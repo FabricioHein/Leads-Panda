@@ -1,0 +1,67 @@
+<div class="layout-px-spacing">
+
+
+    <div class="layout-top-spacing" v-if="usuario ">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                <form id="general-info" class="section general-info">
+                    <!-- <div v-if="!show">
+                        
+                        <div class="loader dual-loader mx-auto">
+                            
+                        </div>
+                    </div> -->
+                    <div class="info">
+                        <h6 class="">Importar Tabela</h6>
+                        <div class="row">
+                            <div class="col-lg-11 mx-auto">
+                                <div class="row">
+                                    <div class="col-xl-2 col-lg-12 col-md-4">
+                                        <div class="upload mt-4 pe-md-4">
+                                            <input type="file" @change="onChange" />
+
+                                            <p class="mt-2">Carregar Tabela </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                        <div class="form">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Módulo</label>
+                                                        <div class="col-5">
+                                                            <v-select v-model="selected"
+                                                                :reduce="(option) => option.id" :options="options" />
+                                                        </div>
+                                                    </div>
+                                                    <img :src="require('@/assets/images/xlsx.png')" alt="profile"
+                                                        class="profile-preview" />
+                                                    <label>Baixar Modelo</label>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<div class="account-settings-footer" v-if="selected">
+    <div class="as-footer-container">
+        <button type="button" class="btn btn-success" @click="save">Importar</button>
+        <button type="button" class="btn btn-danger" @click="back">Cancelar</button>
+    </div>
+</div>

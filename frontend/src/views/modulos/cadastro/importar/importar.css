@@ -1,0 +1,26 @@
+*{
+    font-family: sans-serif;
+    box-sizing:border-box;
+    color:#FFF;
+  }
+  
+  .form-upload{
+    background:#333;
+    display: block;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    width: 350px;
+  }
+  
+  .input-personalizado{
+    cursor: pointer;
+  }
+  
+  .imagem{
+    max-width: 100%;
+  }
+  
+  .input-file{
+    display:none;
+  }

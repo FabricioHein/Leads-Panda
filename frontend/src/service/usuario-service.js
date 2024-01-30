@@ -1,0 +1,44 @@
+import Api from '@/api/api';
+
+class UsuarioService extends Api {
+    constructor(config, token, url) {
+        super(config, token, url);
+        this.url = url || '/api/usuario';
+        this.config = config || {};
+        this.token = token;
+    }
+    async AtualizarUsuario() {
+        return await this.update();
+    }
+    async deleteUsuario() {
+        this.url = '/api/usuario/delete';
+
+        return await this.post();
+    }
+    async criarUsuario() {
+        return await this.post();
+    }
+    async novoCliente() {
+        this.url = '/api/authenticator/criar-usuario-cliente';
+
+        const novoCliente = await this.post()
+      
+        return novoCliente;
+    }
+    async recupearSenhaEmail(email) {
+        this.url = `/authenticator/novasenha/${email}`;
+
+        return await this.get();
+    }
+    async atualizarPermissaoModulos() {
+        this.url = '/api/usuario/atualizar/permissao';
+        return await this.post();
+    }
+    async getAllUsuarios() {
+        const allUser = await this.get();
+        if(allUser.data) return allUser.data;
+        return [];
+    }
+}
+
+export default UsuarioService;

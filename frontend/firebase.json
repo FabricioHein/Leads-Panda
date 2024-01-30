@@ -1,0 +1,25 @@
+{
+  "hosting": {
+    "public": "/dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "backend"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "rules": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+
+}

@@ -1,0 +1,243 @@
+<div class="layout-px-spacing">
+    <teleport to="#breadcrumb">
+        <ul class="navbar-nav flex-row">
+            <li>
+                <div class="page-header">
+                    <nav class="breadcrumb-one" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:;">Perfil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span>Configuração da
+                                    Conta</span></li>
+                        </ol>
+                    </nav>
+                </div>
+            </li>
+        </ul>
+    </teleport>
+
+    <div class="account-settings-container layout-top-spacing">
+        <div class="account-content">
+            <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll"
+                data-offset="-100">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                        <form id="general-info" class="section general-info">
+                            <div class="info">
+                                <h6 class="">Informação Pessoal</h6>
+                                <div class="row">
+                                    <div class="col-lg-11 mx-auto">
+                                        <div class="row">
+                                            <div class="col-xl-2 col-lg-12 col-md-4">
+                                                <div class="upload mt-4 pe-md-4">
+                                                    <input ref="fl_profile" type="file" class="d-none"
+                                                        accept="image/*" @change="change_file" />
+                                                    <img :src="selected_file ? selected_file : require('@/assets/images/user-profile.jpeg')"
+                                                        alt="profile" class="profile-preview"
+                                                        @click="$refs.fl_profile.click()" />
+                                                    <p class="mt-2">Carregar Imagem </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                                <div class="form">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="fullName">Nome</label>
+                                                                <input class="form-control mb-4" placeholder="Nome"
+                                                                    v-model="usuario.name" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="fullName">CPF</label>
+                                                                <input class="form-control mb-4" placeholder="cpf"
+                                                                    v-model="usuario.cpf" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="fullName">Email</label>
+                                                                <input class="form-control mb-4" placeholder="email"
+                                                                    v-model="usuario.email"  />
+                                                            </div>
+                                                            <!-- <div class="form-group">
+                                                                <label for="fullName">Tipo Usuário</label>
+                                                                <input class="form-control mb-4"
+                                                                    v-model="usuario.isAdmin" />
+                                                            </div> -->
+
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="fullName">Sobrenome</label>
+                                                                <input class="form-control mb-4"
+                                                                    placeholder="Sobrenome"
+                                                                    v-model="usuario.sobrenome" />
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="fullName">Telefone</label>
+
+                                                                <input type="text" v-model="usuario.telefone"
+                                                                    class="form-control" v-maska="'+55(##)#####-####'"
+                                                                    placeholder="__-_______" />
+
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                        <form id="general-info" class="section general-info">
+                            <div class="info">
+                                <h6 class="">Endereço</h6>
+                                <div class="row">
+                                  
+                                </div>
+                            </div>
+                        </form>
+                    </div> -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                        <form id="general-info" class="section general-info">
+                            <div class="info">
+                                <h6 class="">Configurar Aplicação </h6>
+                                <div class="row">
+                                    <div class="col-lg-11 mx-auto">
+                                        <div class="row">
+                                            <h6>Cor do Tema</h6>
+                                            <p class="small text-muted mb-3">Escolha qual cor prefere utilizar no
+                                                app.</p>
+                                            <div class="btn-group-toggle row mb-4 mx-0">
+                                                <div
+                                                    class="text-color radio-primary col-6 ps-0 mb-3 custom-control custom-radio">
+                                                    <input type="radio" id="light_mode"
+                                                        v-model="$store.state.app.dark_mode"
+                                                        class="custom-control-input" value="light"
+                                                        @change="setTemplateStyle" />
+                                                    <label class="custom-control-label" for="light_mode">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-sun me-2">
+                                                            <circle cx="12" cy="12" r="5"></circle>
+                                                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                                                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                                                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78">
+                                                            </line>
+                                                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                                                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                                                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                                        </svg>
+                                                        Modo Claro
+                                                    </label>
+                                                </div>
+                                                <div
+                                                    class="text-color radio-primary col-6 ps-0 mb-3 custom-control custom-radio">
+                                                    <input type="radio" id="dark_mode"
+                                                        v-model="$store.state.app.dark_mode"
+                                                        class="custom-control-input" value="dark"
+                                                        @change="setTemplateStyle" />
+                                                    <label class="custom-control-label" for="dark_mode">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="feather feather-moon me-2">
+                                                            <path
+                                                                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z">
+                                                            </path>
+                                                        </svg>
+                                                        Modo Escuro
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                            <h6>Barra Lateral</h6>
+                                            <p class="small text-muted mb-3">Escolha qual barra lateral deseja usar.
+                                            </p>
+                                            <div class="btn-group-toggle row mb-4 mx-0">
+                                                <div
+                                                    class="text-color radio-primary col-6 ps-0 mb-3 custom-control custom-radio">
+                                                    <input type="radio" id="horizontal"
+                                                        v-model="$store.state.app.menu_style"
+                                                        class="custom-control-input" value="horizontal"
+                                                        @change="setMenuStyle" />
+                                                    <label class="custom-control-label"
+                                                        for="horizontal">Horizontal</label>
+                                                </div>
+                                                <div
+                                                    class="text-color radio-primary col-6 ps-0 mb-3 custom-control custom-radio">
+                                                    <input type="radio" id="vertical"
+                                                        v-model="$store.state.app.menu_style"
+                                                        class="custom-control-input" value="vertical"
+                                                        @change="setMenuStyle" />
+                                                    <label class="custom-control-label"
+                                                        for="vertical">Vertical</label>
+                                                </div>
+                                                <div
+                                                    class="text-color radio-primary col-12 ps-0 mb-3 custom-control custom-radio">
+                                                    <input type="radio" id="collapsible"
+                                                        v-model="$store.state.app.menu_style"
+                                                        class="custom-control-input" value="collapsible-vertical"
+                                                        @change="setMenuStyle" />
+                                                    <label class="custom-control-label"
+                                                        for="collapsible">Collapsible Vertical</label>
+                                                </div>
+                                            </div>
+                                            <h6 class="mb-1">Estilo</h6>
+                                            <p class="small text-muted mb-3">Seleciono o estilo do app que deseja.
+                                            </p>
+                                            <div class="btn-group-toggle row mx-0">
+                                                <div
+                                                    class="text-color radio-primary col-3 ps-0 mb-3 custom-control custom-radio">
+                                                    <input type="radio" id="boxed"
+                                                        v-model="$store.state.app.layout_style"
+                                                        class="custom-control-input" value="boxed-layout"
+                                                        @change="setLayoutStyle" />
+                                                    <label class="custom-control-label" for="boxed">Caixa
+                                                        Menor</label>
+                                                </div>
+                                                <div
+                                                    class="text-color radio-primary col-5 ps-0 mb-3 custom-control custom-radio">
+                                                    <input type="radio" id="largeboxed"
+                                                        v-model="$store.state.app.layout_style"
+                                                        class="custom-control-input" value="large-boxed-layout"
+                                                        @change="setLayoutStyle" />
+                                                    <label class="custom-control-label" for="largeboxed">Caixa
+                                                        Maior</label>
+                                                </div>
+                                                <div
+                                                    class="text-color radio-primary col-4 ps-0 mb-3 custom-control custom-radio">
+                                                    <input type="radio" id="full"
+                                                        v-model="$store.state.app.layout_style"
+                                                        class="custom-control-input" value="full"
+                                                        @change="setLayoutStyle" />
+                                                    <label class="custom-control-label" for="full">Total</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="account-settings-footer">
+            <div class="as-footer-container">
+                <button type="button" class="btn btn-primary">Limpar Dados</button>
+                <button type="button" class="btn btn-success" @click="save()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,242 @@
+.ql-container.ql-snow {
+    border-top: 0px;
+    margin-top: 10px;
+    padding: 13px 0;
+    border: 1px solid #bfc9d4 !important;
+    border-radius: 6px;
+}
+
+.ql-container,
+.ql-editor {
+    min-height: inherit;
+}
+
+.ql-editor {
+    max-height: 200px;
+}
+
+.ql-toolbar.ql-snow .ql-picker-label {
+    border: 1px solid transparent;
+    color: #000000;
+}
+
+.ql-snow .ql-stroke {
+    fill: none;
+    stroke: #000000;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
+.ql-snow .ql-fill,
+.ql-snow .ql-stroke.ql-fill {
+    fill: #000000;
+}
+
+
+.grid {
+    display: grid;
+}
+
+.panel {
+    padding: 0;
+}
+
+.text-chat {
+    overflow: auto;
+    height: 3rem;
+}
+
+.painel-form {
+    background-color: #ffff;
+}
+
+.painel-modelo {
+    background-color: #ffff;
+
+}
+
+.color-input {
+    width: 50px;
+    height: 30px;
+    border: 1px solid #ccc;
+
+}
+
+/* Estilos personalizados com variáveis CSS */
+:root {
+
+    --user-message-color: #64c707;
+    --bot-message-color: #7f810d;
+    --background-color: #851e1e;
+    /* Cor padrão de fundo do chat */
+    --button-color: #2196f3;
+    /* Cor padrão do botão "Enviar" */
+    --button-text-color: #ffffff;
+    /* Cor padrão do texto do botão "Enviar" */
+}
+
+#chat-container {
+    margin: 0 auto;
+    padding: 20px;
+    height: 70vh;
+    /* Define a altura do chat-container para ocupar a tela inteira (100% da altura do viewport) */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    /* Cor de fundo do chat */
+    border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+}
+
+#chat-box {
+    flex-grow: 1;
+    /* Faz o chat-box expandir e ocupar o espaço disponível */
+    overflow-y: scroll;
+    /* Adiciona a barra de rolagem vertical */
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(228, 223, 223);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(228, 223, 223);
+}
+
+.message {
+    display: flex;
+    margin: 10px 0;
+}
+
+.user-message {
+    padding: 5px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.bot-message {
+    padding: 5px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+}
+
+.avatar img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.avatar .username {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.message-bubble {
+    border-radius: 15px;
+    padding: 10px 15px;
+    font-size: 14px;
+    max-width: 70%;
+}
+
+.user-message .message-bubble {
+    background-color: var(--user-message-color);
+    /* Cor das mensagens do usuário */
+    color: white;
+}
+
+.bot-message .message-bubble {
+    background-color: var(--bot-message-color);
+    /* Cor das mensagens do bot */
+    color: white;
+}
+
+/* Estilize o botão de enviar e o ícone de adicionar */
+#sendButton {
+    background-color: var(--button-color);
+    /* Cor do botão "Enviar" */
+    color: var(--button-text-color);
+    /* Cor do texto do botão "Enviar" */
+}
+
+#sendButton:hover {
+    background-color: #007bff;
+    /* Cor do botão "Enviar" quando hover */
+}
+
+#addAttachmentButton {
+    background-color: #28a745;
+    /* Cor do botão de adicionar */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#addAttachmentButton:hover {
+    background-color: #1e7e34;
+    /* Cor do botão de adicionar quando hover */
+}
+
+.typing-message {
+    display: flex;
+    justify-content: flex-start;
+    margin: 10px 0;
+}
+
+.typing-bubble {
+    background-color: #d9d9d9;
+    color: #000;
+    border-radius: 15px;
+    padding: 10px 15px;
+    font-size: 14px;
+    max-width: 70%;
+}
+
+/* Estilos para o botão de fechar */
+.close-button {
+    display: none;
+    position: absolute;
+    top: 10px;
+    /* Posição superior personalizada */
+    right: 10px;
+    /* Posição à direita personalizada */
+    bottom: auto;
+    /* Define o valor padrão para a posição inferior */
+    left: auto;
+    /* Define o valor padrão para a posição esquerda */
+    cursor: pointer;
+    font-size: 24px;
+    color: #ff0000;
+    /* Cor vermelha */
+    z-index: 1;
+    /* Garante que o botão de fechar esteja acima do conteúdo carregado */
+}

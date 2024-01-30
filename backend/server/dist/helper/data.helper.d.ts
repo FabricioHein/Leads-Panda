@@ -1,0 +1,38 @@
+export declare class DateTime {
+    static ToDateTime(val: any): Date;
+    static ToFormat(val: any, format: any): any;
+    static DateDiff(inicial: any, final: any): any;
+    static DateNow(): Date;
+    static startOfDay(): any;
+    static getDataBase(data: any): string;
+    static subtractDays(date: any, day: any): any;
+    static subtractMonth(date: any, months: any): any;
+    static AddMonth(date: any, month: any): any;
+    static AddDay(date: any, day: any): any;
+    static EqualsDate(inicial: any, final: any): boolean;
+    static Now(): any;
+    static isSameDay(date: any): any;
+    static DateToString(date: any): any;
+    static MonthYearToString(date: any): any;
+    static EndOfMonth(date: any): any;
+    static DataBaseToString(date: any): any;
+    static dateTimeAsId(): number;
+    static comparaMaior(dataInicial: any, dataFinal: any): boolean;
+    static comparaMenor(dataInicial: any, dataFinal: any): boolean;
+    static DateDiffHoras(inicial: any, final: any): number;
+    static DateDiffDias(inicial: any, final: any): number;
+    static DateDiffMeses(inicial: any, final: any): any;
+    static DateDiffAnos(inicial: any, final: any): number;
+    static idade(dataNascimento: any, dataDoCalculo: any): number;
+    static convertDateBankFormat(value: any): Date;
+    static convertInverseDateBankFormat(value: any): Date;
+    static primeiroDiaMes(dataBase: any): Date;
+    static ultimoDiaMes(dataBase: any): Date;
+    static extractDate(value: any): string;
+    static calcularVencimentoCobranca(regraCobranca: any): Date;
+    static vencimentoCobranca(diaVencimento: any, mes: any): Date;
+    static AddHours(date: any, hours: any): any;
+    static getListadeData(dataInicial: any, dataFinal: any): any[];
+    static createDate(dia: any, mes: any, ano: any): Date;
+    static convertSecondsToDate(seconds: any): Date;
+}

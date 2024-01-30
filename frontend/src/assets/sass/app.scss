@@ -1,0 +1,58 @@
+/*main pluging css*/
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'forms/theme-checkbox-radio.scss';
+@import 'perfect-scrollbar.css';
+@import 'main.scss';
+@import 'structure.scss';
+@import 'elements/alert.scss';
+@import 'forms/switches.scss';
+@import 'custom-loader.css';
+@import 'animate.css';
+
+@import 'tables/table-custom.scss';
+
+/*dark css*/
+@import 'dark.scss';
+
+/*custom css*/
+@import 'style.scss';
+
+.avatar-p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+   
+}
+.avatar-m {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+   
+}
+.avatar-g {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+   
+}
+.avatar-p img {
+    width: 100%;
+    border-radius: 50%;
+}
+.avatar-m img {
+    width: 100%;
+    border-radius: 50%;
+}
+.avatar-g img {
+    width: 100%;
+    border-radius: 50%;
+}

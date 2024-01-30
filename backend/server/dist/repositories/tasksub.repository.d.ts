@@ -1,0 +1,113 @@
+import { PrismaService } from 'src/base/relacional/PrismaService';
+export declare class TaskSubRepository {
+    private prisma;
+    constructor(prisma: PrismaService);
+    getVisaoGeralTaskSub(where: any): Promise<({
+        task: {
+            id: number;
+            contato_nome: string;
+            contato_numero: string;
+            title: string;
+            description: string;
+            processoId: number;
+            valor_Inicial: import("@prisma/client/runtime/library").Decimal;
+            valor_Final: import("@prisma/client/runtime/library").Decimal;
+            marcar_venda: boolean;
+            desconto: import("@prisma/client/runtime/library").Decimal;
+            previsao_fechamento: Date;
+            status: string;
+            emailId: number;
+            anotacoesId: number;
+            contactsId: number;
+            usersId: number;
+            operador: string;
+            created_at: Date;
+            updated_at: Date;
+            metasId: number;
+            vendaId: number;
+            empresa: string;
+            motivosId: number;
+            produtoId: number;
+            arquivado: boolean;
+        };
+    } & {
+        id: number;
+        title: string;
+        description: string;
+        description_text: string;
+        priority: string;
+        status: string;
+        date_start: Date;
+        date_end: Date;
+        created_at: Date;
+        updated_at: Date;
+        taskId: number;
+    })[]>;
+    getTaskSubAllTaskId(taskId: any): Promise<{
+        id: number;
+        title: string;
+        description: string;
+        description_text: string;
+        priority: string;
+        status: string;
+        date_start: Date;
+        date_end: Date;
+        created_at: Date;
+        updated_at: Date;
+        taskId: number;
+    }[]>;
+    getByIdTaskSub(id: any): Promise<{
+        id: number;
+        title: string;
+        description: string;
+        description_text: string;
+        priority: string;
+        status: string;
+        date_start: Date;
+        date_end: Date;
+        created_at: Date;
+        updated_at: Date;
+        taskId: number;
+    }>;
+    createTaskSub(data: any): Promise<{
+        id: number;
+        title: string;
+        description: string;
+        description_text: string;
+        priority: string;
+        status: string;
+        date_start: Date;
+        date_end: Date;
+        created_at: Date;
+        updated_at: Date;
+        taskId: number;
+    }>;
+    updateTaskSub(id: any, data: any): Promise<{
+        id: number;
+        title: string;
+        description: string;
+        description_text: string;
+        priority: string;
+        status: string;
+        date_start: Date;
+        date_end: Date;
+        created_at: Date;
+        updated_at: Date;
+        taskId: number;
+    }>;
+    deleteTaskSub(id: any): Promise<{
+        id: number;
+        title: string;
+        description: string;
+        description_text: string;
+        priority: string;
+        status: string;
+        date_start: Date;
+        date_end: Date;
+        created_at: Date;
+        updated_at: Date;
+        taskId: number;
+    }>;
+    createManyTaskSub(data: any): Promise<import(".prisma/client").Prisma.BatchPayload>;
+    deleteManyTaskSubSub(id: any): Promise<import(".prisma/client").Prisma.BatchPayload>;
+}

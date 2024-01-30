@@ -1,0 +1,85 @@
+import { PrismaService } from 'src/base/relacional/PrismaService';
+export declare class FornecedorRepository {
+    private prisma;
+    constructor(prisma: PrismaService);
+    getFornecedorAll(): Promise<{
+        id: number;
+        link_img: string;
+        nome_responsavel: string;
+        email: string;
+        empresa: string;
+        cnpj: string;
+        telefone: string;
+        celular: string;
+        foto: string;
+        ativo: boolean;
+        created_at: Date;
+        updated_at: Date;
+        operador: string;
+        clienteId: number;
+    }[]>;
+    getByIdFornecedor(id: any): Promise<{
+        id: number;
+        link_img: string;
+        nome_responsavel: string;
+        email: string;
+        empresa: string;
+        cnpj: string;
+        telefone: string;
+        celular: string;
+        foto: string;
+        ativo: boolean;
+        created_at: Date;
+        updated_at: Date;
+        operador: string;
+        clienteId: number;
+    }>;
+    createFornecedor(data: any): Promise<{
+        id: number;
+        link_img: string;
+        nome_responsavel: string;
+        email: string;
+        empresa: string;
+        cnpj: string;
+        telefone: string;
+        celular: string;
+        foto: string;
+        ativo: boolean;
+        created_at: Date;
+        updated_at: Date;
+        operador: string;
+        clienteId: number;
+    }>;
+    updateFornecedor(id: any, data: any): Promise<{
+        id: number;
+        link_img: string;
+        nome_responsavel: string;
+        email: string;
+        empresa: string;
+        cnpj: string;
+        telefone: string;
+        celular: string;
+        foto: string;
+        ativo: boolean;
+        created_at: Date;
+        updated_at: Date;
+        operador: string;
+        clienteId: number;
+    }>;
+    deleteFornecedor(id: any): Promise<{
+        id: number;
+        link_img: string;
+        nome_responsavel: string;
+        email: string;
+        empresa: string;
+        cnpj: string;
+        telefone: string;
+        celular: string;
+        foto: string;
+        ativo: boolean;
+        created_at: Date;
+        updated_at: Date;
+        operador: string;
+        clienteId: number;
+    }>;
+}

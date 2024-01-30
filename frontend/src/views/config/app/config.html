@@ -1,0 +1,134 @@
+<div class="layout-px-spacing">
+
+    <div class="account-settings-container layout-top-spacing" v-if="usuario">
+        <div class="account-content">
+            <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll"
+                data-offset="-100">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+                        <form novalidate id="general-info" class="section general-info">
+                            <div class="info">
+                                <h6 class="">Configuração</h6>
+                                <div class="row">
+                                    <div class="col-lg-11 mx-auto">
+                                        <div class="row">
+                                            <div class="col-xl-2 col-lg-12 col-md-4">
+                                                <div class="upload mt-4 pe-md-4">
+                                                    <input ref="fl_profile" type="file" class="d-none"
+                                                        accept="image/*" @change="change_file" />
+                                                    <img :src="cliente.logo_link  ? cliente.logo_link : require('@/assets/images/user-no-foto.png')"
+                                                        alt="profile" class="profile-preview"
+                                                        @click="$refs.fl_profile.click()" />
+                                                    <p class="mt-2">Carregar Logo</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                                <div class="form">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="fullName">Empresa</label>
+                                                                <input v-model="cliente.nome_empresa" 
+                                                                    type="text" class="form-control"
+                                                                    :class="[cliente.nome_empresa  ? 'is-valid' : 'is-invalid']" />
+                                                                <div class="valid-feedback">ok!
+                                                                </div>
+                                                                <div class="invalid-feedback">Campo obrigatório!
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="fullName">CNPJ </label>
+                                                                <input v-model="cliente.cnpj_cpf" type="text"
+                                                                    class="form-control"
+                                                                    v-maska="'##.###.###/####-##'"
+                                                                    :class="[cliente.cnpj_cpf ? 'is-valid' : 'is-invalid']" />
+                                                                <div class="valid-feedback">ok!
+                                                                </div>
+                                                                <div class="invalid-feedback">Campo obrigatório!
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="fullName">Responsável</label>
+
+                                                                <input v-model="cliente.responsavel" type="text"
+                                                                    class="form-control"
+                                                                    :class="[cliente.responsavel ? 'is-valid' : 'is-invalid']"
+                                                                     />
+                                                                <div class="valid-feedback">ok!
+                                                                </div>
+                                                                <div class="invalid-feedback">Campo obrigatório!
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="fullName">Nome Fantasia</label>
+
+                                                                <input v-model="cliente.nome_fantasia" type="text"
+                                                                    class="form-control"
+                                                                    :class="[cliente.nome_fantasia ? 'is-valid' : 'is-invalid']" />
+                                                                <div class="valid-feedback">ok!
+                                                                </div>
+                                                                <div class="invalid-feedback">Campo obrigatório!
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="fullName">Telefone</label>
+
+                                                                <input v-model="usuario.telefone"
+                                                                    v-maska="'##-#######'" placeholder="__-_______"
+                                                                    type="text" class="form-control"
+                                                                    :class="[usuario.telefone ? 'is-valid' : 'is-invalid']" />
+                                                                <div class="valid-feedback">ok!</div>
+                                                                <div class="invalid-feedback">Campo obrigatório!
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="fullName">Email</label>
+
+                                                                <input v-model="usuario.email"                                                                       
+                                                                    type="text" class="form-control"
+                                                                    :class="[usuario.email ? 'is-valid' : 'is-invalid']" />
+                                                                <div class="valid-feedback">ok!</div>
+                                                                <div class="invalid-feedback">Campo obrigatório!
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                        <form id="general-info" class="section general-info">
+                            <div class="info">
+                                <h6 class="">Endereço</h6>
+                              
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="account-settings-footer">
+            <div class="as-footer-container">
+                <button type="button" class="btn btn-success" @click="save()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

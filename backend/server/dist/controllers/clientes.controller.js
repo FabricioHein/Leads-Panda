@@ -20,6 +20,14 @@ let ClientesController = class ClientesController {
     constructor(clienteService) {
         this.clienteService = clienteService;
     }
+    async getByIdName(name) {
+        try {
+            return await this.clienteService.getByIdName(name);
+        }
+        catch (error) {
+            return error;
+        }
+    }
     async getAllClientes(clienteId) {
         try {
             return await this.clienteService.getAllClientes(clienteId);
@@ -61,6 +69,14 @@ let ClientesController = class ClientesController {
         }
     }
 };
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('filter/name/:name'),
+    __param(0, (0, common_1.Param)('name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ClientesController.prototype, "getByIdName", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('todos/:clienteId'),

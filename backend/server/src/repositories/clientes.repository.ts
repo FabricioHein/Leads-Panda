@@ -4,6 +4,18 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class ClientesRepository {
   constructor(private prisma: PrismaService) {}
+  
+  async getByIdName(name) {
+    return await this.prisma.cliente.findMany({
+      where: {
+        nome: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
+    });
+  }
+
   async getClientesAll(clienteId) {
     return await this.prisma.cliente.findMany({
       where: {

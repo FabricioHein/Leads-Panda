@@ -10,7 +10,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item theme-text" v-if="cliente">
-                        <router-link to="/" class="nav-link">{{ "ZigmaBot" }} </router-link>
+                        <router-link to="/" class="nav-link">{{ "Panda Leads" }} </router-link>
                     </li>
                 </ul>
                 <div class="d-none horizontal-menu">

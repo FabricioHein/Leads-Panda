@@ -16,6 +16,16 @@ let ClientesRepository = class ClientesRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async getByIdName(name) {
+        return await this.prisma.cliente.findMany({
+            where: {
+                nome: {
+                    contains: name,
+                    mode: 'insensitive',
+                },
+            },
+        });
+    }
     async getClientesAll(clienteId) {
         return await this.prisma.cliente.findMany({
             where: {

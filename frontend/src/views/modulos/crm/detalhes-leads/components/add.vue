@@ -11,14 +11,17 @@
 
         <label>Nome Contato</label>
         <input type="text" class="form-control" placeholder="Pesquise o Contato" v-model="params.contato_nome"
-          @input="findContato()" />
+          @input="findContato()" />      
+       
         <div v-if="contatoNome">
           <ul>
             <li v-for="contato in contatosLista" @click="setContato(contato)">
-              {{ contato.name }} - {{ contato.number }}
+             {{ contato.nome }}   {{ contato.sobrenome }} {{' - ' }}   {{ contato.cpf }}
             </li>
           </ul>
         </div>
+        <label for="cpf">CPF</label>
+        <input v-model="params.cpf" v-maska="'###.###.###-##'" placeholder="CPF" type="text" class="form-control" />
         <label>Valor Inicial</label>
         <inputMoney v-model="params.valor_Inicial" :options="options" />
         <label>Valor Final</label>
@@ -206,7 +209,7 @@ export default {
         }
         return {
           id: v.id,
-          nome: v.nome 
+          nome: v.nome
         }
       })
       console.log(this.vendedor)
@@ -222,14 +225,22 @@ export default {
     setContato(evento) {
       this.params.Contacts = evento;
       this.contatoNome = false;
-      this.params.contato_nome = evento.name;
-      this.params.contato_numero = evento.number;
+      this.params.contato_nome = evento.nome + ' ' + evento.sobrenome;
+      this.params.contato_numero = evento.telefone;
+      this.params.cpf = evento.cpf;
+      this.params.empresa = evento.empresa;
     },
     async findContato() {
 
       this.contatoNome = !this.contatoNome;
-      const contatos = new ContatosService({}, this.token, `/api/contatos/filter/name/${this.params.contato_nome}`);
+
+      if((this.params.contato_nome).length > 3){
+        const contatos = new ContatosService({}, this.token, `/api/clientes/filter/name/${this.params.contato_nome}`);
       this.contatosLista = await contatos.getByIdNomeOrNumber();
+      }
+    
+
+     
     },
     back() {
       this.$router.push('/crm/oportunidades')

@@ -19,6 +19,9 @@ let ClientesService = class ClientesService {
         this.clientesRepository = clientesRepository;
         this.historicoClienteRepository = historicoClienteRepository;
     }
+    async getByIdName(name) {
+        return await this.clientesRepository.getByIdName(name);
+    }
     async createClienteConfig(data) {
         const usuario = await this.createClientes(data);
         if (usuario) {

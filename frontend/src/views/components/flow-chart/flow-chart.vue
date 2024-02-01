@@ -21,7 +21,7 @@
                     d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                 </svg>
               </button>
-          
+
               <button id="conect-node" @mousedown="startConectarNode(node)" type="button" class="btn rounded-circle "
                 v-if="!editConnection">
                 <svg viewBox="0 0 120 120" version="1.1" xmlns="https://www.w3.org/2000/svg">
@@ -52,19 +52,27 @@
             <div class="btn-group p-4">
               <button class="btn btn-success" v-if="!editar" @click="criarNode(node)">Criar Opção</button>
               <button class="btn btn-success" v-if="editar" @click="alterar">Alterar</button>
-
+             
             </div>
 
           </div>
           <div class="mt-container">
 
             <div class="p-4">
+              <label>Interação:</label>
+              <select v-model="novoCampo.type" class="form-control">
+                <option v-for="s in selectedType" :value="s.value">
+                  {{ s.value }}</option>
+              
+              </select>
               <label>Pergunta:</label>
               <textarea class="form-control" v-model="novoCampo.ask" />
               <label>Resposta:</label>
               <textarea class="form-control" v-model="novoCampo.text" />
-
+              
             </div>
+            
+            
 
           </div>
 
@@ -88,10 +96,18 @@ export default {
   },
   data() {
     return {
+      selectedType: [
+        {
+          value: 'btn',
+          label: 'Botão',
+          link: '',
+          name: ''
+        }
+      ],
       editConnection: false,
       connection: null,
       editar: false,
-      novoCampo: { text: 'Algum texto', ask: 'Alguma Pergunta', type: 'start', position: { x: 150, y: 300 } },
+      novoCampo: { text: 'Algum texto', ask: 'Alguma Pergunta', type: '', position: { x: 150, y: 300 } },
       condicao: [
         {
           label: 'Igual',
@@ -99,8 +115,8 @@ export default {
         }
       ],
       nodes: [
-        { id: '1', text: 'Start', ask: 'Pergunta', type: 'start', position: { x: 150, y: 300 } },
-        { id: '2', text: 'Start', ask: 'Pergunta', type: 'start', position: { x: 150, y: 300 } },
+        { id: '1', text: '', ask: 'Pergunta', type: '', position: { x: 150, y: 300 } },
+        { id: '2', text: '', ask: 'Pergunta', type: '', position: { x: 150, y: 300 } },
 
       ],
       connections: [
@@ -112,14 +128,12 @@ export default {
   },
   methods: {
     startConectarNode(node) {
-      console.log('start', node)
 
       this.connection = node;
-
       this.editConnection = !this.editConnection
 
     },
-    endConectarNode(node) {  
+    endConectarNode(node) {
 
       console.log(node.id)
 
@@ -144,10 +158,9 @@ export default {
 
 
       if (this.nodes.length == 0) {
-        this.novoCampo['id']
+        this.novoCampo['id'] = 1;
       } else {
         this.novoCampo['id'] = this.nodes.length + 1
-
       }
 
       this.nodes.push(this.novoCampo)
@@ -296,4 +309,5 @@ export default {
   stroke: #000;
   stroke-width: 1px;
   /* Reduz a largura do traço */
-}</style>
+}
+</style>

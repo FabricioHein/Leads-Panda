@@ -259,7 +259,13 @@ if (usuario) {
             name: 'cadastro',
             component: () => import(/* webpackChunkName: "auth-login" */ '../views/auth/register_boxed'),
             meta: { layout: 'registro' },
-        }
+        },
+        {
+            path: '/',
+            name: 'home',
+            component: () => import(/* webpackChunkName: "auth-login" */ '../views/index/index.vue'),
+            meta: { layout: 'auth' },
+        }, 
     ];
   
 }

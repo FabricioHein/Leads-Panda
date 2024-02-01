@@ -2,12 +2,18 @@
   <div class="card component-card_1 node" :style="{ left: node.position.x + 'px', top: node.position.y + 'px' }"
     @mousedown="startDrag" @touchstart="startDrag">
     <div class="card-body">
-      <p class="card-text">
+      <button class="btn btn-primary" v-if="node.type == 'btn'"> {{ 'Texto' }}</button>
+
+     
+      <p class="card-text p-2">
         {{ node.ask }}
       </p>
       <p class="card-text">
         {{ node.text }}
       </p>
+
+
+
       <slot></slot>
 
     </div>

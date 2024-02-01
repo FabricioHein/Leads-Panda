@@ -48,6 +48,10 @@ export default {
 
   },
   methods: {
+    closeModal(){
+      this.emoji = false;
+
+    },
     setChatBuild() {
 
       var params = this.$route.params;
@@ -65,7 +69,6 @@ export default {
       var params = this.$route.params
       var clienteId = params.clienteId;
       var chave = params.chaveId;
-      var atendimento = params.user;
       var tipo = params.tipo;
       var telefonParams = params.telefone;
       var emailParams = params.email;
@@ -79,11 +82,6 @@ export default {
       } else {
         qtdMsgm = 1
       }
-
-
-      if (atendimento) {
-        this.usuario = atendimento;
-      };
 
       //usuario chat     
       if (clienteId && chave && tipo == 'getchat' || tipo == 'teste') {
@@ -130,6 +128,7 @@ export default {
                   this.chat.messages = this.messages;
 
                   localStorage.setItem("chat", JSON.stringify(this.chat));
+                  this.scrollToBottom();
 
                 }
 
@@ -257,6 +256,7 @@ export default {
                     this.chat.messages = this.messages;
 
                     localStorage.setItem("chat", JSON.stringify(this.chat));
+                    this.scrollToBottom();
 
                   } else {
                     localStorage.setItem("chat", JSON.stringify(this.chat));
@@ -378,14 +378,12 @@ export default {
 
                   this.chat.messages = this.messages;
 
-
+                  this.scrollToBottom();
 
 
                 }
 
               }
-
-
 
 
             };
@@ -417,7 +415,7 @@ export default {
 
       this.scrollToBottom();
 
-
+   
 
     },
     valida() {
@@ -521,7 +519,6 @@ export default {
 
      setInterval(async ()  => {
 
-        console.log('setTime')
 
         this.chat = JSON.parse(localStorage.getItem('chat'));
 
@@ -536,15 +533,13 @@ export default {
 
             this.messages = []
             this.messages = newMessage.data;
-            console.log('msgm', this.messages)
 
-            this.scrollToBottom()
 
           }
 
         }
 
-      }, 5000); // Intervalo de 1000 milissegundos (1 segundo)
+      }, 8000); // Intervalo de 1000 milissegundos (1 segundo)
 
 
 
@@ -642,7 +637,7 @@ export default {
             });
 
             this.chat.messages = this.messages;
-
+            this.scrollToBottom();
             localStorage.setItem("chat", JSON.stringify(this.chat));
 
           } else {
@@ -661,6 +656,18 @@ export default {
 
     async sendMessage() {
 
+      console.log(this.chat)
+      var params = this.$route.params;
+      var tipo = params.tipo;
+
+      this.usuario = this.chat.nome;
+      
+      if(tipo == 'atendimento'){
+        this.usuario = params.user
+      }
+
+
+      this.emoji = false;
 
       var msmSend = {
         // message_id: this.messages.length + 1,
@@ -742,24 +749,21 @@ export default {
 
         }
 
-
-
-
       }
 
     },
     messageClass(message) {
-      return message.username === this.usuario ? 'ZigmaBot_chat_balloon ZigmaBot_right_balloon' : 'ZigmaBot_chat_balloon ZigmaBot_left_balloon message_with_photo';
+      return message.username === this.usuario ? 'panda_chat_balloon panda_right_balloon' : 'panda_chat_balloon panda_left_balloon message_with_photo';
     },
     messageClassSec(message) {
-      return message.username === this.usuario ? '' : 'ZigmaBot_chat_balloon_inner innerRight';
+      return message.username === this.usuario ? '' : 'panda_chat_balloon_inner innerRight';
     },
     scrollToBottom() {
       this.$nextTick(() => {
-        const chatBox = document.getElementById('ZigmaBot_chat_component');
+        const chatBox = document.getElementById('panda_chat_component');
         console.log(chatBox.scrollTop, chatBox.scrollHeight)
 
-        if (chatBox) chatBox.scrollTop = 0;
+        if (chatBox) chatBox.scrollTop = 5843 ;
 
       });
     },

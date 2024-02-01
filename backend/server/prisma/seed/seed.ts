@@ -5,9 +5,9 @@ var listaNome = `Lista`
 const Config = {
   configuracaoCliente: [
     {
-      nome_empresa: 'ZigmaBot',
+      nome_empresa: 'panda',
       logo_link: '',
-      nome_fantasia: 'ZigmaBot',
+      nome_fantasia: 'panda',
     },
   ],
   tipo_projeto: [

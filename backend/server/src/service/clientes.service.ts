@@ -9,7 +9,9 @@ export class ClientesService {
     private clientesRepository: ClientesRepository,
     private historicoClienteRepository: HistoricoClienteRepository,
   ) {}
-
+  async getByIdName(name) {
+    return await this.clientesRepository.getByIdName(name);
+  }
   async createClienteConfig(data: any) {
     const usuario = await this.createClientes(data);
 

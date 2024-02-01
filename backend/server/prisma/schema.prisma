@@ -248,6 +248,7 @@ model task {
   contato_nome        String?               @db.VarChar(100)
   contato_numero      String?               @db.VarChar(20)
   title               String?               @db.VarChar(100)
+  cpf                   String?                 @db.VarChar(150)
   description         String?
   processoId          Int?
   valor_Inicial       Decimal?              @db.Decimal(10, 2)

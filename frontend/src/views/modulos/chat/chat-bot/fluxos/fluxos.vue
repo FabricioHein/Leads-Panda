@@ -1,13 +1,7 @@
 <template>
-    <page :params="acesso">
-        <div class="panel-body">
-            <div class="parent p-2">
-                <flowchart></flowchart>                
-            </div>
-
-
-        </div>
-    </page>
+    <div class="panel-body">
+        <flowchart></flowchart>    
+    </div>
 </template>
 <style scoped>
 .panel {
@@ -27,12 +21,9 @@
 
 <script >
 import '@/assets/sass/drag-drop/drag-drop.css';
-import { VueDraggableNext as draggable } from 'vue-draggable-next';
 
-import { mapGetters } from 'vuex';
 
 import Acesso from '@/helpers/Acesso'
-import page from '@/views/components/page.vue';
 import flowchart from '@/views/components/flow-chart/flow-chart.vue';
 
 export default {
@@ -119,24 +110,18 @@ export default {
             etapa: false
         }
     },
-    computed: {
-        ...mapGetters(['usuario', 'cliente', 'token', 'permissao']),
-    },
+
     components: {
-        page,
         flowchart
 
     },
     methods: {
-        getAcesso() {
-            this.acesso = Acesso.getAcesso('MKT', '/formulario/novo', this.permissao);
-            console.log('acesso', this.acesso)
-        },
+      
        
 
     },
     created() {
-       this.getAcesso()
+       
 
     },
 

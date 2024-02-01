@@ -4,6 +4,33 @@ export declare class ClientesService {
     private clientesRepository;
     private historicoClienteRepository;
     constructor(clientesRepository: ClientesRepository, historicoClienteRepository: HistoricoClienteRepository);
+    getByIdName(name: any): Promise<{
+        id: number;
+        nome: string;
+        sobrenome: string;
+        email: string;
+        empresa: string;
+        data_nascimento: Date;
+        cpf: string;
+        cnpj: string;
+        rg: string;
+        telefone: string;
+        responsavel: string;
+        linkFoto: string;
+        sexoId: number;
+        planoId: number;
+        configuracaoClienteId: number;
+        cep: string;
+        logradouro: string;
+        bairro: string;
+        estado: string;
+        cidade: string;
+        pais: string;
+        complemento: string;
+        numero: string;
+        created_at: Date;
+        updated_at: Date;
+    }[]>;
     createClienteConfig(data: any): Promise<string>;
     atualizarClientes(data: any): Promise<{
         id: number;
@@ -33,17 +60,17 @@ export declare class ClientesService {
         updated_at: Date;
     }>;
     getAllClientes(clienteId: any): Promise<({
-        historico_cliente: {
-            operador: string;
-            created_at: Date;
-            valor: string;
-        }[];
         sexo: {
             id: number;
             descricao: string;
             created_at: Date;
             updated_at: Date;
         };
+        historico_cliente: {
+            created_at: Date;
+            valor: string;
+            operador: string;
+        }[];
     } & {
         id: number;
         nome: string;

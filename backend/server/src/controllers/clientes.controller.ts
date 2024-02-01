@@ -15,6 +15,16 @@ export class ClientesController {
   constructor(private readonly clienteService: ClientesService) {}
 
   @UseGuards(JwtAuthGuard)
+  @Get('filter/name/:name')
+  async getByIdName(@Param('name') name) {
+    try {
+      return await this.clienteService.getByIdName(name);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('todos/:clienteId')
   async getAllClientes(@Param('clienteId') clienteId) {
     try {

@@ -33,7 +33,7 @@ class ContatosService extends Api {
     }
     async getByIdNomeOrNumber() {
         const getByIdNomeOrNumber = await this.get();
-        if(getByIdNomeOrNumber.data)
+        if(getByIdNomeOrNumber.data) return getByIdNomeOrNumber.data
         return [];
     }
 }

@@ -10,10 +10,13 @@ import { ConfigClienteRepository } from 'src/repositories/configCliente.reposito
 import { SubModulosRepository } from 'src/repositories/sub-modulos.repository';
 import { ModulosRepository } from 'src/repositories/modulos.repository';
 import { PrismaService } from 'src/base/relacional/PrismaService';
+import { SendgridService } from 'src/mail/sendgrid/sendgrid.service';
+
 
 @Module({
   controllers: [AuthenticatorController],
   providers: [
+    SendgridService,
     AuthenticatorService,
     UsuariosService,
     UsuarioRepository,

@@ -1,10 +1,9 @@
 import { Controller, Post, Get, Put, Request, UseGuards } from '@nestjs/common';
-import { EmailService } from '../service/email.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('email')
 export class EmailController {
-  constructor(private readonly emailService: EmailService) {}
+  constructor() {}
 
   @UseGuards(JwtAuthGuard)
   @Get('enviar')

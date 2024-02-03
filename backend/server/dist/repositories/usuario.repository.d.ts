@@ -4,6 +4,7 @@ export declare class UsuarioRepository {
     constructor(prisma: PrismaService);
     findOne(username: string): Promise<{
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -14,11 +15,12 @@ export declare class UsuarioRepository {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -37,12 +39,12 @@ export declare class UsuarioRepository {
         permissao_modulos: ({
             modulo: {
                 subModulo: {
+                    id: number;
                     permissao_sub_modulos: {
-                        ver: boolean;
                         editar: boolean;
+                        ver: boolean;
                         deletar: boolean;
                     }[];
-                    id: number;
                 }[];
             } & {
                 id: number;
@@ -64,6 +66,7 @@ export declare class UsuarioRepository {
         })[];
     } & {
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -74,11 +77,12 @@ export declare class UsuarioRepository {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -95,6 +99,7 @@ export declare class UsuarioRepository {
     })[]>;
     getByIdUser(id: any): Promise<{
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -105,11 +110,12 @@ export declare class UsuarioRepository {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -126,6 +132,7 @@ export declare class UsuarioRepository {
     }>;
     getByEmailUser(email: any): Promise<{
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -136,11 +143,12 @@ export declare class UsuarioRepository {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -157,6 +165,7 @@ export declare class UsuarioRepository {
     }>;
     createUser(data: any): Promise<{
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -167,11 +176,12 @@ export declare class UsuarioRepository {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -188,6 +198,7 @@ export declare class UsuarioRepository {
     }>;
     updateUser(id: any, data: any): Promise<{
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -198,11 +209,12 @@ export declare class UsuarioRepository {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -219,6 +231,7 @@ export declare class UsuarioRepository {
     }>;
     deleteUser(id: any): Promise<{
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -229,11 +242,12 @@ export declare class UsuarioRepository {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -247,5 +261,110 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+    }>;
+    findUnique(email: any): Promise<{
+        id: number;
+        nome: string;
+        sobrenome: string;
+        empresa: string;
+        cpf: string;
+        telefone: string;
+        linkFoto: string;
+        isAdmin: boolean;
+        themeDark: boolean;
+        operador: string;
+        sexoId: number;
+        clienteId: number;
+        email: string;
+        profile: string;
+        created_at: Date;
+        updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
+        timesId: number;
+        cep: string;
+        logradouro: string;
+        bairro: string;
+        estado: string;
+        cidade: string;
+        pais: string;
+        complemento: string;
+        numero: string;
+        primeiro_acesso: boolean;
+        gerente_conta: boolean;
+        termos: boolean;
+        password: string;
+    }>;
+    update(data: any): Promise<{
+        id: number;
+        nome: string;
+        sobrenome: string;
+        empresa: string;
+        cpf: string;
+        telefone: string;
+        linkFoto: string;
+        isAdmin: boolean;
+        themeDark: boolean;
+        operador: string;
+        sexoId: number;
+        clienteId: number;
+        email: string;
+        profile: string;
+        created_at: Date;
+        updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
+        timesId: number;
+        cep: string;
+        logradouro: string;
+        bairro: string;
+        estado: string;
+        cidade: string;
+        pais: string;
+        complemento: string;
+        numero: string;
+        primeiro_acesso: boolean;
+        gerente_conta: boolean;
+        termos: boolean;
+        password: string;
+    }>;
+    resetPasswordFindUnique(data: any): Promise<{
+        id: string;
+        email: string;
+        token: string;
+        expireIn: Date;
+        createdAt: Date;
+    }>;
+    createResetPassword(data: any): Promise<{
+        id: string;
+        email: string;
+        token: string;
+        expireIn: Date;
+        createdAt: Date;
+    }>;
+    deleteResetPassword(data: any): Promise<{
+        id: string;
+        email: string;
+        token: string;
+        expireIn: Date;
+        createdAt: Date;
+    }>;
+    emailVerificationCreate(data: any): Promise<{
+        id: string;
+        email: string;
+        code: string;
+        createdAt: Date;
+    }>;
+    findVerificationCreate(email: any): Promise<{
+        id: string;
+        email: string;
+        code: string;
+        createdAt: Date;
+    }>;
+    deletVficationCreate(email: any): Promise<{
+        id: string;
+        email: string;
+        code: string;
+        createdAt: Date;
     }>;
 }

@@ -60,17 +60,17 @@ export declare class ClientesService {
         updated_at: Date;
     }>;
     getAllClientes(clienteId: any): Promise<({
+        historico_cliente: {
+            operador: string;
+            created_at: Date;
+            valor: string;
+        }[];
         sexo: {
             id: number;
             descricao: string;
             created_at: Date;
             updated_at: Date;
         };
-        historico_cliente: {
-            created_at: Date;
-            valor: string;
-            operador: string;
-        }[];
     } & {
         id: number;
         nome: string;

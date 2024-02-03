@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link
+      href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'
+      rel='stylesheet'
+    />
+  </head>
+  <body>
+    <div
+      style='color: #484848;
+            font-family: "Roboto", sans-serif;
+            background-color: rgb(240, 244, 247);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            text-align: justify;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            min-width: 70%;'
+    >
+      <div
+        style='height: auto;
+            width: 700px;
+            border-radius: 20px;
+            background: #fff;
+            padding: 30px 30px 30px 30px;
+            overflow: hidden;
+            margin: 20px auto;'
+      >
+        <div
+          style='display: flex;
+        justify-content: center;
+        margin-bottom: 20px;'
+        >
+          <img
+            style='width: 110px; height: 75px;'
+            src='https://recordar.art.br/backend/main-logo.png'
+          />
+        </div>
+        <div
+          style='border-bottom: 1px solid #ccc;
+        margin-bottom: 20px;
+        padding-bottom: 10px;'
+        ></div>
+        <h2>Detalhes da Sua Compra - Atualização sobre o Seu Pedido</h2>
+        <p>Prezado(a) <strong>{{name}}</strong></p>
+        <P>Agradecemos pela sua compra em nossa plataforma Recordar. É um prazer saber que você escolheu os nossos produtos e serviços para atender às suas necessidades.<p>
+        <p>Segue abaixo os detalhes da sua compra:</p>
+        <p style="font-size: small;"><strong>Nome do Cliente:</strong> {{name}}</p>
+        <p style="font-size: small;"><strong>Número do Pedido:</strong> {{number}}</p>
+        <p style="font-size: small;"><strong>Valor do Pedido:</strong> {{total}}</p>
+        <p style="font-size: small;"><strong>Status do Pagamento:</strong>   {{paymentStatus}}</p>
+        <p style="font-size: small;"><strong>Método de pagamento:</strong> {{paymentMethod}}</p>
+        {{#each items}}
+            <p style="font-size: small;">{{description}} - {{totalFormatted}}</p>
+        {{/each}}
+        <p style="font-size: small;">Estamos aqui para garantir que sua experiência seja excepcional. Caso tenha alguma dúvida ou precise de assistência adicional, não hesite em nos contatar. Sua satisfação é a nossa prioridade.
+        Mais uma vez, agradecemos por escolher a Recordar. Esperamos que essa compra seja a primeira de muitas e que possamos continuar a atender suas expectativas de forma exemplar.
+        </p>
+        <p>Atenciosamente,</p>
+        <p>Equipe Recordar</p>
+      </div>
+    </div>
+  </body>
+</html>

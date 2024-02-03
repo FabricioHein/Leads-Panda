@@ -1,5 +1,6 @@
 import { PrismaService } from 'src/base/relacional/PrismaService';
 import { Injectable } from '@nestjs/common';
+import { Email } from 'whatsapp-api-js/messages';
 
 @Injectable()
 export class ConfigClienteRepository {
@@ -11,6 +12,20 @@ export class ConfigClienteRepository {
     return await this.prisma.configuracaoCliente.findFirst({
       where: {
         id: id,
+      },
+    });
+  }
+  async getByCnpjEmailCliente(cnpj_cpf, email) {
+    return await this.prisma.configuracaoCliente.findFirst({
+      where: {
+       AND: [
+        {
+          cnpj_cpf: cnpj_cpf
+        },
+        {
+          email: email
+        }
+       ]
       },
     });
   }

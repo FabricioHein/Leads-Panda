@@ -8,9 +8,9 @@ const auth_1 = require("firebase/auth");
 class Firebase {
     static async signInWithEmailAndPassword(email, password) {
         const auth = (0, auth_1.getAuth)();
-        const login = await (0, auth_1.signInWithEmailAndPassword)(auth, email, password);
-        if (login) {
-            return login;
+        const signInWithEmailAndPassw = await (0, auth_1.signInWithEmailAndPassword)(auth, email, password);
+        if (signInWithEmailAndPassw) {
+            return signInWithEmailAndPassw;
         }
         return null;
     }
@@ -54,7 +54,7 @@ class Firebase {
         });
         return true;
     }
-    static async usuariaExiste(email, password) {
+    static async usuarioExiste(email, password) {
         const auth = (0, auth_1.getAuth)();
     }
 }

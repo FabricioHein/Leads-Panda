@@ -26,6 +26,20 @@ let ConfigClienteRepository = class ConfigClienteRepository {
             },
         });
     }
+    async getByCnpjEmailCliente(cnpj_cpf, email) {
+        return await this.prisma.configuracaoCliente.findFirst({
+            where: {
+                AND: [
+                    {
+                        cnpj_cpf: cnpj_cpf
+                    },
+                    {
+                        email: email
+                    }
+                ]
+            },
+        });
+    }
     async getByCnpjCliente(cnpj_cpf) {
         return await this.prisma.configuracaoCliente.findFirst({
             where: {

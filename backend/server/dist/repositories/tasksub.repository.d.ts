@@ -8,6 +8,7 @@ export declare class TaskSubRepository {
             contato_nome: string;
             contato_numero: string;
             title: string;
+            cpf: string;
             description: string;
             processoId: number;
             valor_Inicial: import("@prisma/client/runtime/library").Decimal;

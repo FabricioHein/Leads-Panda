@@ -23,7 +23,7 @@ class UsuarioService extends Api {
 
         const novoCliente = await this.post()
       
-        return novoCliente;
+        return novoCliente.data;
     }
     async recupearSenhaEmail(email) {
         this.url = `/authenticator/novasenha/${email}`;

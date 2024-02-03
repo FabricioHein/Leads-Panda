@@ -18,10 +18,10 @@ export class Firebase {
   //realizar o login
   static async signInWithEmailAndPassword(email, password) {
     const auth = getAuth();
-    const login = await signInWithEmailAndPassword(auth, email, password);
+    const  signInWithEmailAndPassw= await signInWithEmailAndPassword(auth, email, password);
 
-    if (login) {
-      return login;
+    if ( signInWithEmailAndPassw) {
+      return  signInWithEmailAndPassw;
     }
     return null;
   }
@@ -88,7 +88,7 @@ export class Firebase {
     });
     return true;
   }
-  static async usuariaExiste(email, password) {
+  static async usuarioExiste(email, password) {
     const auth = getAuth();
   }
 }

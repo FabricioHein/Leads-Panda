@@ -3,7 +3,6 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import * as functions from 'firebase-functions';
 import * as express from 'express';
-import { EmailService } from './service/email.service';
 // import { IoAdapter } from '@nestjs/platform-socket.io';
 
 const server = express();

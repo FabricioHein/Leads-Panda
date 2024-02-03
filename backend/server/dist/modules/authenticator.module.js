@@ -19,12 +19,14 @@ const configCliente_repository_1 = require("../repositories/configCliente.reposi
 const sub_modulos_repository_1 = require("../repositories/sub-modulos.repository");
 const modulos_repository_1 = require("../repositories/modulos.repository");
 const PrismaService_1 = require("../base/relacional/PrismaService");
+const sendgrid_service_1 = require("../mail/sendgrid/sendgrid.service");
 let AuthenticatorModule = class AuthenticatorModule {
 };
 AuthenticatorModule = __decorate([
     (0, common_1.Module)({
         controllers: [authenticator_controller_1.AuthenticatorController],
         providers: [
+            sendgrid_service_1.SendgridService,
             authenticator_service_1.AuthenticatorService,
             usuarios_service_1.UsuariosService,
             usuario_repository_1.UsuarioRepository,

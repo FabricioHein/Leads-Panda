@@ -18,7 +18,6 @@ const processo_module_1 = require("./modules/processo.module");
 const task_module_1 = require("./modules/task.module");
 const contatos_module_1 = require("./modules/contatos.module");
 const clientes_module_1 = require("./modules/clientes.module");
-const email_module_1 = require("./modules/email.module");
 const projeto_module_1 = require("./modules/projeto.module");
 const firebase_module_1 = require("./modules/firebase.module");
 const firebase_service_1 = require("./service/firebase.service");
@@ -37,7 +36,6 @@ AppModule = __decorate([
             task_module_1.TaskModule,
             contatos_module_1.ContatosModule,
             clientes_module_1.ClientesModule,
-            email_module_1.EmailModule,
             projeto_module_1.ProjetoModule,
             firebase_module_1.FirebaseModule,
             chat_module_1.ChatModule,

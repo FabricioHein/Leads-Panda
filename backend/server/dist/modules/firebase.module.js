@@ -18,12 +18,14 @@ const firebase_service_1 = require("../service/firebase.service");
 const configCliente_repository_1 = require("../repositories/configCliente.repository");
 const modulos_repository_1 = require("../repositories/modulos.repository");
 const sub_modulos_repository_1 = require("../repositories/sub-modulos.repository");
+const sendgrid_service_1 = require("../mail/sendgrid/sendgrid.service");
 let FirebaseModule = class FirebaseModule {
 };
 FirebaseModule = __decorate([
     (0, common_1.Module)({
         controllers: [usuarios_controller_1.UsuariosController],
         providers: [
+            sendgrid_service_1.SendgridService,
             firebase_service_1.FirebaseService,
             usuarios_service_1.UsuariosService,
             usuario_repository_1.UsuarioRepository,

@@ -9,6 +9,7 @@ class TaskModel {
             (this.previsao_fechamento = new Date(data.previsao_fechamento) ? new Date(data.previsao_fechamento) : null),
             (this.contato_numero = data.contato_numero ? data.contato_numero : ''),
             (this.contato_nome = data.contato_nome ? data.contato_nome : ''),
+            (this.cpf = data.cpf ? data.cpf : ''),
             (this.processoId = Number(data.projetoId)),
             (this.motivosId = Number(data.motivosId) ? Number(data.motivosId) : null),
             (this.produtoId = Number(data.produtoId) ? Number(data.produtoId) : null),

@@ -7,6 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model EmailVerification {
+  id        String    @id @default(uuid())
+  email     String    @unique() @db.VarChar(255)
+  code      String    @unique() @db.VarChar(255)
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("email_verifications")
+}
+model ResetPassword {
+  id        String    @id @default(uuid())
+  email     String    @unique() @db.VarChar(255)
+  token     String    @unique() @db.VarChar(255)
+  expireIn  DateTime? @map("expire_in")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("reset_passwords")
+}
+
 model chat_info {
   chat_info_id           Int                  @id @default(autoincrement())
   uuid                   String?              @db.Text()
@@ -685,6 +703,7 @@ model Contacts {
 
 model Users {
   id                    Int                     @id @default(autoincrement())
+  nome                  String?                 @db.VarChar(255)
   sobrenome             String?                 @db.VarChar(200)
   empresa               String?                 @db.VarChar(150)
   cpf                   String?                 @db.VarChar(150)
@@ -694,12 +713,13 @@ model Users {
   themeDark             Boolean?
   operador              String?                 @db.VarChar(150)
   sexoId                Int?
-  clienteId             Int?
-  nome                  String?                 @db.VarChar(255)
+  clienteId             Int?  
   email                 String?                 @unique @db.VarChar(255)
   profile               String?                 @default("admin") @db.VarChar(255)
   created_at            DateTime?               @default(now())
   updated_at            DateTime?               @updatedAt
+  last_login            DateTime?   
+  verifiedAt            DateTime?                   
   timesId               Int?
   cep                   String?                 @db.VarChar(25)
   logradouro            String?                 @db.VarChar(150)

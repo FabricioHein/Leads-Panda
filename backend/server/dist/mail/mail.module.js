@@ -6,18 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmailModule = void 0;
+exports.MailModule = void 0;
 const common_1 = require("@nestjs/common");
-const email_service_1 = require("../service/email.service");
-const email_controller_1 = require("../controllers/email.controller");
-const PrismaService_1 = require("../base/relacional/PrismaService");
-let EmailModule = class EmailModule {
+const mail_services_abstract_1 = require(".././abstracts/mail-services.abstract");
+const sendgrid_service_1 = require("./sendgrid/sendgrid.service");
+let MailModule = class MailModule {
 };
-EmailModule = __decorate([
+MailModule = __decorate([
     (0, common_1.Module)({
-        controllers: [email_controller_1.EmailController],
-        providers: [email_service_1.EmailService, PrismaService_1.PrismaService],
+        providers: [
+            {
+                provide: mail_services_abstract_1.IMailService,
+                useClass: sendgrid_service_1.SendgridService,
+            },
+        ],
+        exports: [mail_services_abstract_1.IMailService],
     })
-], EmailModule);
-exports.EmailModule = EmailModule;
-//# sourceMappingURL=email.module.js.map
+], MailModule);
+exports.MailModule = MailModule;
+//# sourceMappingURL=mail.module.js.map

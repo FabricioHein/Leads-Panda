@@ -6,5 +6,5 @@ export declare class Firebase {
     static updatePassword(user: any, newPassword: any): void;
     static updateEmail(): void;
     static emailVerificacao(email: any, password: any): Promise<boolean>;
-    static usuariaExiste(email: any, password: any): Promise<void>;
+    static usuarioExiste(email: any, password: any): Promise<void>;
 }

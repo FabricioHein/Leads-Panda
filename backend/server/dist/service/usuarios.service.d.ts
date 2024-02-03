@@ -5,7 +5,9 @@ import { FirebaseService } from './firebase.service';
 import { ConfigClienteRepository } from 'src/repositories/configCliente.repository';
 import { SubModulosRepository } from 'src/repositories/sub-modulos.repository';
 import { ModulosRepository } from 'src/repositories/modulos.repository';
+import { SendgridService } from 'src/mail/sendgrid/sendgrid.service';
 export declare class UsuariosService {
+    private mailService;
     private usuarioRepositorio;
     private modulosPermissaoRepository;
     private subModulosPermissaoRepository;
@@ -13,11 +15,31 @@ export declare class UsuariosService {
     private configClienteRepository;
     private subModulosRepository;
     private modulosRepository;
-    constructor(usuarioRepositorio: UsuarioRepository, modulosPermissaoRepository: ModulosPermissaoRepository, subModulosPermissaoRepository: SubModulosPermissaoRepository, firebaseService: FirebaseService, configClienteRepository: ConfigClienteRepository, subModulosRepository: SubModulosRepository, modulosRepository: ModulosRepository);
+    constructor(mailService: SendgridService, usuarioRepositorio: UsuarioRepository, modulosPermissaoRepository: ModulosPermissaoRepository, subModulosPermissaoRepository: SubModulosPermissaoRepository, firebaseService: FirebaseService, configClienteRepository: ConfigClienteRepository, subModulosRepository: SubModulosRepository, modulosRepository: ModulosRepository);
+    forgotPassword(email: string): Promise<{
+        notFound: boolean;
+        notVerifiedAt?: undefined;
+        success?: undefined;
+    } | {
+        notVerifiedAt: boolean;
+        notFound?: undefined;
+        success?: undefined;
+    } | {
+        success: boolean;
+        notFound?: undefined;
+        notVerifiedAt?: undefined;
+    }>;
+    recoverPassword(password: string, token: string): Promise<boolean>;
+    sendWelcomeEmail(newUser: any): Promise<boolean>;
+    verifyTokenRecoverPassword(token: string): Promise<boolean>;
     novaSenhaUsuarioEmail(email: any): Promise<any>;
-    createUsuarioCliente(data: any): Promise<never>;
+    createUsuarioCliente(data: any): Promise<{
+        msg: string;
+        status: boolean;
+    }>;
     atualizarUsuario(data: any): Promise<{
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -28,11 +50,12 @@ export declare class UsuariosService {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -51,12 +74,12 @@ export declare class UsuariosService {
         permissao_modulos: ({
             modulo: {
                 subModulo: {
+                    id: number;
                     permissao_sub_modulos: {
-                        ver: boolean;
                         editar: boolean;
+                        ver: boolean;
                         deletar: boolean;
                     }[];
-                    id: number;
                 }[];
             } & {
                 id: number;
@@ -78,6 +101,7 @@ export declare class UsuariosService {
         })[];
     } & {
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -88,11 +112,12 @@ export declare class UsuariosService {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;
@@ -107,13 +132,22 @@ export declare class UsuariosService {
         termos: boolean;
         password: string;
     })[]>;
-    createUsuario(data: any): Promise<never>;
+    createUsuario(data: any): Promise<{
+        msg: string;
+        error: boolean;
+        status?: undefined;
+    } | {
+        msg: string;
+        status: boolean;
+        error?: undefined;
+    }>;
     permissaoAdmin(data: any): Promise<{
         msg: string;
         error: boolean;
     }>;
     deleteUsuario(data: any): Promise<{
         id: number;
+        nome: string;
         sobrenome: string;
         empresa: string;
         cpf: string;
@@ -124,11 +158,12 @@ export declare class UsuariosService {
         operador: string;
         sexoId: number;
         clienteId: number;
-        nome: string;
         email: string;
         profile: string;
         created_at: Date;
         updated_at: Date;
+        last_login: Date;
+        verifiedAt: Date;
         timesId: number;
         cep: string;
         logradouro: string;

@@ -20,9 +20,14 @@ const sub_modulos_repository_1 = require("../repositories/sub-modulos.repository
 const modulos_repository_1 = require("../repositories/modulos.repository");
 const msg_response_1 = require("../utils/msg.response");
 const bcrypt_jwt_module_1 = require("bcrypt-jwt-module");
+const crypto_1 = require("crypto");
+const getEmailTemplatePath_1 = require("../helper/getEmailTemplatePath");
+const date_fns_1 = require("date-fns");
+const sendgrid_service_1 = require("../mail/sendgrid/sendgrid.service");
 const jwt = new bcrypt_jwt_module_1.BcryptService();
 let UsuariosService = class UsuariosService {
-    constructor(usuarioRepositorio, modulosPermissaoRepository, subModulosPermissaoRepository, firebaseService, configClienteRepository, subModulosRepository, modulosRepository) {
+    constructor(mailService, usuarioRepositorio, modulosPermissaoRepository, subModulosPermissaoRepository, firebaseService, configClienteRepository, subModulosRepository, modulosRepository) {
+        this.mailService = mailService;
         this.usuarioRepositorio = usuarioRepositorio;
         this.modulosPermissaoRepository = modulosPermissaoRepository;
         this.subModulosPermissaoRepository = subModulosPermissaoRepository;
@@ -30,6 +35,128 @@ let UsuariosService = class UsuariosService {
         this.configClienteRepository = configClienteRepository;
         this.subModulosRepository = subModulosRepository;
         this.modulosRepository = modulosRepository;
+    }
+    async forgotPassword(email) {
+        const hasOldSolicitation = await this.usuarioRepositorio.resetPasswordFindUnique({
+            where: { email },
+        });
+        if (hasOldSolicitation) {
+            await this.usuarioRepositorio.deleteResetPassword({
+                where: { email },
+            });
+        }
+        const user = await this.usuarioRepositorio.findUnique({
+            where: {
+                email,
+            },
+        });
+        if (!user)
+            return { notFound: true };
+        if (!user.verifiedAt)
+            return { notVerifiedAt: true };
+        const token = (0, crypto_1.randomUUID)();
+        const expireIn = new Date();
+        const linkVerification = `${process.env.FRONTEND_URL}/auth/recuperar-senha/${token}`;
+        const subject = 'Recuperação de senha';
+        expireIn.setDate(expireIn.getDate() + 1);
+        const templatePath = (0, getEmailTemplatePath_1.getEmailTemplatePath)('recover-password.hbs');
+        const emailSent = await this.mailService.sendEmail({
+            to: user.email,
+            subject,
+            variables: {
+                name: user.nome,
+                email: user.email,
+                linkVerification,
+            },
+            path: templatePath,
+        });
+        if (emailSent) {
+            await this.usuarioRepositorio.createResetPassword({
+                data: {
+                    email: user.email,
+                    token,
+                    expireIn,
+                },
+            });
+        }
+        return { success: true };
+    }
+    async recoverPassword(password, token) {
+        const recoverPassword = await this.usuarioRepositorio.resetPasswordFindUnique({
+            where: {
+                token,
+            },
+        });
+        const user = await this.usuarioRepositorio.update({
+            where: { email: recoverPassword.email },
+            data: {
+                password: await jwt.hash(password),
+            },
+        });
+        const subject = 'Senha alterada com sucesso.';
+        const templatePath = (0, getEmailTemplatePath_1.getEmailTemplatePath)('recover-password-success.hbs');
+        await this.mailService.sendEmail({
+            to: user.email,
+            subject,
+            variables: {
+                name: user.nome,
+                linkToLoginPage: `${process.env.FRONTEND_URL}/auth/login`,
+            },
+            path: templatePath,
+        });
+        return true;
+    }
+    async sendWelcomeEmail(newUser) {
+        const subject = 'Confirmação de e-mail';
+        const code = (0, crypto_1.randomUUID)();
+        const linkVerification = `${process.env.FRONTEND_URL}/auth/validar-email/${code}`;
+        const templatePath = (0, getEmailTemplatePath_1.getEmailTemplatePath)('confirm-email.hbs');
+        const emailSent = await this.mailService.sendEmaiNodemailer({
+            to: newUser.email,
+            subject,
+            variables: {
+                name: newUser.nome,
+                email: newUser.email,
+                linkVerification,
+            },
+            path: templatePath,
+        });
+        if (emailSent) {
+            const emailVerification = await this.usuarioRepositorio.findVerificationCreate(newUser.email);
+            if (!emailVerification) {
+                await this.usuarioRepositorio.emailVerificationCreate({
+                    data: {
+                        email: newUser.email,
+                        code,
+                    },
+                });
+            }
+            else {
+                await this.usuarioRepositorio.deletVficationCreate(newUser.email);
+                await this.usuarioRepositorio.emailVerificationCreate({
+                    data: {
+                        email: newUser.email,
+                        code,
+                    },
+                });
+            }
+        }
+        return emailSent;
+    }
+    async verifyTokenRecoverPassword(token) {
+        const twoDaysAgo = (0, date_fns_1.subDays)(new Date(), 2);
+        const recoverPassword = await this.usuarioRepositorio.resetPasswordFindUnique({
+            where: {
+                token,
+            },
+        });
+        if (!recoverPassword)
+            return false;
+        const expiredIn = new Date(recoverPassword.expireIn);
+        const isOlderThanTwoDays = (0, date_fns_1.isBefore)(expiredIn, twoDaysAgo);
+        if (isOlderThanTwoDays)
+            return false;
+        return true;
     }
     async novaSenhaUsuarioEmail(email) {
         try {
@@ -49,9 +176,8 @@ let UsuariosService = class UsuariosService {
             if (!cliente.cnpj_cpf) {
                 cliente.cnpj_cpf = dataUsuario.cpf;
             }
-            if (cliente && dataUsuario && cliente.cnpj_cpf) {
-                const hasCliente = await this.configClienteRepository.getByCnpjCliente(cliente.cnpj_cpf);
-                console.log(hasCliente);
+            if (cliente && dataUsuario && cliente.cnpj_cpf && cliente.email) {
+                const hasCliente = await this.configClienteRepository.getByCnpjEmailCliente(cliente.cnpj_cpf, cliente.email);
                 if (!hasCliente) {
                     if (!cliente['nome_empresa']) {
                         cliente['nome_empresa'] = dataUsuario.nome;
@@ -67,14 +193,32 @@ let UsuariosService = class UsuariosService {
                             dataUsuario['clienteId'] = Number(criarCliente.id);
                             const usuarioNovo = await this.createUsuario(dataUsuario);
                             if (usuarioNovo) {
-                                return (0, msg_response_1.SucessAceptable)('Usuário Criado com Sucesso');
+                                const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
+                                if (emailEnviado) {
+                                    return {
+                                        msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
+                                        status: true
+                                    };
+                                }
+                                else {
+                                    return {
+                                        msg: 'Problemas para enviar email de validação',
+                                        status: false
+                                    };
+                                }
                             }
-                            return (0, msg_response_1.ErroNotAceptable)('Erro para Criar Usuário');
+                            return {
+                                msg: 'Erro para Criar Usuário',
+                                status: false
+                            };
                         }
                     }
                 }
                 else {
-                    return (0, msg_response_1.ErroNotAceptable)('Usuário Já Cadastrado!');
+                    return {
+                        msg: 'CPF ou CNPJ já cadastrado.',
+                        status: false
+                    };
                 }
                 throw new common_1.NotAcceptableException();
             }
@@ -84,11 +228,28 @@ let UsuariosService = class UsuariosService {
                     const criarCliente = await this.configClienteRepository.createCliente(cliente);
                     if (criarCliente) {
                         dataUsuario['clienteId'] = Number(criarCliente.id);
-                        return await this.createUsuario(dataUsuario);
+                        await this.createUsuario(dataUsuario);
+                        const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
+                        if (emailEnviado) {
+                            return {
+                                msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
+                                status: true
+                            };
+                        }
+                        else {
+                            return {
+                                msg: 'Problemas para enviar email de validação',
+                                status: false
+                            };
+                        }
                     }
                 }
                 else {
-                    return (0, msg_response_1.ErroNotAceptable)('Usuário Já Existe');
+                    return {
+                        msg: 'Erro para Criar Usuário',
+                        status: false
+                    };
+                    ;
                 }
             }
         }
@@ -99,7 +260,7 @@ let UsuariosService = class UsuariosService {
     async atualizarUsuario(data) {
         try {
             const { id } = data;
-            if (data.password) {
+            if (data.password && data.password != '') {
                 data.password = await jwt.hash(data.password);
             }
             const dataUsuario = data;
@@ -137,24 +298,44 @@ let UsuariosService = class UsuariosService {
                         if (data.modulos && data.sub) {
                             data['id'] = Number(novoUsuario.id);
                             await this.atualizarPermissoesModulos(data);
-                            return (0, msg_response_1.ErroNotAceptable)('Usuário Criado com Sucesso');
+                            return {
+                                msg: 'Criado com Sucesso',
+                                error: false,
+                            };
                         }
                         else {
                             data['id'] = Number(novoUsuario.id);
                             const permissaoAdmin = await this.permissaoAdmin(data);
                             return permissaoAdmin
-                                ? (0, msg_response_1.SucessAceptable)('Usuário Criado com Sucesso')
-                                : (0, msg_response_1.ErroNotAceptable)('Erro para Criar Permissão');
+                                ? {
+                                    msg: 'Usuário Criado com Sucesso',
+                                    status: true
+                                }
+                                : {
+                                    msg: 'Erro para Criar Usuário',
+                                    status: false
+                                };
                         }
                     }
-                    return (0, msg_response_1.ErroNotAceptable)('Erro para Criar Permissão');
+                    return {
+                        msg: 'Erro para Criar Usuário',
+                        status: false
+                    };
                 }
                 else {
-                    return (0, msg_response_1.ErroNotAceptable)('Usuário Já Existe');
+                    return {
+                        msg: 'Erro para Criar Usuário',
+                        status: false
+                    };
+                    ;
                 }
             }
             else {
-                return (0, msg_response_1.ErroNotAceptable)('Usuário Já Existe');
+                return {
+                    msg: 'Erro para Criar Usuário',
+                    status: false
+                };
+                ;
             }
         }
         catch (error) {
@@ -237,7 +418,8 @@ let UsuariosService = class UsuariosService {
 };
 UsuariosService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [usuario_repository_1.UsuarioRepository,
+    __metadata("design:paramtypes", [sendgrid_service_1.SendgridService,
+        usuario_repository_1.UsuarioRepository,
         modulos_permissao_repository_1.ModulosPermissaoRepository,
         sub_modulos_permissao_repository_1.SubModulosPermissaoRepository,
         firebase_service_1.FirebaseService,

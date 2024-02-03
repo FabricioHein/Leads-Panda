@@ -11,12 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmailController = void 0;
 const common_1 = require("@nestjs/common");
-const email_service_1 = require("../service/email.service");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let EmailController = class EmailController {
-    constructor(emailService) {
-        this.emailService = emailService;
-    }
+    constructor() { }
     enviarEmail() {
         try {
             return 'ok';
@@ -35,7 +32,7 @@ __decorate([
 ], EmailController.prototype, "enviarEmail", null);
 EmailController = __decorate([
     (0, common_1.Controller)('email'),
-    __metadata("design:paramtypes", [email_service_1.EmailService])
+    __metadata("design:paramtypes", [])
 ], EmailController);
 exports.EmailController = EmailController;
 //# sourceMappingURL=email.controller.js.map

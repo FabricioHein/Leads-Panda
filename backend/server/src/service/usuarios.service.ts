@@ -12,11 +12,17 @@ import {
   SucessAceptable,
 } from 'src/utils/msg.response';
 import { BcryptService as Jwt } from 'bcrypt-jwt-module';
+import { randomUUID } from 'crypto';
+import { getEmailTemplatePath } from '../helper/getEmailTemplatePath';
+import { isBefore, subDays } from 'date-fns';
+
+import { SendgridService } from 'src/mail/sendgrid/sendgrid.service';
 
 const jwt = new Jwt();
 @Injectable()
 export class UsuariosService {
   constructor(
+    private mailService: SendgridService,
     private usuarioRepositorio: UsuarioRepository,
     private modulosPermissaoRepository: ModulosPermissaoRepository,
     private subModulosPermissaoRepository: SubModulosPermissaoRepository,
@@ -24,11 +30,166 @@ export class UsuariosService {
     private configClienteRepository: ConfigClienteRepository,
     private subModulosRepository: SubModulosRepository,
     private modulosRepository: ModulosRepository,
-  ) {}
+  ) { }
+
+
+  async forgotPassword(email: string) {
+    const hasOldSolicitation = await this.usuarioRepositorio.resetPasswordFindUnique({
+      where: { email },
+    });
+
+    if (hasOldSolicitation) {
+      await this.usuarioRepositorio.deleteResetPassword({
+        where: { email },
+      });
+    }
+
+    const user = await this.usuarioRepositorio.findUnique({
+      where: {
+        email,
+      },
+    });
+
+
+    if (!user) return { notFound: true };
+
+    if (!user.verifiedAt) return { notVerifiedAt: true };
+
+    const token = randomUUID();
+    const expireIn = new Date();
+    const linkVerification = `${process.env.FRONTEND_URL}/auth/recuperar-senha/${token}`;
+
+    const subject = 'Recuperação de senha';
+    expireIn.setDate(expireIn.getDate() + 1);
+
+    const templatePath = getEmailTemplatePath('recover-password.hbs');
+
+    const emailSent = await this.mailService.sendEmail({
+      to: user.email,
+      subject,
+      variables: {
+        name: user.nome,
+        email: user.email,
+        linkVerification,
+      },
+      path: templatePath,
+    });
+
+    if (emailSent) {
+      await this.usuarioRepositorio.createResetPassword({
+        data: {
+          email: user.email,
+          token,
+          expireIn,
+        },
+      });
+    }
+
+    return { success: true };
+  }
+  async recoverPassword(password: string, token: string) {
+    const recoverPassword = await this.usuarioRepositorio.resetPasswordFindUnique({
+      where: {
+        token,
+      },
+    });
+
+    const user = await this.usuarioRepositorio.update({
+      where: { email: recoverPassword.email },
+      data: {
+        password: await jwt.hash(password),
+      },
+    });
+
+    const subject = 'Senha alterada com sucesso.';
+
+    const templatePath = getEmailTemplatePath('recover-password-success.hbs');
+
+    await this.mailService.sendEmail({
+      to: user.email,
+      subject,
+      variables: {
+        name: user.nome,
+        linkToLoginPage: `${process.env.FRONTEND_URL}/auth/login`,
+      },
+      path: templatePath,
+    });
+
+    return true;
+  }
+
+  async sendWelcomeEmail(newUser) {
+    const subject = 'Confirmação de e-mail';
+    const code = randomUUID();
+    const linkVerification = `${process.env.FRONTEND_URL}/auth/validar-email/${code}`;
+
+    const templatePath = getEmailTemplatePath('confirm-email.hbs');
+
+    const emailSent = await this.mailService.sendEmaiNodemailer({
+      to: newUser.email,
+      subject,
+      variables: {
+        name: newUser.nome,
+        email: newUser.email,
+        linkVerification,
+      },
+      path: templatePath,
+    });
+
+    if (emailSent) {
+
+      const emailVerification =  await this.usuarioRepositorio.findVerificationCreate(newUser.email);
+
+      if(!emailVerification){
+        await this.usuarioRepositorio.emailVerificationCreate({
+          data: {
+            email: newUser.email,
+            code,
+          },
+        });
+
+      }else{
+
+        await this.usuarioRepositorio.deletVficationCreate(newUser.email  );
+
+        await this.usuarioRepositorio.emailVerificationCreate({
+          data: {
+            email: newUser.email,
+            code,
+          },
+        });
+
+      }
+     
+    }
+    return emailSent;
+  }
+
+  async verifyTokenRecoverPassword(token: string) {
+    const twoDaysAgo = subDays(new Date(), 2);
+
+    const recoverPassword = await this.usuarioRepositorio.resetPasswordFindUnique({
+      where: {
+        token,
+      },
+    });
+
+    if (!recoverPassword) return false;
+
+    const expiredIn = new Date(recoverPassword.expireIn);
+    const isOlderThanTwoDays = isBefore(expiredIn, twoDaysAgo);
+
+    if (isOlderThanTwoDays) return false;
+
+    return true;
+  }
+
+  //firebase
   async novaSenhaUsuarioEmail(email) {
     try {
       const usuario = await this.usuarioRepositorio.getByEmailUser(email);
       if (usuario) {
+
         return await this.firebaseService.sendPasswordResetEmail(email);
       }
     } catch (error) {
@@ -40,15 +201,15 @@ export class UsuariosService {
       const cliente = data.cliente;
       const dataUsuario = data.usuario;
 
-      if(!cliente.cnpj_cpf){
+      if (!cliente.cnpj_cpf) {
         cliente.cnpj_cpf = dataUsuario.cpf;
       }
 
-      if (cliente && dataUsuario &&  cliente.cnpj_cpf) {
-        const hasCliente = await this.configClienteRepository.getByCnpjCliente(
+      if (cliente && dataUsuario && cliente.cnpj_cpf&& cliente.email) {
+        const hasCliente = await this.configClienteRepository.getByCnpjEmailCliente(
           cliente.cnpj_cpf,
+          cliente.email
         );
-        console.log(hasCliente)
 
         if (!hasCliente) {
           if (!cliente['nome_empresa']) {
@@ -70,13 +231,35 @@ export class UsuariosService {
 
               const usuarioNovo = await this.createUsuario(dataUsuario);
               if (usuarioNovo) {
-                return SucessAceptable('Usuário Criado com Sucesso');
+
+                const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
+
+                if(emailEnviado){
+                 return {
+                   msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
+                   status: true
+                 };
+    
+                }else{
+                return {
+                  msg: 'Problemas para enviar email de validação',
+                  status: false
+                };
+               }
+               
               }
-              return ErroNotAceptable('Erro para Criar Usuário');
+              return  {
+                msg: 'Erro para Criar Usuário',
+                status: false
+              };
             }
           }
         } else {
-          return ErroNotAceptable('Usuário Já Cadastrado!');
+          return  {
+            msg: 'CPF ou CNPJ já cadastrado.',
+            status: false
+          };
+
         }
         throw new NotAcceptableException();
       } else if (dataUsuario) {
@@ -92,12 +275,32 @@ export class UsuariosService {
             // dataUsuario['isAdmin'] = true;
             // dataUsuario['primeiro_acesso'] = true;
             // dataUsuario['gerente_conta'] = true;
-
             dataUsuario['clienteId'] = Number(criarCliente.id);
-            return await this.createUsuario(dataUsuario);
+             await this.createUsuario(dataUsuario);
+
+            const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
+
+            if(emailEnviado){
+             return {
+               msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
+               status: true
+             };
+
+            }else{
+             return {
+               msg: 'Problemas para enviar email de validação',
+               status: false
+             };
+            }
+
+            
+
           }
         } else {
-          return ErroNotAceptable('Usuário Já Existe');
+          return  {
+                msg: 'Erro para Criar Usuário',
+                status: false
+              };;
         }
       }
     } catch (error) {
@@ -108,7 +311,7 @@ export class UsuariosService {
     try {
       const { id } = data;
 
-      if (data.password) {
+      if (data.password && data.password != '') {
         data.password = await jwt.hash(data.password);
       }
       const dataUsuario = data;
@@ -155,22 +358,40 @@ export class UsuariosService {
               data['id'] = Number(novoUsuario.id);
               await this.atualizarPermissoesModulos(data);
 
-              return ErroNotAceptable('Usuário Criado com Sucesso');
+              return {
+                msg: 'Criado com Sucesso',
+                error: false,
+              };
             } else {
               data['id'] = Number(novoUsuario.id);
               const permissaoAdmin = await this.permissaoAdmin(data);
 
               return permissaoAdmin
-                ? SucessAceptable('Usuário Criado com Sucesso')
-                : ErroNotAceptable('Erro para Criar Permissão');
+                ? {
+                  msg: 'Usuário Criado com Sucesso',
+                  status: true
+                }
+                :  {
+                msg: 'Erro para Criar Usuário',
+                status: false
+              };
             }
           }
-          return ErroNotAceptable('Erro para Criar Permissão');
+          return  {
+                msg: 'Erro para Criar Usuário',
+                status: false
+              };
         } else {
-          return ErroNotAceptable('Usuário Já Existe');
+          return  {
+                msg: 'Erro para Criar Usuário',
+                status: false
+              };;
         }
       } else {
-        return ErroNotAceptable('Usuário Já Existe');
+        return  {
+                msg: 'Erro para Criar Usuário',
+                status: false
+              };;
       }
     } catch (error) {
       return ErroBadRequest(error);

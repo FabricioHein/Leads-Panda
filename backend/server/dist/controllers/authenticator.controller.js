@@ -37,6 +37,14 @@ let AuthenticatorController = class AuthenticatorController {
             return error;
         }
     }
+    async validaTokenSenha(code) {
+        try {
+            return await this.usuariosService.novaSenhaUsuarioEmail(code);
+        }
+        catch (error) {
+            return error;
+        }
+    }
 };
 __decorate([
     (0, common_1.Post)('criar-usuario-cliente'),
@@ -52,6 +60,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthenticatorController.prototype, "novaSenhaUsuarioEmail", null);
+__decorate([
+    (0, common_1.Get)('valida-code/:code'),
+    __param(0, (0, common_1.Param)('code')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthenticatorController.prototype, "validaTokenSenha", null);
 AuthenticatorController = __decorate([
     (0, common_1.Controller)('api/authenticator'),
     __metadata("design:paramtypes", [authenticator_service_1.AuthenticatorService,

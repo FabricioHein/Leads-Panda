@@ -7,6 +7,7 @@ export declare class TaskRepository {
         contato_nome: string;
         contato_numero: string;
         title: string;
+        cpf: string;
         description: string;
         processoId: number;
         valor_Inicial: import("@prisma/client/runtime/library").Decimal;
@@ -34,6 +35,7 @@ export declare class TaskRepository {
         contato_nome: string;
         contato_numero: string;
         title: string;
+        cpf: string;
         description: string;
         processoId: number;
         valor_Inicial: import("@prisma/client/runtime/library").Decimal;
@@ -126,6 +128,7 @@ export declare class TaskRepository {
         };
         Users: {
             id: number;
+            nome: string;
             sobrenome: string;
             empresa: string;
             cpf: string;
@@ -136,11 +139,12 @@ export declare class TaskRepository {
             operador: string;
             sexoId: number;
             clienteId: number;
-            nome: string;
             email: string;
             profile: string;
             created_at: Date;
             updated_at: Date;
+            last_login: Date;
+            verifiedAt: Date;
             timesId: number;
             cep: string;
             logradouro: string;
@@ -178,6 +182,7 @@ export declare class TaskRepository {
         contato_nome: string;
         contato_numero: string;
         title: string;
+        cpf: string;
         description: string;
         processoId: number;
         valor_Inicial: import("@prisma/client/runtime/library").Decimal;
@@ -205,6 +210,7 @@ export declare class TaskRepository {
         contato_nome: string;
         contato_numero: string;
         title: string;
+        cpf: string;
         description: string;
         processoId: number;
         valor_Inicial: import("@prisma/client/runtime/library").Decimal;
@@ -232,6 +238,7 @@ export declare class TaskRepository {
         contato_nome: string;
         contato_numero: string;
         title: string;
+        cpf: string;
         description: string;
         processoId: number;
         valor_Inicial: import("@prisma/client/runtime/library").Decimal;
@@ -259,6 +266,7 @@ export declare class TaskRepository {
         contato_nome: string;
         contato_numero: string;
         title: string;
+        cpf: string;
         description: string;
         processoId: number;
         valor_Inicial: import("@prisma/client/runtime/library").Decimal;

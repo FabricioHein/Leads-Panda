@@ -1,10 +1,12 @@
 <template>
     <div class="form auth-boxed">
-        <div class="form-container outer">
+        <div class="form-container outer" v-if="!verificacaoEmail">
             <div class="form-form">
                 <div class="form-form-wrap">
                     <div class="form-container">
                         <div class="form-content">
+                            <img :src="require('@/assets/images/odin-logo.png')" style="width: 50px;" />
+
                             <h1 class="">Registrar</h1>
                             <p class="signup-link register">Já tem uma conta? <router-link to="/login">Acessar</router-link>
                             </p>
@@ -48,10 +50,9 @@
                                                     </path>
                                                 </svg>
                                             </button>
-                                            <button  v-else @click="verSenha" type="button" class="btn btn-primary">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="16" height="16" fill="currentColor" class="bi bi-eye-slash"
-                                                    viewBox="0 0 16 16">
+                                            <button v-else @click="verSenha" type="button" class="btn btn-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                                     <path
                                                         d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
                                                     <path
@@ -60,7 +61,7 @@
                                                         d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
                                                 </svg>
                                             </button>
-                                            
+
                                         </div>
                                     </div>
 
@@ -68,9 +69,10 @@
                                         <label>Repetir Senha</label>
 
                                         <div class="input-group">
-                                            <input id="password-rep" type="password" class="form-control" placeholder="Senha"
-                                                v-model="re_password" />
-                                            <button v-if="ver" @click="verSenhaRepetir" type="button" class="btn btn-primary">
+                                            <input id="password-rep" type="password" class="form-control"
+                                                placeholder="Senha" v-model="re_password" />
+                                            <button v-if="ver" @click="verSenhaRepetir" type="button"
+                                                class="btn btn-primary">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                                     <path
@@ -81,10 +83,9 @@
                                                     </path>
                                                 </svg>
                                             </button>
-                                            <button  v-else @click="verSenhaRepetir" type="button" class="btn btn-primary">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="16" height="16" fill="currentColor" class="bi bi-eye-slash"
-                                                    viewBox="0 0 16 16">
+                                            <button v-else @click="verSenhaRepetir" type="button" class="btn btn-primary">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                                     <path
                                                         d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
                                                     <path
@@ -93,7 +94,7 @@
                                                         d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
                                                 </svg>
                                             </button>
-                                            
+
                                         </div>
                                     </div>
 
@@ -116,6 +117,29 @@
                             <form class="text-start">
 
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-container outer" v-else>
+            <div class="form-form">
+                <div class="form-form-wrap">
+                    <div class="form-container">
+                        <div class="form-content">
+                            <!-- Logo -->
+                            <div style="text-align: center;">
+                                <router-link to="/">
+                                <img :src="require('@/assets/images/odin-logo.png')" style="width: 50px;" />
+                            </router-link>
+                            </div>                         
+                            <!-- Mensagem -->
+                            <div style="text-align: center; margin-top: 20px;">
+                                <h2>Verifique o Seu E-mail</h2>
+                                <p>Obrigado por se cadastrar! Por favor, verifique o seu e-mail para concluir o processo.
+                                </p>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -144,6 +168,7 @@ export default {
     }),
     data() {
         return {
+            verificacaoEmail: false,
             ver: false,
             verRepetir: false,
             telefone: null,
@@ -187,7 +212,7 @@ export default {
 
 
         },
-        
+
         async novoUsuarioValida() {
             if (!this.email) {
                 this.showMessage('Insira um email válido.', 'error');
@@ -241,11 +266,11 @@ export default {
             const novoCliente = new usuarioService(clienteJson);
             const criarNovo = await novoCliente.novoCliente();
 
-            if (criarNovo.status == 202) {
-                this.showMessage('Verifique o seus acessos por email');
-                router.push('/login')
-            }else{
-                this.showMessage(criarNovo.msg, 'error');
+            console.log(criarNovo)
+            this.showMessage(criarNovo.msg, criarNovo.status == 200 || criarNovo.status == true ? 'success' : 'error');
+
+            if (criarNovo.status == 200 || criarNovo.status == true) {
+                this.verificacaoEmail = true;              
             }
 
         },

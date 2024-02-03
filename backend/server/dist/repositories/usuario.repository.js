@@ -95,6 +95,42 @@ let UsuarioRepository = class UsuarioRepository {
             },
         });
     }
+    async findUnique(email) {
+        return await this.prisma.users.findUnique({
+            where: {
+                email: email,
+            },
+        });
+    }
+    async update(data) {
+        return await this.prisma.users.update(data);
+    }
+    async resetPasswordFindUnique(data) {
+        return await this.prisma.resetPassword.findUnique(data);
+    }
+    async createResetPassword(data) {
+        return await this.prisma.resetPassword.create(data);
+    }
+    async deleteResetPassword(data) {
+        return await this.prisma.resetPassword.delete(data);
+    }
+    async emailVerificationCreate(data) {
+        return await this.prisma.emailVerification.create(data);
+    }
+    async findVerificationCreate(email) {
+        return await this.prisma.emailVerification.findUnique({
+            where: {
+                email: email
+            }
+        });
+    }
+    async deletVficationCreate(email) {
+        return await this.prisma.emailVerification.delete({
+            where: {
+                email: email
+            }
+        });
+    }
 };
 UsuarioRepository = __decorate([
     (0, common_1.Injectable)(),

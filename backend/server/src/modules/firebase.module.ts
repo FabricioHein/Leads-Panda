@@ -9,9 +9,11 @@ import { FirebaseService } from 'src/service/firebase.service';
 import { ConfigClienteRepository } from 'src/repositories/configCliente.repository';
 import { ModulosRepository } from 'src/repositories/modulos.repository';
 import { SubModulosRepository } from 'src/repositories/sub-modulos.repository';
+import { SendgridService } from 'src/mail/sendgrid/sendgrid.service';
 @Module({
   controllers: [UsuariosController],
   providers: [
+    SendgridService,
     FirebaseService,
     UsuariosService,
     UsuarioRepository,

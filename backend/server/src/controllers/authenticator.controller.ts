@@ -26,4 +26,13 @@ export class AuthenticatorController {
       return error;
     }
   }
+
+  @Get('valida-code/:code')
+  async validaTokenSenha(@Param('code') code) {
+    try {
+      return await this.usuariosService.novaSenhaUsuarioEmail(code);
+    } catch (error) {
+      return error;
+    }
+  }
 }

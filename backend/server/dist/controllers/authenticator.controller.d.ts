@@ -6,4 +6,5 @@ export declare class AuthenticatorController {
     constructor(authenticatorService: AuthenticatorService, usuariosService: UsuariosService);
     criarNovoCliente(req: any): Promise<any>;
     novaSenhaUsuarioEmail(email: any): Promise<any>;
+    validaTokenSenha(code: any): Promise<any>;
 }

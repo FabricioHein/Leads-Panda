@@ -16,18 +16,14 @@ export declare class UsuariosService {
     private subModulosRepository;
     private modulosRepository;
     constructor(mailService: SendgridService, usuarioRepositorio: UsuarioRepository, modulosPermissaoRepository: ModulosPermissaoRepository, subModulosPermissaoRepository: SubModulosPermissaoRepository, firebaseService: FirebaseService, configClienteRepository: ConfigClienteRepository, subModulosRepository: SubModulosRepository, modulosRepository: ModulosRepository);
-    forgotPassword(email: string): Promise<{
-        notFound: boolean;
-        notVerifiedAt?: undefined;
-        success?: undefined;
+    forgotPassword(email: any): Promise<{
+        msg: string;
+        status: boolean;
+        linkToLoginPage?: undefined;
     } | {
-        notVerifiedAt: boolean;
-        notFound?: undefined;
-        success?: undefined;
-    } | {
-        success: boolean;
-        notFound?: undefined;
-        notVerifiedAt?: undefined;
+        msg: string;
+        linkToLoginPage: string;
+        status: boolean;
     }>;
     recoverPassword(password: string, token: string): Promise<boolean>;
     sendWelcomeEmail(newUser: any): Promise<boolean>;

@@ -10,9 +10,9 @@ export class UsuarioRepository {
     const user = await this.prisma.users.findFirst({
       where: {
         OR: [
-          {
-            nome: username,
-          },
+          // {
+          //   nome: username,
+          // },
           {
             email: username,
           },
@@ -89,7 +89,7 @@ export class UsuarioRepository {
     });
   }
   async findUnique(email) {
-    return await this.prisma.users.findUnique({
+    return await this.prisma.users.findFirst({
       where: {
         email: email,
       },
@@ -100,7 +100,7 @@ export class UsuarioRepository {
   }
 
   async resetPasswordFindUnique(data) {
-    return await this.prisma.resetPassword.findUnique(data);
+    return await this.prisma.resetPassword.findFirst(data);
   }
   async createResetPassword(data) {
     return await this.prisma.resetPassword.create(data);

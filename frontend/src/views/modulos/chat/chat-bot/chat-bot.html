@@ -9,10 +9,10 @@
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                         type="button" role="tab" aria-controls="home" aria-selected="true">Chat</button>
                 </li>
-                <!-- <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="fluxo-tab" data-bs-toggle="tab" data-bs-target="#fluxo" type="button"
-                        role="tab" aria-controls="fluxo" aria-selected="true">Fluxo Bot</button>
-                </li> -->
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="cores-tab" data-bs-toggle="tab" data-bs-target="#cores" type="button"
+                        role="tab" aria-controls="cores" aria-selected="true">Cores</button>
+                </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="config-tab" data-bs-toggle="tab" data-bs-target="#config" type="button"
                         role="tab" aria-controls="config" aria-selected="true">Configurações</button>
@@ -23,7 +23,7 @@
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row p-2">
                         <div class="col">
-
+                            
                             <div class="painel-modelo" id="painel">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -39,8 +39,10 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Mensagem de Inicial</label>
-                                                            <textarea id="style" style="height: 204px;"
-                                                                v-model="formData.msg_inicial" placeholder="Bem-vindo"
+                                                            <textarea id="style" 
+                                                            style="height: 204px;"
+                                                            v-model="formData.msg_inicial"
+                                                                placeholder="Bem-vindo"
                                                                 class="form-control text-chat"></textarea>
                                                         </div>
                                                         <label class="form-label">Modelo IA</label>
@@ -61,7 +63,7 @@
 
                             </div>
                         </div>
-                        <div class="col" v-if="formData.chat_info_id">
+                        <div class="col" v-if="formData.chat_info_id" >
                             <div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <div class="p-2">
@@ -74,13 +76,8 @@
                                             'Ver'
                                             }}</button>
                                     </div>
-                                    <div class="p-2" v-if="formData.chat_info_id">
-                                        <button type="button" class="btn btn-primary mb-2 me-2" data-bs-toggle="modal"
-                                            data-bs-target="#codigo-web">Gerar Código Web</button>
-                                    </div>
-
-                                </div>
-
+                                </div>   
+    
                             </div>
                             <div class="chat-modelo" id="container-chat" style="height: 80%;"></div>
                         </div>
@@ -97,33 +94,99 @@
                                             'Ver'
                                             }}</button>
                                     </div>
-                                </div>
-
+                                </div>   
+    
                             </div>
                         </div>
-                        <!-- Modal -->
-                        <div class="modal fade" id="codigo-web" tabindex="-1" role="dialog"
-                            aria-labelledby="codigo-webLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="codigo-webLabel">Web</h5>
-                                        <button type="button" data-dismiss="modal" data-bs-dismiss="modal"
-                                            aria-label="Close" class="btn-close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="modal-text">
-                                            <ul>
-                                              
-                                            </ul>
-                                         
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn" data-dismiss="modal"
-                                            data-bs-dismiss="modal"><i class="flaticon-cancel-12"></i> Sair</button>
+                        
+                        
+                    </div>
+                </div>
+                <div class="tab-pane" id="cores" role="tabpanel" aria-labelledby="cores-tab">
+                    <div class="row p-2">
+                        <div class="col">
+                            <div class="painel-modelo" id="painel">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col p-2">
+                                            <div class="painel-modelo" id="painel">
+                                                <div class="accordion">
+                                                
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="headingOne">
+                                                            <button class="accordion-button" type="button"
+                                                                data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                                                aria-expanded="true" aria-controls="collapseOne">
+                                                                Configurar Cores do Chat Web
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapseOne" class="accordion-collapse collapse show"
+                                                            aria-labelledby="headingOne"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+                                                                <div class="mt-container">
+                                                                    <div class="p-4 grid">
+                                                                        <div class="upload mt-4 pe-md-4">
+                                                                            <div class="avatar">
+                                                                                <input ref="fl_profile" type="file"
+                                                                                    class="d-none" accept="image/*"
+                                                                                    @change="change_file" />
+                                                                                <img :src="formData.bot_foto ? formData.bot_foto : require('@/assets/images/user-no-foto.png')"
+                                                                                    alt="profile" class="avatar"
+                                                                                    @click="$refs.fl_profile.click()" />
+                                                                            </div>
+                                                                            <p class="mt-2">Selecione uma Foto</p>
+
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="p-4 grid">
+                                                                        <label>Cor Conversa - Usuário</label>
+                                                                        <input class="color-input" type="color"
+                                                                            v-model="formData.cor_conversa_user"
+                                                                            @change="applyStyles" />
+                                                                        <label>Cor Conversa - Atendente</label>
+                                                                        <input class="color-input" type="color"
+                                                                            v-model="formData.cor_conversa_atend"
+                                                                            @change="applyStyles" />
+                                                                    </div>
+
+                                                                    <div class="p-4 grid">
+                                                                        <label>Botão Enviar</label>
+                                                                        <input class="color-input" type="color"
+                                                                            v-model="formData.cor_botao_enviar"
+                                                                            @change="applyStyles" />
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                               
+
+                                                </div>
+
+                                            </div>
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <div class="p-2">
+                                                    <button class="btn btn-success" @click="createChat">{{
+                                                        formData.chat_info_id ? 'Atualizar' : 'Publicar'
+                                                        }}</button>
+                                                </div>
+                                                <div class="p-2" v-if="formData.chat_info_id">
+                                                    <button class="btn btn-success" @click="ver">{{
+                                                        'Ver'
+                                                        }}</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
@@ -175,9 +238,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                  
-
-
                                                 </div>
 
                                             </div>
@@ -205,9 +265,7 @@
 
                     </div>
                 </div>
-                <!-- <div class="tab-pane fade show active" id="fluxo" role="tabpanel" aria-labelledby="fluxo-tab">
-                    <fluxos></fluxos>
-                </div> -->
+
             </div>
 
 

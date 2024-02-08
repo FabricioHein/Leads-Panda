@@ -25,10 +25,7 @@
           <label>Email</label>
         <InputVue type="text" v-model:value="params.email" />
 
-        <template v-if="!params.id">
-          <label>Senha</label>
-        <InputVue type="password" v-model:value="params.password" />
-        </template>
+       
        
 
        

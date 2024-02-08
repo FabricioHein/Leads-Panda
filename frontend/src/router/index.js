@@ -33,13 +33,7 @@ if (usuario) {
             name: 'cadastro',
             component: () => import(/* webpackChunkName: "auth-login" */ '../views/auth/register_boxed'),
             meta: { layout: 'registro' },
-        },
-        {
-            path: '/auth/nova-senha',
-            name: 'esqueceu-senha',
-            component: () => import(/* webpackChunkName: "auth-login" */ '../views/auth/pass_recovery_boxed.vue'),
-            meta: { layout: 'registro' },
-        },
+        }, 
 
         {
             path: '/login',
@@ -241,6 +235,12 @@ if (usuario) {
     ];
 }else {
     routes = [
+        {
+            path: '/auth/nova-senha',
+            name: 'esqueceu-senha',
+            component: () => import(/* webpackChunkName: "auth-login" */ '../views/auth/pass_recovery_boxed.vue'),
+            meta: { layout: 'registro' },
+        },
         {
             path: '/chatCliente/:clienteId/:chaveId/:user/:chatId',
             name: 'chat-cliente',

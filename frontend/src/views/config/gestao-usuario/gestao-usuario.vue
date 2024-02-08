@@ -95,11 +95,7 @@
                                                     href="#user-permissao" role="tab" aria-controls="justify-profile"
                                                     aria-selected="true">Permissões</a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="justify-senha-tab" data-bs-toggle="tab"
-                                                    href="#user-senha" role="tab" aria-controls="justify-senha"
-                                                    aria-selected="false">Senha</a>
-                                            </li>
+                                           
                                         </ul>
                                         <div class="tab-content" id="justifyTabContent">
                                        
@@ -144,37 +140,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="user-senha" role="tabpanel"
-                                                aria-labelledby="justify-profile-tab">
-                                                <div class="add-contact-box">
-                                                    <div v-if="!params.id">
-                                                        <div class="container">
-                                                            <div class="row">
-                                                                <div class="row">
-                                                                    <div class="col p-4">
-                                                                        <input v-model="params.senha"
-                                                                            class="form-control p-2" />
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            <button type="button" class="btn btn-warning"
-                                                                @click="GerarSenha">Gerar
-                                                                Senha
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div v-else>
-                                                        <button type="button" class="btn btn-warning" @click="NovaSenha">
-                                                            Enviar email para Nova Senha
-                                                        </button>
-                                                    </div>
-
-
-
-                                                </div>
-
-                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>

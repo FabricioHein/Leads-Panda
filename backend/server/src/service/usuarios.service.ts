@@ -33,10 +33,12 @@ export class UsuariosService {
   ) { }
 
 
-  async forgotPassword(email: string) {
+  async forgotPassword(email) {
+
     const hasOldSolicitation = await this.usuarioRepositorio.resetPasswordFindUnique({
       where: { email },
     });
+
 
     if (hasOldSolicitation) {
       await this.usuarioRepositorio.deleteResetPassword({
@@ -44,16 +46,21 @@ export class UsuariosService {
       });
     }
 
-    const user = await this.usuarioRepositorio.findUnique({
-      where: {
-        email,
-      },
-    });
+    const user = await this.usuarioRepositorio.findOne(email);
 
+    if (!user) return {
+      msg: 'Usuário Não Encontrado !!',
+      status: false
+    };
 
-    if (!user) return { notFound: true };
+    if (!user.verifiedAt) {
+      await this.sendWelcomeEmail(user);
 
-    if (!user.verifiedAt) return { notVerifiedAt: true };
+      return {
+        msg: 'Usuário Não Verificado, verifique seu Email! ',
+        status: false
+      };
+    }
 
     const token = randomUUID();
     const expireIn = new Date();
@@ -64,7 +71,7 @@ export class UsuariosService {
 
     const templatePath = getEmailTemplatePath('recover-password.hbs');
 
-    const emailSent = await this.mailService.sendEmail({
+    const emailSent = await this.mailService.sendEmaiNodemailer({
       to: user.email,
       subject,
       variables: {
@@ -85,7 +92,11 @@ export class UsuariosService {
       });
     }
 
-    return { success: true };
+    return {
+      msg: 'Link para Alteração Enviado ao Email!',
+      linkToLoginPage: `/login`,
+      status: true
+    };
   }
   async recoverPassword(password: string, token: string) {
     const recoverPassword = await this.usuarioRepositorio.resetPasswordFindUnique({
@@ -138,9 +149,9 @@ export class UsuariosService {
 
     if (emailSent) {
 
-      const emailVerification =  await this.usuarioRepositorio.findVerificationCreate(newUser.email);
+      const emailVerification = await this.usuarioRepositorio.findVerificationCreate(newUser.email);
 
-      if(!emailVerification){
+      if (!emailVerification) {
         await this.usuarioRepositorio.emailVerificationCreate({
           data: {
             email: newUser.email,
@@ -148,9 +159,9 @@ export class UsuariosService {
           },
         });
 
-      }else{
+      } else {
 
-        await this.usuarioRepositorio.deletVficationCreate(newUser.email  );
+        await this.usuarioRepositorio.deletVficationCreate(newUser.email);
 
         await this.usuarioRepositorio.emailVerificationCreate({
           data: {
@@ -160,7 +171,7 @@ export class UsuariosService {
         });
 
       }
-     
+
     }
     return emailSent;
   }
@@ -205,7 +216,7 @@ export class UsuariosService {
         cliente.cnpj_cpf = dataUsuario.cpf;
       }
 
-      if (cliente && dataUsuario && cliente.cnpj_cpf&& cliente.email) {
+      if (cliente && dataUsuario && cliente.cnpj_cpf && cliente.email) {
         const hasCliente = await this.configClienteRepository.getByCnpjEmailCliente(
           cliente.cnpj_cpf,
           cliente.email
@@ -223,6 +234,24 @@ export class UsuariosService {
             const usuario = await this.usuarioRepositorio.getByEmailUser(
               dataUsuario.email,
             );
+            if (usuario) {
+
+              if (!usuario.verifiedAt) {
+                await this.sendWelcomeEmail(usuario);
+
+                return {
+                  msg: 'Usuário Não Verificado, verifique seu Email! ',
+                  status: false
+                };
+              } else {
+                return {
+                  msg: 'CPF ou CNPJ já cadastrado.',
+                  status: false
+                };
+
+              }
+
+            }
             if (!usuario) {
               dataUsuario['isAdmin'] = true;
               dataUsuario['primeiro_acesso'] = true;
@@ -234,28 +263,28 @@ export class UsuariosService {
 
                 const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
 
-                if(emailEnviado){
-                 return {
-                   msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
-                   status: true
-                 };
-    
-                }else{
-                return {
-                  msg: 'Problemas para enviar email de validação',
-                  status: false
-                };
-               }
-               
+                if (emailEnviado) {
+                  return {
+                    msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
+                    status: true
+                  };
+
+                } else {
+                  return {
+                    msg: 'Problemas para enviar email de validação',
+                    status: false
+                  };
+                }
+
               }
-              return  {
+              return {
                 msg: 'Erro para Criar Usuário',
                 status: false
               };
             }
           }
         } else {
-          return  {
+          return {
             msg: 'CPF ou CNPJ já cadastrado.',
             status: false
           };
@@ -267,6 +296,25 @@ export class UsuariosService {
           dataUsuario.email,
         );
 
+        if (usuario) {
+
+          const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
+
+          if (emailEnviado) {
+            return {
+              msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
+              status: true
+            };
+
+          } else {
+            return {
+              msg: 'Problemas para enviar email de validação',
+              status: false
+            };
+          }
+
+        }
+
         if (!usuario) {
           const criarCliente = await this.configClienteRepository.createCliente(
             cliente,
@@ -276,31 +324,31 @@ export class UsuariosService {
             // dataUsuario['primeiro_acesso'] = true;
             // dataUsuario['gerente_conta'] = true;
             dataUsuario['clienteId'] = Number(criarCliente.id);
-             await this.createUsuario(dataUsuario);
+            await this.createUsuario(dataUsuario);
 
             const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
 
-            if(emailEnviado){
-             return {
-               msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
-               status: true
-             };
+            if (emailEnviado) {
+              return {
+                msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
+                status: true
+              };
 
-            }else{
-             return {
-               msg: 'Problemas para enviar email de validação',
-               status: false
-             };
+            } else {
+              return {
+                msg: 'Problemas para enviar email de validação',
+                status: false
+              };
             }
 
-            
+
 
           }
         } else {
-          return  {
-                msg: 'Erro para Criar Usuário',
-                status: false
-              };;
+          return {
+            msg: 'Erro para Criar Usuário',
+            status: false
+          };;
         }
       }
     } catch (error) {
@@ -371,27 +419,27 @@ export class UsuariosService {
                   msg: 'Usuário Criado com Sucesso',
                   status: true
                 }
-                :  {
-                msg: 'Erro para Criar Usuário',
-                status: false
-              };
+                : {
+                  msg: 'Erro para Criar Usuário',
+                  status: false
+                };
             }
           }
-          return  {
-                msg: 'Erro para Criar Usuário',
-                status: false
-              };
+          return {
+            msg: 'Erro para Criar Usuário',
+            status: false
+          };
         } else {
-          return  {
-                msg: 'Erro para Criar Usuário',
-                status: false
-              };;
+          return {
+            msg: 'Erro para Criar Usuário',
+            status: false
+          };;
         }
       } else {
-        return  {
-                msg: 'Erro para Criar Usuário',
-                status: false
-              };;
+        return {
+          msg: 'Erro para Criar Usuário',
+          status: false
+        };;
       }
     } catch (error) {
       return ErroBadRequest(error);

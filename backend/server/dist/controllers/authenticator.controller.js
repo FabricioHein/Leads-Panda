@@ -31,7 +31,7 @@ let AuthenticatorController = class AuthenticatorController {
     }
     async novaSenhaUsuarioEmail(email) {
         try {
-            return await this.usuariosService.novaSenhaUsuarioEmail(email);
+            return await this.usuariosService.forgotPassword(email);
         }
         catch (error) {
             return error;
@@ -39,7 +39,7 @@ let AuthenticatorController = class AuthenticatorController {
     }
     async validaTokenSenha(code) {
         try {
-            return await this.usuariosService.novaSenhaUsuarioEmail(code);
+            return await this.usuariosService.verifyTokenRecoverPassword(code);
         }
         catch (error) {
             return error;

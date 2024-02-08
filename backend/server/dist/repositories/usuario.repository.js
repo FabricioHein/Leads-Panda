@@ -21,9 +21,6 @@ let UsuarioRepository = class UsuarioRepository {
             where: {
                 OR: [
                     {
-                        nome: username,
-                    },
-                    {
                         email: username,
                     },
                 ],
@@ -96,7 +93,7 @@ let UsuarioRepository = class UsuarioRepository {
         });
     }
     async findUnique(email) {
-        return await this.prisma.users.findUnique({
+        return await this.prisma.users.findFirst({
             where: {
                 email: email,
             },
@@ -106,7 +103,7 @@ let UsuarioRepository = class UsuarioRepository {
         return await this.prisma.users.update(data);
     }
     async resetPasswordFindUnique(data) {
-        return await this.prisma.resetPassword.findUnique(data);
+        return await this.prisma.resetPassword.findFirst(data);
     }
     async createResetPassword(data) {
         return await this.prisma.resetPassword.create(data);

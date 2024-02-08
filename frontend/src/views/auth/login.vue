@@ -164,7 +164,7 @@ export default {
                 this.showMessage(`Bem-vindo, ${acesso.usuario.nome}`);
             } else {
                 localStorage.removeItem('usuario');
-                this.showMessage(acesso.msg, 'error');
+                this.showMessage(acesso.message, 'error');
                 this.isLoading = false;
                 this.btn = false
 

@@ -7,7 +7,6 @@ class UsuarioModel {
             (this.cpf = data.cpf ? String(data.cpf) : ''),           
             (this.telefone = data.telefone ? String(data.telefone) : ''),
             (this.linkFoto = data.linkFoto ? String(data.linkFoto) : ''),
-            (this.password = data.password ? String(data.password) : null),
                         //endereco
             (this.logradouro = data.logradouro ? data.logradouro : ''),
             (this.cep = data.cep ? data.cep : ''),

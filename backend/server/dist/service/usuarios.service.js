@@ -45,22 +45,26 @@ let UsuariosService = class UsuariosService {
                 where: { email },
             });
         }
-        const user = await this.usuarioRepositorio.findUnique({
-            where: {
-                email,
-            },
-        });
+        const user = await this.usuarioRepositorio.findOne(email);
         if (!user)
-            return { notFound: true };
-        if (!user.verifiedAt)
-            return { notVerifiedAt: true };
+            return {
+                msg: 'Usuário Não Encontrado !!',
+                status: false
+            };
+        if (!user.verifiedAt) {
+            await this.sendWelcomeEmail(user);
+            return {
+                msg: 'Usuário Não Verificado, verifique seu Email! ',
+                status: false
+            };
+        }
         const token = (0, crypto_1.randomUUID)();
         const expireIn = new Date();
         const linkVerification = `${process.env.FRONTEND_URL}/auth/recuperar-senha/${token}`;
         const subject = 'Recuperação de senha';
         expireIn.setDate(expireIn.getDate() + 1);
         const templatePath = (0, getEmailTemplatePath_1.getEmailTemplatePath)('recover-password.hbs');
-        const emailSent = await this.mailService.sendEmail({
+        const emailSent = await this.mailService.sendEmaiNodemailer({
             to: user.email,
             subject,
             variables: {
@@ -79,7 +83,11 @@ let UsuariosService = class UsuariosService {
                 },
             });
         }
-        return { success: true };
+        return {
+            msg: 'Link para Alteração Enviado ao Email!',
+            linkToLoginPage: `/login`,
+            status: true
+        };
     }
     async recoverPassword(password, token) {
         const recoverPassword = await this.usuarioRepositorio.resetPasswordFindUnique({
@@ -186,6 +194,21 @@ let UsuariosService = class UsuariosService {
                     const criarCliente = await this.configClienteRepository.createCliente(cliente);
                     if (criarCliente) {
                         const usuario = await this.usuarioRepositorio.getByEmailUser(dataUsuario.email);
+                        if (usuario) {
+                            if (!usuario.verifiedAt) {
+                                await this.sendWelcomeEmail(usuario);
+                                return {
+                                    msg: 'Usuário Não Verificado, verifique seu Email! ',
+                                    status: false
+                                };
+                            }
+                            else {
+                                return {
+                                    msg: 'CPF ou CNPJ já cadastrado.',
+                                    status: false
+                                };
+                            }
+                        }
                         if (!usuario) {
                             dataUsuario['isAdmin'] = true;
                             dataUsuario['primeiro_acesso'] = true;
@@ -224,6 +247,21 @@ let UsuariosService = class UsuariosService {
             }
             else if (dataUsuario) {
                 const usuario = await this.usuarioRepositorio.getByEmailUser(dataUsuario.email);
+                if (usuario) {
+                    const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
+                    if (emailEnviado) {
+                        return {
+                            msg: 'Usuário Criado com Sucesso, Verifique o Seu Email!! ',
+                            status: true
+                        };
+                    }
+                    else {
+                        return {
+                            msg: 'Problemas para enviar email de validação',
+                            status: false
+                        };
+                    }
+                }
                 if (!usuario) {
                     const criarCliente = await this.configClienteRepository.createCliente(cliente);
                     if (criarCliente) {

@@ -26,9 +26,10 @@ class UsuarioService extends Api {
         return novoCliente.data;
     }
     async recupearSenhaEmail(email) {
-        this.url = `/authenticator/novasenha/${email}`;
+        this.url = `/api/authenticator/novasenha/${email}`;
+        let recupearSenhaEmail = await this.get();
 
-        return await this.get();
+        return recupearSenhaEmail.data;
     }
     async atualizarPermissaoModulos() {
         this.url = '/api/usuario/atualizar/permissao';

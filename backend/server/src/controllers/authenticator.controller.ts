@@ -21,7 +21,7 @@ export class AuthenticatorController {
   @Get('novasenha/:email')
   async novaSenhaUsuarioEmail(@Param('email') email) {
     try {
-      return await this.usuariosService.novaSenhaUsuarioEmail(email);
+      return await this.usuariosService.forgotPassword(email);
     } catch (error) {
       return error;
     }
@@ -30,7 +30,7 @@ export class AuthenticatorController {
   @Get('valida-code/:code')
   async validaTokenSenha(@Param('code') code) {
     try {
-      return await this.usuariosService.novaSenhaUsuarioEmail(code);
+      return await this.usuariosService.verifyTokenRecoverPassword(code);
     } catch (error) {
       return error;
     }

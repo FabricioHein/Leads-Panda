@@ -1,7 +1,7 @@
 
-# Título do Projeto
+# Leads Panda 
 
-Uma breve descrição sobre o que esse projeto faz e para quem ele é
+é um CRM com Chat, Funil e etc Open Souce desenvolvido pelo Fabrício Hein
 
 
 ## Deploy

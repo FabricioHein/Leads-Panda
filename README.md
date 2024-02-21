@@ -1,5 +1,5 @@
 
-# Leads Panda 
+# lead2converts
 
 é um CRM com Chat, Funil e etc Open Souce desenvolvido pelo Fabrício Hein
 

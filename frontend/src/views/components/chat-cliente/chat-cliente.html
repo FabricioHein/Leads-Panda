@@ -1,27 +1,27 @@
-<div class="panda_chat_canvas "
+<div class="lead2-converts_chat_canvas "
 style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: block;">
-<div class="panda_chat_head panda_hide_image" >
+<div class="lead2-converts_chat_head lead2-converts_hide_image" >
   <div class="head_flex">
-    <div class="panda_head_back_button "><i class="macke macke-chevron-left"></i></div>
-    <div class="panda_images visible"></div><span class="panda_head_texts">
-      <div class="panda_head_text1" v-if="type != 'atendimento'" >Atendimento Digital</div>
+    <div class="lead2-converts_head_back_button "><i class="macke macke-chevron-left"></i></div>
+    <div class="lead2-converts_images visible"></div><span class="lead2-converts_head_texts">
+      <div class="lead2-converts_head_text1" v-if="type != 'atendimento'" >Atendimento Digital</div>
     </span>
   </div>
-  <div class="panda_help_button_container"></div>
-  <div class="panda_orion_belt_button_container transition"></div>
-  <div class="panda_orion_belt_button_container schedule"></div>
-  <div class="panda_orion_belt_button_container schedule"></div>
+  <div class="lead2-converts_help_button_container"></div>
+  <div class="lead2-converts_orion_belt_button_container transition"></div>
+  <div class="lead2-converts_orion_belt_button_container schedule"></div>
+  <div class="lead2-converts_orion_belt_button_container schedule"></div>
 </div>
-<div  class="panda_chat_component panda_chat_online panda_visible"
+<div  class="lead2-converts_chat_component lead2-converts_chat_online lead2-converts_visible"
   style="--chat-msg-received-text-color: #34474C;">
-  <div class="panda_chat_balloons_list" id="panda_chat_component" @click="closeModal()">
+  <div class="lead2-converts_chat_balloons_list" id="lead2-converts_chat_component" @click="closeModal()">
 
     <div v-for="message in messages" :key="message.id" :class="messageClass(message)">
       <img class="image_message"
         :src="message.avatar"  v-if="message.avatar" />
 
 
-        <span class="panda_chat_balloon_inner innerRight" style="--chat-msg-text-color: #ffffff;">
+        <span class="lead2-converts_chat_balloon_inner innerRight" style="--chat-msg-text-color: #ffffff;">
         {{ message.text }} 
       </span>
 
@@ -53,8 +53,8 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
       }" />
     </div>
 
-    <div class="panda_chat_balloon panda_left_balloon typing_dots"><span
-        class="panda_chat_balloon_inner"><span class="jumping-dots"><span class="dot-1">·</span><span
+    <div class="lead2-converts_chat_balloon lead2-converts_left_balloon typing_dots"><span
+        class="lead2-converts_chat_balloon_inner"><span class="jumping-dots"><span class="dot-1">·</span><span
             class="dot-2">·</span><span class="dot-3">·</span></span></span></div>
   </div>
   <div class="ChatForm-text-input" style="--chat-btnIconHover: #8116d7;">

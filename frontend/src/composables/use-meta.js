@@ -12,5 +12,5 @@ export const usePageTitle = (pageTitle) =>
     );
 
 export const useMeta = (data) => {
-    return useHead({ ...data, title: `Panda Leads  CRM- ${data.title} ` });
+    return useHead({ ...data, title: `Lead2Converts  CRM- ${data.title} ` });
 };

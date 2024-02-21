@@ -757,14 +757,14 @@ export default {
 
     },
     messageClass(message) {
-      return message.username === this.usuario ? 'panda_chat_balloon panda_right_balloon' : 'panda_chat_balloon panda_left_balloon message_with_photo';
+      return message.username === this.usuario ? 'lead2-converts_chat_balloon lead2-converts_right_balloon' : 'lead2-converts_chat_balloon lead2-converts_left_balloon message_with_photo';
     },
     messageClassSec(message) {
-      return message.username === this.usuario ? '' : 'panda_chat_balloon_inner innerRight';
+      return message.username === this.usuario ? '' : 'lead2-converts_chat_balloon_inner innerRight';
     },
     scrollToBottom() {
       this.$nextTick(() => {
-        const chatBox = document.getElementById('panda_chat_component');
+        const chatBox = document.getElementById('lead2-converts_chat_component');
         console.log(chatBox.scrollTop, chatBox.scrollHeight)
 
         if (chatBox) chatBox.scrollTop = 5843 ;

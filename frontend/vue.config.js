@@ -56,7 +56,7 @@ module.exports = {
         proxy: {
             '/api': {
                 target: 'http://localhost:3000',
-                // target: 'https://us-central1-zigma-prod.cloudfunctions.net/backend',
+                // target: 'https://us-central1-lead2converts-prod.cloudfunctions.net/backend',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, ''),
                 secure: true,

@@ -5,9 +5,9 @@ var listaNome = `Lista`
 const Config = {
   configuracaoCliente: [
     {
-      nome_empresa: 'panda',
+      nome_empresa: 'lead2-converts',
       logo_link: '',
-      nome_fantasia: 'panda',
+      nome_fantasia: 'lead2-converts',
     },
   ],
   tipo_projeto: [

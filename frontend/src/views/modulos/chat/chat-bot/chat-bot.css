@@ -10,6 +10,10 @@
 .ql-editor {
     min-height: inherit;
 }
+.option:hover{
+    background-color: #e4e4e4;
+    cursor: pointer;
+}
 
 .ql-editor {
     max-height: 200px;
@@ -70,7 +74,7 @@
     --bot-message-color: #7f810d;
     --background-color: #851e1e;
     /* Cor padrão de fundo do chat */
-    --button-color: #2196f3;
+    --button-color: #131313;
     /* Cor padrão do botão "Enviar" */
     --button-text-color: #ffffff;
     /* Cor padrão do texto do botão "Enviar" */

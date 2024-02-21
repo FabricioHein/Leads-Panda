@@ -1,5 +1,5 @@
 export declare class WhatsappService {
-    getQrCode(clientId: any): {
-        qr: boolean;
-    };
+    sendMessage(): Promise<import("whatsapp-api-js/types").ServerSentMessageResponse | import("whatsapp-api-js/types").ServerErrorResponse | Response | {
+        msg: string;
+    }>;
 }

@@ -6,6 +6,7 @@
             this.key_chatgpt = data.key_chatgpt || null,
             this.organization_chatgpt = data.organization_chatgpt || null,
             this.key_facebook = data.key_facebook || null,
+            this.type = data.type || null,
             this.key_instagram = data.key_instagram || null,
             this.token_whatsapp = data.token_whatsapp || null,
             this.app_secret_whatsapp = data.app_secret_whatsapp || null,

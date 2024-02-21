@@ -23,7 +23,7 @@ let ChatService = class ChatService {
     }
     async getChatInfoByUuid(uuid) {
         try {
-            return this.deleteToken(await this.chatInfoRepository.getByUuidChatInfo(uuid));
+            return await this.chatInfoRepository.getByUuidChatInfo(uuid);
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);
@@ -33,7 +33,7 @@ let ChatService = class ChatService {
         try {
             const { chat_info_id } = data;
             const chatInfo = data;
-            return this.deleteToken(await this.chatInfoRepository.updateChatInfo(Number(chat_info_id), chatInfo));
+            return await this.chatInfoRepository.updateChatInfo(Number(chat_info_id), chatInfo);
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);
@@ -57,7 +57,7 @@ let ChatService = class ChatService {
     }
     async createchatInfo(data) {
         try {
-            const chatInfo = this.deleteToken(await this.chatInfoRepository.createChatInfo(data));
+            const chatInfo = await this.chatInfoRepository.createChatInfo(data);
             return chatInfo;
         }
         catch (error) {
@@ -96,6 +96,14 @@ let ChatService = class ChatService {
     async getByChatUuidMessages(uuid) {
         try {
             return await this.messagesRepository.getByChatUuidMessages(uuid);
+        }
+        catch (error) {
+            return (0, msg_response_1.ErroBadRequest)(error);
+        }
+    }
+    async getByChatUuidMessagesLast(uuid) {
+        try {
+            return await this.messagesRepository.getByChatUuidMessagesLast(uuid);
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);

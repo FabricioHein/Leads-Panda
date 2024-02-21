@@ -156,9 +156,9 @@ let ChatController = class ChatController {
             return error;
         }
     }
-    async getAllChatMsgmOpenLast(uuid) {
+    async getByChatUuidMessagesLast(uuid) {
         try {
-            return await this.chatService.getByChatUuidMessages(uuid);
+            return await this.chatService.getByChatUuidMessagesLast(uuid);
         }
         catch (error) {
             return error;
@@ -297,12 +297,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "atualizarChat", null);
 __decorate([
-    (0, common_1.Get)('getByChatUuidMessages/:uuid'),
+    (0, common_1.Get)('getByChatUuidMessagesLast/:uuid'),
     __param(0, (0, common_1.Param)('uuid')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ChatController.prototype, "getAllChatMsgmOpenLast", null);
+], ChatController.prototype, "getByChatUuidMessagesLast", null);
 ChatController = __decorate([
     (0, common_1.Controller)('api/chat'),
     __metadata("design:paramtypes", [chat_service_1.ChatService])

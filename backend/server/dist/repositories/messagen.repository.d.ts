@@ -74,4 +74,16 @@ export declare class MessagesRepository {
         created_at: Date;
         updated_at: Date;
     }>;
+    deleteMessageChatId(id: any): Promise<{
+        message_id: number;
+        avatar: string;
+        username: string;
+        text: string;
+        type: string;
+        whatsapp_id: string;
+        chat_id: number;
+        to_telefone: string;
+        created_at: Date;
+        updated_at: Date;
+    }>;
 }

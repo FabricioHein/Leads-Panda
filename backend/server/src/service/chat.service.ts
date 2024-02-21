@@ -14,7 +14,7 @@ export class ChatService {
 
   async getChatInfoByUuid(uuid) {
     try {
-      return this.deleteToken(await this.chatInfoRepository.getByUuidChatInfo(uuid));
+      return await this.chatInfoRepository.getByUuidChatInfo(uuid);
     } catch (error) {
       return ErroBadRequest(error);
     }
@@ -25,10 +25,10 @@ export class ChatService {
       const { chat_info_id } = data;
       const chatInfo = data;
 
-      return this.deleteToken(await this.chatInfoRepository.updateChatInfo(
+      return await this.chatInfoRepository.updateChatInfo(
         Number(chat_info_id),
         chatInfo,
-      ));
+      );
     } catch (error) {
       return ErroBadRequest(error);
     }
@@ -50,9 +50,7 @@ export class ChatService {
   }
   async createchatInfo(data: any) {
     try {
-      const chatInfo = this.deleteToken(
-        await this.chatInfoRepository.createChatInfo(data)
-      )
+      const chatInfo =  await this.chatInfoRepository.createChatInfo(data);
       return chatInfo
     } catch (error) {
       return ErroBadRequest(error);
@@ -61,7 +59,8 @@ export class ChatService {
 
   async deletechatInfo(data: any) {
     try {
-      const id = data.chat_info_id;
+
+      const id = data.chat_info_id;  
       return await this.chatInfoRepository.deleteChatInfo(id);
     } catch (error) {
       return ErroBadRequest(error);
@@ -97,6 +96,13 @@ export class ChatService {
   async getByChatUuidMessages(uuid) {
     try {
       return await this.messagesRepository.getByChatUuidMessages(uuid);
+    } catch (error) {
+      return ErroBadRequest(error);
+    }
+  }
+  async getByChatUuidMessagesLast(uuid) {
+    try {
+      return await this.messagesRepository.getByChatUuidMessagesLast(uuid);
     } catch (error) {
       return ErroBadRequest(error);
     }

@@ -1,19 +1,17 @@
 <page :params="acesso">
 
-
-    <div class="panel-body">
-
+    <div class="panel-body" v-if="!createChatParams">
         <div class="parent p-2">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                         type="button" role="tab" aria-controls="home" aria-selected="true">Chat</button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" v-if="formData.type == 'web'">
                     <button class="nav-link" id="cores-tab" data-bs-toggle="tab" data-bs-target="#cores" type="button"
                         role="tab" aria-controls="cores" aria-selected="true">Cores</button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" v-if="formData.type == 'WhatsApp'">
                     <button class="nav-link" id="config-tab" data-bs-toggle="tab" data-bs-target="#config" type="button"
                         role="tab" aria-controls="config" aria-selected="true">Configurações</button>
                 </li>
@@ -23,7 +21,7 @@
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row p-2">
                         <div class="col">
-                            
+
                             <div class="painel-modelo" id="painel">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -34,25 +32,23 @@
                                                     <form @submit.prevent="submitForm">
                                                         <div class="mb-3">
                                                             <label for="nome" class="form-label">Nome Bot</label>
-                                                            <input type="text" id="nome" v-model="formData.bot_nome"
-                                                                class="form-control">
+                                                            <InputVue type="text" v-model:value="formData.bot_nome" />
+
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Mensagem de Inicial</label>
-                                                            <textarea id="style" 
-                                                            style="height: 204px;"
-                                                            v-model="formData.msg_inicial"
-                                                                placeholder="Bem-vindo"
+                                                            <textarea id="style" style="height: 204px;"
+                                                                v-model="formData.msg_inicial" placeholder="Bem-vindo"
                                                                 class="form-control text-chat"></textarea>
                                                         </div>
-                                                        <label class="form-label">Modelo IA</label>
+                                                        <!-- <label class="form-label">Modelo IA</label>
 
                                                         <div class="mb-3">
 
                                                             <quill-editor theme="snow" v-model="formData.modelo_ai"
                                                                 :options="descricao"
                                                                 style="height: 204px;"></quill-editor>
-                                                        </div>
+                                                        </div> -->
                                                     </form>
                                                 </div>
                                             </div>
@@ -63,7 +59,7 @@
 
                             </div>
                         </div>
-                        <div class="col" v-if="formData.chat_info_id" >
+                        <div class="col" v-if="formData.chat_info_id">
                             <div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <div class="p-2">
@@ -71,15 +67,16 @@
                                             formData.chat_info_id ? 'Atualizar' : 'Publicar'
                                             }}</button>
                                     </div>
-                                    <div class="p-2" v-if="formData.chat_info_id">
+                                    <div class="p-2" v-if="formData.chat_info_id && formData.type == 'web'">
                                         <button class="btn btn-success" @click="ver">{{
                                             'Ver'
                                             }}</button>
                                     </div>
-                                </div>   
-    
+                                </div>
+
                             </div>
-                            <div class="chat-modelo" id="container-chat" style="height: 80%;"></div>
+                            <div v-if="formData.type == 'web'" class="chat-modelo" id="container-chat"
+                                style="height: 80%;"></div>
                         </div>
                         <div v-else>
                             <div>
@@ -89,17 +86,17 @@
                                             formData.chat_info_id ? 'Atualizar' : 'Publicar'
                                             }}</button>
                                     </div>
-                                    <div class="p-2" v-if="formData.chat_info_id">
+                                    <div class="p-2" v-if="formData.chat_info_id && formData.type == 'web'">
                                         <button class="btn btn-success" @click="ver">{{
                                             'Ver'
                                             }}</button>
                                     </div>
-                                </div>   
-    
+                                </div>
+
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
                 </div>
                 <div class="tab-pane" id="cores" role="tabpanel" aria-labelledby="cores-tab">
@@ -111,7 +108,7 @@
                                         <div class="col p-2">
                                             <div class="painel-modelo" id="painel">
                                                 <div class="accordion">
-                                                
+
                                                     <div class="accordion-item">
                                                         <h2 class="accordion-header" id="headingOne">
                                                             <button class="accordion-button" type="button"
@@ -163,7 +160,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                               
 
                                                 </div>
 
@@ -174,7 +170,7 @@
                                                         formData.chat_info_id ? 'Atualizar' : 'Publicar'
                                                         }}</button>
                                                 </div>
-                                                <div class="p-2" v-if="formData.chat_info_id">
+                                                <div class="p-2" v-if="formData.chat_info_id && formData.type == 'web'">
                                                     <button class="btn btn-success" @click="ver">{{
                                                         'Ver'
                                                         }}</button>
@@ -213,28 +209,132 @@
                                                             aria-labelledby="headingTwo"
                                                             data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
-                                                                <div class="mb-3">
-                                                                    <label for="nome" class="form-label">Token :</label>
-                                                                    <input type="text" id="nome"
-                                                                        v-model="formData.token_whatsapp"
-                                                                        class="form-control">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="nome" class="form-label">Aplicativo
-                                                                        Secreto :</label>
-                                                                    <input type="text" id="nome"
-                                                                        v-model="formData.app_secret_whatsapp"
-                                                                        class="form-control">
-                                                                </div>
+                                                                
+                                                             
+                                                                <div class="container mt-container ">
+                                                                    <div class="mb-2">
+                                                                        <label class="form-label">ID Telefone :</label>
+                                                                        <div class="input-group">
 
-                                                                <div class="mb-3">
-                                                                    <label for="nome" class="form-label">ID Telefone
-                                                                        :</label>
-                                                                    <input type="text" id="nome"
-                                                                        v-model="formData.wa_id_numero_telefone"
-                                                                        class="form-control">
-                                                                </div>
+                                                                            <input id="wa_id_numero_telefone"
+                                                                                type="password" class="form-control "
+                                                                                placeholder=""
+                                                                                v-model="formData.wa_id_numero_telefone" />
+                                                                            <span class="p-2" v-if="!verToverTokenWa"
+                                                                                @click="verToken('wa_id_numero_telefone')"><svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-eye-slash"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                                                                                    <path
+                                                                                        d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                                                                                    <path
+                                                                                        d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                                                                                </svg></span>
+                                                                            <span v-else
+                                                                                @click="verToken('wa_id_numero_telefone')">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-eye"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                                                                    <path
+                                                                                        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                                                                </svg>
+                                                                            </span>
+                                                                        </div>
 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="container mt-container ">
+                                                                    <div class="mb-2">
+                                                                        <label class="form-label">Aplicativo
+                                                                            Secreto :</label>
+                                                                        <div class="input-group">
+
+                                                                            <input id="app_secret_whatsapp"
+                                                                                type="password" class="form-control "
+                                                                                placeholder=""
+                                                                                v-model="formData.app_secret_whatsapp" />
+                                                                            <span class="p-2"
+                                                                                v-if="!verTokapp_secret_whatsappen"
+                                                                                @click="verToken('app_secret_whatsapp')"><svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-eye-slash"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                                                                                    <path
+                                                                                        d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                                                                                    <path
+                                                                                        d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                                                                                </svg></span>
+                                                                            <span v-else
+                                                                                @click="verToken('app_secret_whatsapp')">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-eye"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                                                                    <path
+                                                                                        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                                                                </svg>
+                                                                            </span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="mb-2">
+                                                                        <label class="form-label">Token
+                                                                            WhatsApp:</label>
+                                                                        <div class="input-group">
+
+                                                                            <input id="token_whatsapp" type="password"
+                                                                                class="form-control " placeholder=""
+                                                                                v-model="formData.token_whatsapp" />
+                                                                            <span class="p-2" v-if="!token_whatsapp"
+                                                                                @click="verToken('token_whatsapp')"><svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-eye-slash"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                                                                                    <path
+                                                                                        d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                                                                                    <path
+                                                                                        d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                                                                                </svg></span>
+                                                                            <span v-else
+                                                                                @click="verToken('token_whatsapp')">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-eye"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                                                                    <path
+                                                                                        d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                                                                </svg>
+                                                                            </span>
+                                                                        </div>
+
+                                                                    </div>
+
+
+
+
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -247,7 +347,7 @@
                                                         formData.chat_info_id ? 'Atualizar' : 'Publicar'
                                                         }}</button>
                                                 </div>
-                                                <div class="p-2" v-if="formData.chat_info_id">
+                                                <div class="p-2" v-if="formData.chat_info_id && formData.type == 'web'">
                                                     <button class="btn btn-success" @click="ver">{{
                                                         'Ver'
                                                         }}</button>
@@ -272,4 +372,306 @@
 
         </div>
     </div>
+
+    <div class="layout-px-spacing" v-if="createChatParams && etapa == 0">
+
+        <div class="layout-top-spacing">
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+                    <div class="section general-info">
+                        <div class="info">
+                            <h6>{{"Selecione uma Opção"}}</h6>
+                        </div>
+
+                        <div class="container">
+
+                            <div class="option-container">
+                                <div class="option" @click="selectOption('web')">
+                                    <h4 class="mb-4 mt-2">Chat Web</h4>
+                                    <img src="https://static.vecteezy.com/system/resources/previews/015/337/689/original/web-icon-web-sign-free-png.png"
+                                        style="width: 10%;" alt="Chat Web Icon">
+                                    <p>
+                                        Conexão Rápida e Direta: Esqueça as longas esperas por e-mails ou chamadas
+                                        telefônicas. Com nosso Chat Web, você pode obter ajuda instantânea com apenas
+                                        alguns cliques.
+                                    </p>
+                                </div>
+                                <div class="option" @click="selectOption('WhatsApp')">
+                                    <h4 class="mb-4 mt-2">Chat WhatsApp</h4>
+                                    <img src="https://cdn-icons-png.flaticon.com/256/174/174879.png" style="width: 10%;"
+                                        alt="WhatsApp Icon">
+                                    <p>
+                                        ,
+                                        Além do Chat Web, estamos integrados com o WhatsApp, proporcionando a
+                                        flexibilidade de escolher o canal que melhor se adapta às suas necessidades.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="layout-px-spacing" v-if="createChatParams && etapa == 1">
+
+        <div class="layout-top-spacing">
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+                    <div class="section general-info">
+
+
+                        <div class="container mt-container">
+                            <div class=" mt-4">
+                                <div class="card-body">
+                                    <form @submit.prevent="submitForm">
+                                        <div class="mb-3">
+                                            <label for="nome" class="form-label">Nome Bot</label>
+                                            <InputVue type="text" v-model:value="formData.bot_nome" />
+
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Mensagem de Inicial</label>
+                                            <textarea id="style" style="height: 204px;" v-model="formData.msg_inicial"
+                                                placeholder="Bem-vindo" class="form-control text-chat"></textarea>
+                                        </div>
+                                        <!-- <label class="form-label">Modelo IA</label>
+
+                                        <div class="mb-3">
+
+                                            <quill-editor theme="snow" v-model="formData.modelo_ai"
+                                                :options="descricao"
+                                                style="height: 204px;"></quill-editor>
+                                        </div> -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button @click="nextEtapa" type="button" class="btn btn-secondary"
+            v-if="createChatParams && etapa == 1">Continuar</button>
+
+    </div>
+    <div class="layout-px-spacing" v-if="createChatParams && etapa == 2 && formData.type == 'WhatsApp' ">
+
+        <div class="layout-top-spacing">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+                    <div class="section general-info">
+                        <div class="info">
+                            <h6>{{"Insira os Token de Acesso"}}</h6>
+                        </div>
+                        <div class="container mt-container ">
+                            <div class="mb-2">
+                                <label class="form-label">ID Telefone :</label>
+                                <div class="input-group">
+                                   
+                                    <input id="wa_id_numero_telefone" type="password"
+                                    class="form-control " placeholder=""
+                                    v-model="formData.wa_id_numero_telefone" />
+                                    <span class="p-2" v-if="!verToverTokenWa" @click="verToken('wa_id_numero_telefone')"><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor"
+                                        class="bi bi-eye-slash" viewBox="0 0 16 16">
+                                        <path
+                                            d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                                        <path
+                                            d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                                        <path
+                                            d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                                    </svg></span>
+                                    <span v-else @click="verToken('wa_id_numero_telefone')">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor"
+                                        class="bi bi-eye" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                        <path
+                                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                    </svg>
+                                </span>
+                                </div>
+
+                            </div>                          
+                        </div>
+                         <div class="container mt-container ">
+                            <div class="mb-2">
+                                <label class="form-label">Aplicativo
+                                    Secreto :</label>
+                                <div class="input-group">
+                                   
+                                    <input id="app_secret_whatsapp" type="password"
+                                    class="form-control " placeholder=""
+                                    v-model="formData.app_secret_whatsapp" />
+                                    <span class="p-2" v-if="!verTokapp_secret_whatsappen" @click="verToken('app_secret_whatsapp')"><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor"
+                                        class="bi bi-eye-slash" viewBox="0 0 16 16">
+                                        <path
+                                            d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                                        <path
+                                            d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                                        <path
+                                            d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                                    </svg></span>
+                                    <span v-else @click="verToken('app_secret_whatsapp')">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor"
+                                        class="bi bi-eye" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                        <path
+                                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                    </svg>
+                                </span>
+                                </div>
+
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Token WhatsApp:</label>
+                                <div class="input-group">
+                                   
+                                    <input id="token_whatsapp" type="password"
+                                    class="form-control " placeholder=""
+                                    v-model="formData.token_whatsapp" />
+                                    <span class="p-2" v-if="!token_whatsapp" @click="verToken('token_whatsapp')"><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor"
+                                        class="bi bi-eye-slash" viewBox="0 0 16 16">
+                                        <path
+                                            d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                                        <path
+                                            d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                                        <path
+                                            d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                                    </svg></span>
+                                    <span v-else  @click="verToken('token_whatsapp')">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor"
+                                        class="bi bi-eye" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                        <path
+                                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                    </svg>
+                                </span>
+                                </div>
+
+                            </div>
+                           
+                           
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <button class="btn btn-secondary" @click="createChat">{{
+            formData.chat_info_id ? 'Atualizar' : 'Publicar'
+            }}</button>
+
+    </div>
+    <div class="layout-px-spacing" v-if="createChatParams && etapa == 2 && formData.type == 'web' ">
+
+        <div class="layout-top-spacing">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+                    <div class="section general-info">
+                        <div class="info">
+                            <h6>{{"Selecione o Botão para o Site"}}</h6>
+                        </div>
+                        <div class="container mt-container ">
+
+                            <select v-model="selectedIcone.svg" class="form-select">
+                                <option v-for="i in icones" :value="i.svg">{{ i.value }}</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <button class="btn btn-secondary" @click="createChat">{{
+            formData.chat_info_id ? 'Atualizar' : 'Publicar'
+            }}</button>
+
+
+    </div>
+    <div class="layout-px-spacing" v-if="createChatParams && etapa == 3 && formData.type == 'web' ">
+
+        <div class="layout-top-spacing">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+
+                    <div class="section general-info">
+                        <div class="info">
+                            <h6>{{"Selecione as Cores do Chat"}}</h6>
+                        </div>
+
+                        <div class="container mt-container ">
+                            <!-- <div class="p-4 grid">
+                                <div class="upload mt-4 pe-md-4">
+                                    <div class="avatar">
+                                        <input ref="fl_profile" type="file" class="d-none" accept="image/*" @change="change_file" />
+                                        <img :src="formData.bot_foto ? formData.bot_foto : require('@/assets/images/user-no-foto.png')" alt="profile" class="avatar" @click="$refs.fl_profile.click()" />
+                                    </div>
+                                    <p class="mt-2">Selecione uma Foto</p>
+                                </div>
+                            </div> -->
+
+                            <div class="p-4 grid">
+                                <label>Cor Conversa - Usuário</label>
+                                <input class="color-input" type="color" v-model="formData.cor_conversa_user"
+                                    @change="applyStyles" />
+                                <label>Cor Conversa - Atendente</label>
+                                <input class="color-input" type="color" v-model="formData.cor_conversa_atend"
+                                    @change="applyStyles" />
+                            </div>
+
+                            <div class="p-4 grid">
+                                <label>Botão Enviar</label>
+                                <input class="color-input" type="color" v-model="formData.cor_botao_enviar"
+                                    @change="applyStyles" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary" @click="createChat">{{
+            formData.chat_info_id ? 'Atualizar' : 'Publicar'
+            }}</button>
+
+
+    </div>
+
+
+
 </page>

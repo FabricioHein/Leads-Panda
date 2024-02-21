@@ -28,6 +28,7 @@ model ResetPassword {
 model chat_info {
   chat_info_id           Int                  @id @default(autoincrement())
   uuid                   String?              @db.Text()
+  type               String?              @db.VarChar(20)
   key_chatgpt            String?              @db.Text()
   organization_chatgpt   String?              @db.Text()
   key_facebook           String?              @db.Text()

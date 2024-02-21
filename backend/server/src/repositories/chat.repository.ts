@@ -4,6 +4,26 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class ChatRepository {
   constructor(private prisma: PrismaService) { }
+
+  async getChatByTelefoneByUuidInfoChat(chat_telefone, uuid_chat_info) {
+    return await this.prisma.chat.findMany({
+      where: {
+        AND: [
+          {
+            telefone: chat_telefone,
+          },
+          {
+            chat_info: {
+              uuid: uuid_chat_info
+            }
+          }
+        ]
+
+      }
+    });
+  }
+
+
   async getChatAll(clienteId) {
     return await this.prisma.chat.findMany({
       where: {
@@ -48,6 +68,7 @@ export class ChatRepository {
         chat_info: {
           select: {
             uuid: true,
+            type: true
           },
         },
       },
@@ -63,6 +84,7 @@ export class ChatRepository {
         chat_info: {
           select: {
             uuid: true,
+            type: true
           },
         },
       },
@@ -104,4 +126,12 @@ export class ChatRepository {
       },
     });
   }
+  async deleteChatChatInfo(id) {
+    return await this.prisma.chat.deleteMany({
+      where: {
+        chat_info_id: id
+      },
+    });
+  }
+
 }

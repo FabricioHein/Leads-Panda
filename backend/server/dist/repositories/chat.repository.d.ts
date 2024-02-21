@@ -2,6 +2,22 @@ import { PrismaService } from 'src/base/relacional/PrismaService';
 export declare class ChatRepository {
     private prisma;
     constructor(prisma: PrismaService);
+    getChatByTelefoneByUuidInfoChat(chat_telefone: any, uuid_chat_info: any): Promise<{
+        chat_id: number;
+        uuid: string;
+        nome: string;
+        telefone: string;
+        email: string;
+        chat_info_id: number;
+        cliente_id: number;
+        created_at: Date;
+        updated_at: Date;
+        chat_open: boolean;
+        data_close: Date;
+        nome_usuario_close: string;
+        chat_app: string;
+        taskId: number;
+    }[]>;
     getChatAll(clienteId: any): Promise<({
         chat_info: {
             uuid: string;
@@ -57,6 +73,7 @@ export declare class ChatRepository {
     getAllChatClose(clienteId: any): Promise<({
         chat_info: {
             uuid: string;
+            type: string;
         };
     } & {
         chat_id: number;
@@ -77,6 +94,7 @@ export declare class ChatRepository {
     getAllChatOpen(clienteId: any): Promise<({
         chat_info: {
             uuid: string;
+            type: string;
         };
     } & {
         chat_id: number;
@@ -174,4 +192,5 @@ export declare class ChatRepository {
         chat_app: string;
         taskId: number;
     }>;
+    deleteChatChatInfo(id: any): Promise<import(".prisma/client").Prisma.BatchPayload>;
 }

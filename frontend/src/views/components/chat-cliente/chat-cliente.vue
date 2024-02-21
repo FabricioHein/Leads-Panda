@@ -523,7 +523,7 @@ export default {
         this.chat = JSON.parse(localStorage.getItem('chat'));
 
         if (this.chat) {
-          var url = `/api/chat/getByChatUuidMessages/${this.chat.uuid}`;
+          var url = `/api/chat/getByChatUuidMessagesLast/${this.chat.uuid}`;
           var newMessage = await axios({
             method: 'get',
             url: url
@@ -531,8 +531,12 @@ export default {
 
           if (newMessage.data) {
 
-            this.messages = []
-            this.messages = newMessage.data;
+            let msg = newMessage.data;
+
+            var hasMsg = this.messages.find( i => msg.message_id == i.message_id);
+            if(!hasMsg){
+              this.messages.push(msg)
+            }
 
 
           }
@@ -627,7 +631,7 @@ export default {
           localStorage.removeItem('chat');
           this.chat = criarChat.data;
 
-          if (this.chat.messages.length && this.chat.messages.length > 0) {
+          if (this.chat.messages && this.chat.messages.length > 0) {
 
 
             this.chat.messages.map((msg) => {

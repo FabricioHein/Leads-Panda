@@ -3,13 +3,13 @@
   @import url(https://webfonts.huggy.cloud/macke/macke.css);
 
   :root {
-      --user-message-color: #2196f3;
+      --user-message-color: #0d0d0e;
       /* Cor padrão das mensagens do usuário */
       --bot-message-color: #ff6f00;
       /* Cor padrão das mensagens do bot */
       --background-color: #e2dcdc;
       /* Cor padrão de fundo do chat */
-      --button-color: #2196f3;
+      --button-color: #121213;
       /* Cor padrão do botão "Enviar" */
       --button-text-color: #ffffff;
       /* Cor padrão do texto do botão "Enviar" */

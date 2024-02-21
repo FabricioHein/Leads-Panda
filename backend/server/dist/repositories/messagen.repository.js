@@ -71,6 +71,13 @@ let MessagesRepository = class MessagesRepository {
             },
         });
     }
+    async deleteMessageChatId(id) {
+        return await this.prisma.messages.delete({
+            where: {
+                message_id: id,
+            },
+        });
+    }
 };
 MessagesRepository = __decorate([
     (0, common_1.Injectable)(),

@@ -41,6 +41,7 @@ export class ChatInfoRepository {
   }
 
   async deleteChatInfo(id) {
+    
     return await this.prisma.chat_info.delete({
       where: {
         chat_info_id: id,

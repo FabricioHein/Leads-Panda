@@ -182,10 +182,10 @@ export class ChatController {
     }
   }
 
-  @Get('getByChatUuidMessages/:uuid')
-  async getAllChatMsgmOpenLast(@Param('uuid') uuid) {
+  @Get('getByChatUuidMessagesLast/:uuid')
+  async getByChatUuidMessagesLast(@Param('uuid') uuid) {
     try {
-      return await this.chatService.getByChatUuidMessages(uuid);
+      return await this.chatService.getByChatUuidMessagesLast(uuid);
     } catch (error) {
       return error;
     }

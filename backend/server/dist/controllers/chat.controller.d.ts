@@ -19,5 +19,5 @@ export declare class ChatController {
     createMessages(req: any): Promise<any>;
     novoChat(req: any): Promise<any>;
     atualizarChat(req: any): Promise<any>;
-    getAllChatMsgmOpenLast(uuid: any): Promise<any>;
+    getByChatUuidMessagesLast(uuid: any): Promise<any>;
 }

@@ -16,7 +16,16 @@ let WatsappController = class WatsappController {
     constructor(watsappService) {
         this.watsappService = watsappService;
     }
+    async whatsapp() {
+        return await this.watsappService.sendMessage();
+    }
 };
+__decorate([
+    (0, common_1.Post)('send-messagens'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], WatsappController.prototype, "whatsapp", null);
 WatsappController = __decorate([
     (0, common_1.Controller)('api/whatsapp'),
     __metadata("design:paramtypes", [whatsapp_service_1.WhatsappService])

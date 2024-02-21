@@ -5,6 +5,7 @@ export declare class ChatInfoRepository {
     getChatInfoAll(clienteId: any): Promise<{
         chat_info_id: number;
         uuid: string;
+        type: string;
         key_chatgpt: string;
         organization_chatgpt: string;
         key_facebook: string;
@@ -41,6 +42,7 @@ export declare class ChatInfoRepository {
     getByIdChatInfo(id: any): Promise<{
         chat_info_id: number;
         uuid: string;
+        type: string;
         key_chatgpt: string;
         organization_chatgpt: string;
         key_facebook: string;
@@ -77,6 +79,7 @@ export declare class ChatInfoRepository {
     getByUuidChatInfo(uuid: any): Promise<{
         chat_info_id: number;
         uuid: string;
+        type: string;
         key_chatgpt: string;
         organization_chatgpt: string;
         key_facebook: string;
@@ -113,6 +116,7 @@ export declare class ChatInfoRepository {
     createChatInfo(data: any): Promise<{
         chat_info_id: number;
         uuid: string;
+        type: string;
         key_chatgpt: string;
         organization_chatgpt: string;
         key_facebook: string;
@@ -149,6 +153,7 @@ export declare class ChatInfoRepository {
     updateChatInfo(id: any, data: any): Promise<{
         chat_info_id: number;
         uuid: string;
+        type: string;
         key_chatgpt: string;
         organization_chatgpt: string;
         key_facebook: string;
@@ -185,6 +190,7 @@ export declare class ChatInfoRepository {
     deleteChatInfo(id: any): Promise<{
         chat_info_id: number;
         uuid: string;
+        type: string;
         key_chatgpt: string;
         organization_chatgpt: string;
         key_facebook: string;

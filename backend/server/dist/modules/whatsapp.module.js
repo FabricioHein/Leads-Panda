@@ -10,12 +10,17 @@ exports.WhatsappModule = void 0;
 const common_1 = require("@nestjs/common");
 const whatsapp_service_1 = require("../service/whatsapp.service");
 const whatsapp_controller_1 = require("../controllers/whatsapp.controller");
+const chat_repository_1 = require("../repositories/chat.repository");
+const PrismaService_1 = require("../base/relacional/PrismaService");
 let WhatsappModule = class WhatsappModule {
 };
 WhatsappModule = __decorate([
     (0, common_1.Module)({
         controllers: [whatsapp_controller_1.WatsappController],
-        providers: [whatsapp_service_1.WhatsappService],
+        providers: [whatsapp_service_1.WhatsappService,
+            chat_repository_1.ChatRepository,
+            PrismaService_1.PrismaService
+        ],
     })
 ], WhatsappModule);
 exports.WhatsappModule = WhatsappModule;

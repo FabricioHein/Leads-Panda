@@ -23,6 +23,7 @@ CREATE TABLE "reset_passwords" (
 CREATE TABLE "chat_info" (
     "chat_info_id" SERIAL NOT NULL,
     "uuid" TEXT,
+    "type" VARCHAR(20),
     "key_chatgpt" TEXT,
     "organization_chatgpt" TEXT,
     "key_facebook" TEXT,

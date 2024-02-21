@@ -1,11 +1,10 @@
 <div class="panda_chat_canvas "
 style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: block;">
-
-<div class="panda_chat_head panda_hide_image">
+<div class="panda_chat_head panda_hide_image" >
   <div class="head_flex">
     <div class="panda_head_back_button "><i class="macke macke-chevron-left"></i></div>
     <div class="panda_images visible"></div><span class="panda_head_texts">
-      <div class="panda_head_text1">Atendimento Digital</div>
+      <div class="panda_head_text1" v-if="type != 'atendimento'" >Atendimento Digital</div>
     </span>
   </div>
   <div class="panda_help_button_container"></div>
@@ -19,9 +18,8 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
 
     <div v-for="message in messages" :key="message.id" :class="messageClass(message)">
       <img class="image_message"
-        :src="message.avatar"  v-if="message.avata" />
-        <img class="image_message"
-        :src="require(`@/assets/images/user-no-foto.png`)"  v-else />
+        :src="message.avatar"  v-if="message.avatar" />
+
 
         <span class="panda_chat_balloon_inner innerRight" style="--chat-msg-text-color: #ffffff;">
         {{ message.text }} 
@@ -68,7 +66,7 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
       <div class="ChatForm-button ChatForm-btnIconHover ChatFormAudio-sendActive"
         style="position: initial; height: auto; padding: 3px;"><i class="macke macke-send"></i></div>
     </div>
-    <div class="MenuOptions" v-if="option">
+    <div class="MenuOptions" v-if="option && type != 'atendimento'">
       <!-- <div class="MenuOptions-list-item" style="--chat-item-color: #8116d7;"><i
                       class="macke macke-finalize macke_item"></i>Finalizar atendimento</div>
               <div class="MenuOptions-list-item" style="--chat-item-color: #8116d7;"><i
@@ -87,11 +85,14 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
                           fill="#E9E9E9" stroke="#e9e9e9"></path>
                   </svg></div> -->
     </div>
-    <div class="ChatForm-button ChatForm-options-button" @click="getOption" style="--chat-DotsIcon-color: #8116d7;"><i
-        class="macke macke-dots"></i></div>
+    <div class="MenuOptions" v-if="option && type == 'atendimento'">
+      
+    </div>
+    <!-- <div class="ChatForm-button ChatForm-options-button" @click="getOption" style="--chat-DotsIcon-color: #8116d7;"><i
+        class="macke macke-dots"></i></div> -->
 
     <div class="textareacontainer">
-      <input class="input-chat" v-if="formData.nomeValida && formData.emailValida && formData.telefoneValida && chat"
+      <input class="input-chat" v-if="formData.nomeValida && formData.emailValida && formData.telefoneValida"
         type="text" v-model="newMessage" placeholder="Digite sua mensagem..." @keyup.enter="sendMessage" />
 
 
@@ -121,7 +122,7 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
       </svg>
     </button>
     <button id="sendButton" class="btn btn-color rounded-circle" @click="sendMessage" v-if="newMessage != ''
-      && formData.nomeValida && formData.emailValida && formData.telefoneValida && chat
+      && formData.nomeValida && formData.emailValida && formData.telefoneValida 
       ">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send"
         viewBox="0 0 16 16">
@@ -129,8 +130,6 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
           d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
       </svg>
     </button>
-
-
 
     <button id="openEmoji" class="btn btn-color rounded-circle" @click="openEmoji()">
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-emoji-smile"

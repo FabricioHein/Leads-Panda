@@ -4,6 +4,20 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class ChatInfoRepository {
   constructor(private prisma: PrismaService) {}
+  async getChatInfoAllType(clienteId, type) {
+    return await this.prisma.chat_info.findMany({
+      where: {
+        AND: [
+          {
+            type: type
+          },
+          {
+            cliente_id: clienteId
+          }
+        ]
+      },
+    });
+  }
   async getChatInfoAll(clienteId) {
     return await this.prisma.chat_info.findMany({
       where: {

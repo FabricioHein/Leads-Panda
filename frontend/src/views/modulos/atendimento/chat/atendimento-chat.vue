@@ -54,8 +54,8 @@
                                                 :class="{ 'text-primary': selected_user && selected_user.chat_id == person.chat_id }">{{
                                                     person.telefone }}</span>
                                                 <div class="f-head">
-                                                    <i class="bi bi-whatsapp" v-if="person.chat_info.type == 'WhatsApp'"></i>
-                                                    <i class="bi bi-globe" v-if="person.chat_info.type == 'web'" ></i>
+                                                    <i class="bi bi-whatsapp" v-if="person.chat_info && person.chat_info.type == 'WhatsApp'"></i>
+                                                    <i class="bi bi-globe" v-if="person.chat_info &&  person.chat_info.type == 'web'" ></i>
                                         </div>
                                         </div>
                                         <!-- <span class="preview">{{ person.uuid }}</span> -->

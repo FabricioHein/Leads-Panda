@@ -16,6 +16,20 @@ let ChatInfoRepository = class ChatInfoRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async getChatInfoAllType(clienteId, type) {
+        return await this.prisma.chat_info.findMany({
+            where: {
+                AND: [
+                    {
+                        type: type
+                    },
+                    {
+                        cliente_id: clienteId
+                    }
+                ]
+            },
+        });
+    }
     async getChatInfoAll(clienteId) {
         return await this.prisma.chat_info.findMany({
             where: {

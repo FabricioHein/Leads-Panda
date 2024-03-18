@@ -23,6 +23,7 @@ export default {
       type: null,
       option: false,
       linkFile: null,
+      emoji: false,
       emojiIndex: emojiIndex,
       usuario: '',
       chatON: false,
@@ -33,8 +34,7 @@ export default {
       chatBuilding: this.setChatBuild(),
       messages: [],
       newMessage: '',
-      load: false,
-      emoji: false,
+      load: false,    
       chat: localStorage.getItem('chat') ? JSON.parse(localStorage.getItem('chat')) : null,
       atendimento: null
     }
@@ -168,7 +168,7 @@ export default {
             if (this.messages.length == 0) {
 
               this.messages.push({
-                id: qtdMsgm,
+                message_id: qtdMsgm,
                 avatar: this.chatBuilding.bot_foto,
                 username: this.chatBuilding.nome || 'Assistente AI',
                 text: this.messages.length == 0 ? this.chatBuilding.msg_inicial : '',
@@ -183,7 +183,7 @@ export default {
             if (this.messages.length == 1) {
 
               this.messages.push({
-                id: qtdMsgm + 1,
+                message_id: qtdMsgm + 1,
                 avatar: this.chatBuilding.bot_foto,
                 username: this.chatBuilding.nome || 'Assistente AI',
                 text: 'Digite o seu Nome',
@@ -316,7 +316,7 @@ export default {
           if (this.messages.length == 0) {
 
             this.messages.push({
-              id: qtdMsgm,
+              message_id: qtdMsgm,
               avatar: this.chatBuilding.bot_foto,
               username: this.chatBuilding.nome || 'Assistente AI',
               text: this.messages.length == 0 ? this.chatBuilding.msg_inicial : '',
@@ -328,7 +328,7 @@ export default {
           if (this.messages.length == 1) {
 
             this.messages.push({
-              id: qtdMsgm + 1,
+              message_id: qtdMsgm + 1,
               avatar: this.chatBuilding.bot_foto,
               username: this.chatBuilding.nome || 'Assistente AI',
               text: 'Digite o seu Nome',
@@ -432,7 +432,7 @@ export default {
         if (textEmail.length == 0) {
 
           this.messages.push({
-            id: this.messages.length + 1,
+            message_id: this.messages.length + 1,
             avatar: this.chatBuilding.bot_foto,
             username: this.chatBuilding.nome || 'Assistente AI',
             text: 'Digite o seu Email',
@@ -449,7 +449,7 @@ export default {
 
         if (textTelefone.length == 0) {
           this.messages.push({
-            id: this.messages.length + 1,
+            message_id: this.messages.length + 1,
             avatar: this.chatBuilding.bot_foto,
             username: this.chatBuilding.nome || 'Assistente AI',
             text: 'Digite o seu Telefone',
@@ -516,34 +516,40 @@ export default {
     },
     async getMessages() {
 
+     setInterval(async ()  => {       
 
-     setInterval(async ()  => {
+        // this.chat = JSON.parse(localStorage.getItem('chat'));
 
+        // if (this.chat) {
+        //   var url = `/api/chat/getByChatUuidMessagesLast/${this.chat.uuid}`;
+        //   var newMessage = await axios({
+        //     method: 'get',
+        //     url: url
+        //   });
 
-        this.chat = JSON.parse(localStorage.getItem('chat'));
+        //   if (newMessage.data) {
 
-        if (this.chat) {
-          var url = `/api/chat/getByChatUuidMessagesLast/${this.chat.uuid}`;
-          var newMessage = await axios({
-            method: 'get',
-            url: url
-          });
+        //     let msg = newMessage.data;
 
-          if (newMessage.data) {
-
-            let msg = newMessage.data;
-
-            var hasMsg = this.messages.find( i => msg.message_id == i.message_id);
-            if(!hasMsg){
-              this.messages.push(msg)
-            }
+        //     for (let index = 0; index < this.messages.length; index++) {
+        //        this.messages[index].message_id;
+        //        if(this.messages[index].message_id){
+        //         console.log(this.messages[index].message_id)
 
 
-          }
+                
+        //        }
 
-        }
+                            
 
-      }, 8000); // Intervalo de 1000 milissegundos (1 segundo)
+              
+        //     }          
+
+        //   }
+
+        // }
+
+      }, 10000); // Intervalo de 1000 milissegundos (1 segundo)
 
 
 
@@ -759,9 +765,7 @@ export default {
     messageClass(message) {
       return message.username === this.usuario ? 'lead2-converts_chat_balloon lead2-converts_right_balloon' : 'lead2-converts_chat_balloon lead2-converts_left_balloon message_with_photo';
     },
-    messageClassSec(message) {
-      return message.username === this.usuario ? '' : 'lead2-converts_chat_balloon_inner innerRight';
-    },
+
     scrollToBottom() {
       this.$nextTick(() => {
         const chatBox = document.getElementById('lead2-converts_chat_component');

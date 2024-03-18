@@ -14,7 +14,7 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
 </div>
 <div  class="lead2-converts_chat_component lead2-converts_chat_online lead2-converts_visible"
   style="--chat-msg-received-text-color: #34474C;">
-  <div class="lead2-converts_chat_balloons_list" id="lead2-converts_chat_component" @click="closeModal()">
+  <div class="lead2-converts_chat_balloons_list" id="lead2-converts_chat_component" >
 
     <div v-for="message in messages" :key="message.id" :class="messageClass(message)">
       <img class="image_message"

@@ -56,7 +56,7 @@ const Config = {
     // },
     {
       id: 4,
-      nome: 'Atendimento',
+      nome: 'Chat',
       url: '/atendimento',
       ativo: true,
       icon: 'bi bi-chat-right-text',

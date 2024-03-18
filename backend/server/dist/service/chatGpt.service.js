@@ -11,18 +11,18 @@ const common_1 = require("@nestjs/common");
 const msg_response_1 = require("../utils/msg.response");
 const openai_1 = require("openai");
 let OpenIaService = class OpenIaService {
-    static async getResposta(data) {
+    static async getResposta(message) {
         try {
             const apiOpenIa = new openai_1.default({
-                apiKey: data.apiKey,
-                organization: data.organization,
+                apiKey: message.apiKey,
+                organization: message.organization,
             });
             const response = await apiOpenIa.chat.completions.create({
                 model: 'gpt-4',
                 messages: [
                     {
                         role: 'user',
-                        content: data.prompt,
+                        content: message.prompt,
                     },
                 ],
                 temperature: 0,
@@ -31,7 +31,7 @@ let OpenIaService = class OpenIaService {
                 frequency_penalty: 0,
                 presence_penalty: 0,
             });
-            return response.choices[0].message;
+            return response.choices[0].message.content;
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);

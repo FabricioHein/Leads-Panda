@@ -70,12 +70,12 @@ export declare class UsuariosService {
         permissao_modulos: ({
             modulo: {
                 subModulo: {
-                    id: number;
                     permissao_sub_modulos: {
-                        editar: boolean;
                         ver: boolean;
+                        editar: boolean;
                         deletar: boolean;
                     }[];
+                    id: number;
                 }[];
             } & {
                 id: number;

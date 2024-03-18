@@ -57,8 +57,13 @@ let ChatService = class ChatService {
     }
     async createchatInfo(data) {
         try {
-            const chatInfo = await this.chatInfoRepository.createChatInfo(data);
-            return chatInfo;
+            const chatInfoHas = await this.chatInfoRepository.getChatInfoAllType(data.cliente_id, data.type);
+            if (!chatInfoHas) {
+                return await this.chatInfoRepository.createChatInfo(data);
+            }
+            return {
+                msg: 'Já Existe Um Chat com Esse Tipo'
+            };
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);

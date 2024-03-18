@@ -1,25 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { ErroBadRequest } from 'src/utils/msg.response';
-import openai from 'openai';
+import OpenAIAPI from 'openai';
 
 
 @Injectable()
 export class OpenIaService {
-  static async getResposta(data) {
+  
+  static async getResposta(message) {
     try {
-
-      const apiOpenIa = new openai({
-        apiKey: data.apiKey,
-        organization: data.organization,
+      const apiOpenIa = new OpenAIAPI({
+        apiKey: message.apiKey,
+        organization: message.organization,
       });
 
-      
       const response = await apiOpenIa.chat.completions.create({
         model: 'gpt-4',
         messages: [
           {
             role: 'user',
-            content: data.prompt,
+            content: message.prompt,
           },
         ],
         temperature: 0,
@@ -28,9 +27,10 @@ export class OpenIaService {
         frequency_penalty: 0,
         presence_penalty: 0,
       });
-      return response.choices[0].message;
+
+      return response.choices[0].message.content;
     } catch (error) {
-      return ErroBadRequest(error)
+      return ErroBadRequest(error);
     }
   }
-}
+  }

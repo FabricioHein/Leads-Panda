@@ -3,6 +3,8 @@
 
 
 <script >
+import CodeHighlighter from '@/components/code.vue'; // Ajuste o caminho conforme necessário
+
 import '@/assets/sass/authentication/auth-boxed.scss';
 import '@/assets/sass/authentication/auth.scss';
 import '@/assets/sass/drag-drop/drag-drop.css';
@@ -31,6 +33,9 @@ export default {
     },
     data() {
         return {
+            codigoJs: `function exemplo() {
+        console.log('Hello, World!');
+              }`,
             etapa: 0,
             createChatParams: false,
             chatON: false,
@@ -64,6 +69,8 @@ export default {
                 }
             ],
             token_whatsapp: false,
+            verTokenKey_chatgpt: false,
+            verorganization_chatgpt:false,
             verToverTokenWa: false,
             verTokapp_secret_whatsappen: false,
             newMessage: '',
@@ -114,6 +121,7 @@ export default {
         ...mapGetters(['usuario', 'cliente', 'token', 'permissao']),
     },
     components: {
+        CodeHighlighter,
         page,
         fluxos,
         quillEditor,
@@ -121,13 +129,19 @@ export default {
     },
     methods: {
         verToken(elem) {
-            if(elem == 'token_whatsapp'){
+            if (elem == 'key_chatgpt') {
+                this.verTokenKey_chatgpt = !this.verTokenKey_chatgpt;
+            }
+            if (elem == 'organization_chatgpt') {
+                this.verorganization_chatgpt = !this.verorganization_chatgpt;
+            }
+            if (elem == 'token_whatsapp') {
                 this.token_whatsapp = !this.token_whatsapp;
             }
-            if(elem == 'app_secret_whatsapp'){
+            if (elem == 'app_secret_whatsapp') {
                 this.verTokapp_secret_whatsappen = !this.verTokapp_secret_whatsappen;
             }
-            if(elem == 'wa_id_numero_telefone'){
+            if (elem == 'wa_id_numero_telefone') {
                 this.verToverTokenWa = !this.verToverTokenWa;
             }
             this.$nextTick(() => {
@@ -299,7 +313,8 @@ export default {
                         this.createChatParams = false;
 
                     } else {
-                        this.showMessage('Erro para Criar!', 'error');
+                        this.showMessage(this.formData.msg, 'error');
+                        router.push('/')
                     }
 
 

@@ -118,6 +118,8 @@ export declare class ChatService {
         anexo_documento: boolean;
         created_at: Date;
         updated_at: Date;
+    } | {
+        msg: string;
     }>;
     deletechatInfo(data: any): Promise<{
         chat_info_id: number;

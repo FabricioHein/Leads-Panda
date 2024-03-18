@@ -2,9 +2,30 @@
   <div class="conteiner">
     <div class="row">
 
-      <div class="col">
-        <div class="painel-modelo" id="painel">
-          <div @mousedown="handlePanelMouseDown" style="position: relative; width: 100%; height: 500px;">
+      <div class="col">Escala: {{ (transform * 10).toFixed() }}
+        <div class="painel-modelo painel-color">
+
+          <div class="btn-group p-4" role="group" aria-label="Basic example">
+            <svg @click="zooOut" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-zoom-in" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0" />
+              <path
+                d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
+              <path fill-rule="evenodd"
+                d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5" />
+            </svg>
+            <svg @click="zooIn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-zoom-out" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0" />
+              <path
+                d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
+              <path fill-rule="evenodd" d="M3 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5" />
+            </svg>
+          </div>
+
+          <div id="flow" @mousedown="handlePanelMouseDown" style="position: relative; width: 100%; height: 500px;">
             <Node v-for="node in nodes" :key="node.id" :node="node" @startDrag="handleStartDrag"
               @dragging="handleDragging">
               <button @click="deletNode(node)" type="button" class="btn rounded-circle btn-danger">
@@ -52,7 +73,7 @@
             <div class="btn-group p-4">
               <button class="btn btn-success" v-if="!editar" @click="criarNode(node)">Criar Opção</button>
               <button class="btn btn-success" v-if="editar" @click="alterar">Alterar</button>
-             
+
             </div>
 
           </div>
@@ -63,16 +84,16 @@
               <select v-model="novoCampo.type" class="form-control">
                 <option v-for="s in selectedType" :value="s.value">
                   {{ s.value }}</option>
-              
+
               </select>
               <label>Pergunta:</label>
               <textarea class="form-control" v-model="novoCampo.ask" />
               <label>Resposta:</label>
               <textarea class="form-control" v-model="novoCampo.text" />
-              
+
             </div>
-            
-            
+
+
 
           </div>
 
@@ -96,6 +117,7 @@ export default {
   },
   data() {
     return {
+      transform: 0.9,
       selectedType: [
         {
           value: 'btn',
@@ -127,6 +149,45 @@ export default {
     };
   },
   methods: {
+    zooOut() {
+      this.$nextTick(() => {
+        var scale = this.transform + 0.1;
+        this.transform = scale;
+        var w = document.getElementById('flow');
+
+        if (scale < 0.9) {
+          w.style.transform = `scale(${scale})`
+        } else {
+          w.style.transform = `scale(0.9)`;
+          this.transform = 0.9;
+        }
+
+
+
+
+      })
+    },
+    zooIn() {
+      this.$nextTick(() => {
+        var scale = this.transform - 0.1;
+        this.transform = scale;
+        var w = document.getElementById('flow');
+
+        if (scale >= 0.1 && scale <= 0.9) {
+          w.style.transform = `scale(${scale})`
+
+        } else {
+          w.style.transform = `scale(0.9)`;
+          this.transform = 0.9;
+        }
+
+
+
+
+
+      })
+      this.$forceUpdate();
+    },
     startConectarNode(node) {
 
       this.connection = node;
@@ -283,6 +344,10 @@ export default {
   100% {
     opacity: 1;
   }
+}
+
+.painel-color {
+  background-color: rgb(234, 234, 234, 1);
 }
 
 .btn-pisca {

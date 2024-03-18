@@ -21,9 +21,6 @@
 
 <script >
 import '@/assets/sass/drag-drop/drag-drop.css';
-
-
-import Acesso from '@/helpers/Acesso'
 import flowchart from '@/views/components/flow-chart/flow-chart.vue';
 
 export default {

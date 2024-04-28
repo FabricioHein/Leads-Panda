@@ -12,6 +12,7 @@
                         <div class="">
                             <i :class="[permissao.icon_modulo]"></i>
                             <span class="p-3">{{ permissao.modulo }}</span>
+                           
                         </div>
                         
                         <div>
@@ -24,13 +25,14 @@
                     </a>
 
                     <ul id="pages" class="collapse submenu list-unstyled" data-bs-parent="#sidebar">
-                        <li v-for="submodulos in permissao.submodulos" :key="submodulos.ordem" >                            
+                        <li v-for="submodulos in permissao.submodulos" :key="submodulos.ordem" >        
 
                           <template v-if="submodulos.ver">
                             <router-link :to="permissao.url_modulo + submodulos.url" @click="toggleMobileMenu">
                             {{
                                   submodulos.nome 
-                            }}</router-link>
+                            }}
+                            </router-link>
                           </template>
                           
                          

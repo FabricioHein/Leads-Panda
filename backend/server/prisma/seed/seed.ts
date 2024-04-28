@@ -1,7 +1,7 @@
 import { PrismaService } from '../../src/base/relacional/PrismaService';
 
 const prisma = new PrismaService();
-var listaNome = `Lista`
+var listaNome = `Editar Integrações`
 const Config = {
   configuracaoCliente: [
     {
@@ -31,21 +31,22 @@ const Config = {
   modulos: [
 
     {
-      id: 5,
-      nome: 'Chat Bot',
-      url: '/leads-ai-chatbot',
-      ativo: true,
-      icon: 'bi bi bi-robot',
-      ordem: 1
-    },
-    {
       id: 1,
       nome: 'CRM',
       url: '/crm',
       ativo: true,
       icon: 'bi bi-bullseye',
+      ordem: 1,
+    },
+    {
+      id: 2,
+      nome: 'Cadastro',
+      url: '/cadastro',
+      ativo: true,
+      icon: 'bi bi-database-fill-add',
       ordem: 2,
     },
+   
     // {
     //   id: 2,
     //   nome: 'MKT',
@@ -55,21 +56,22 @@ const Config = {
     //   ordem: 3,
     // },
     {
-      id: 4,
+      id: 3,
       nome: 'Chat',
       url: '/atendimento',
       ativo: true,
       icon: 'bi bi-chat-right-text',
-      ordem: 4,
+      ordem: 3,
     },
     {
-      id: 3,
-      nome: 'Cadastro',
-      url: '/cadastro',
+      id: 4,
+      nome: 'Configuração',
+      url: '/config',
       ativo: true,
       icon: 'bi bi-database-fill-add',
-      ordem: 5,
-    },
+      ordem: 4,
+    }
+
   
   ],
   submodulos: [
@@ -95,7 +97,7 @@ const Config = {
       url: '/leads',
     },
     {
-      moduloId: 3,
+      moduloId: 2,
       ativo: true,
       icon: '',
       nome: 'Permissões e Acesso',
@@ -117,28 +119,28 @@ const Config = {
     // },
     
     {
-     moduloId: 3,
+     moduloId: 2,
       ativo: true,
       icon: '',
       nome: 'Clientes',
       url: '/clientes',
     },
     {
-      moduloId: 3,
+      moduloId: 2,
       ativo: true,
       icon: '',
       nome: 'Parâmetros',
       url: '/parametros',
     },
     {
-      moduloId: 3,
+      moduloId: 2,
       ativo: true,
       icon: '',
       nome: 'Produtos/Serviços',
       url: '/produtos',
     },
     {
-      moduloId: 3,
+      moduloId: 2,
       ativo: true,
       icon: '',
       nome: 'Usuários',
@@ -146,7 +148,7 @@ const Config = {
     },
     //atendimento
     {
-      moduloId: 4,
+      moduloId: 3,
       ativo: true,
       icon: '',
       nome: 'Atendimentos',
@@ -154,19 +156,28 @@ const Config = {
     },
      //chatbot
     {
-      moduloId: 5,
+      moduloId: 4,
       ativo: true,
       icon: '',
-      nome: 'Criar Chat',
+      nome: 'Add Integração',
       url: '/novo',
     },
     {
-      moduloId: 5,
+      moduloId: 4,
       ativo: true,
       icon: '',
       nome: listaNome,
       url: '/lista',
+    },
+    {
+      moduloId: 4,
+      ativo: true,
+      icon: '',
+      nome: 'Plano e Pagamentos',
+      url: '/pagamentos'
     }
+    
+
   ],
   sexo: [
     {

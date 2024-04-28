@@ -13,6 +13,8 @@ export const createNestServer = async (expressInstance) => {
     new ExpressAdapter(expressInstance),
   );
 
+
+
   // Use o adaptador IoAdapter para WebSocket
   // app.useWebSocketAdapter(new IoAdapter(app));
 

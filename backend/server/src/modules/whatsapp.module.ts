@@ -1,14 +1,17 @@
 import { Module } from '@nestjs/common';
 import { WhatsappService } from '../service/whatsapp.service';
-import { WatsappController } from '../controllers/whatsapp.controller';
+import { WebhookController } from '../controllers/webhook.controller';
+
 import { ChatRepository } from 'src/repositories/chat.repository';
 
 import { PrismaService } from 'src/base/relacional/PrismaService';
 @Module({
-  controllers: [WatsappController],
+  controllers: [
+    WebhookController
+  ],
   providers: [WhatsappService,
     ChatRepository,
-    PrismaService
+  PrismaService
   ],
 })
 export class WhatsappModule {}

@@ -1,5 +1,5 @@
+import WhatsAppAPI from "whatsapp-api-js";
 export declare class WhatsappService {
-    sendMessage(): Promise<import("whatsapp-api-js/types").ServerSentMessageResponse | import("whatsapp-api-js/types").ServerErrorResponse | Response | {
-        msg: string;
-    }>;
+    Whats(data: any): WhatsAppAPI;
+    sendMessageOficial(data: any): Promise<boolean>;
 }

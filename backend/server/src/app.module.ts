@@ -13,7 +13,7 @@ import { ProjetoModule } from './modules/projeto.module';
 import { FirebaseModule } from './modules/firebase.module';
 import { FirebaseService } from './service/firebase.service';
 import { ChatModule } from './modules/chat.module';
-import { ServeStaticModule } from '@nestjs/serve-static'; // New
+import { ServeStaticModule } from '@nestjs/serve-static'; 
 
 
 @Module({

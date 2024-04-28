@@ -1,230 +1,15 @@
-:root {
-    --user-message-color: #080808;
-    /* Cor padrão das mensagens do usuário */
-    --bot-message-color: #ff6f00;
-    /* Cor padrão das mensagens do bot */
-    --background-color: #e2dcdc;
-    /* Cor padrão de fundo do chat */
-    --button-color: #141414;
-    /* Cor padrão do botão "Enviar" */
-    --button-text-color: #ffffff;
-    /* Cor padrão do texto do botão "Enviar" */
-
-    --message-font-size: 14px;
-
-    --background-avatar: #ffff
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: var(--button-color);
-    border-color: var(--button-color)
-}
-
-.btn-primary:hover {
-    color: #fff;
-    background-color: var(--button-color);
-    border-color: var(--button-color);
-}
-
-#chat-container {
-    margin: 0 auto;
-    padding: 20px;
-
-    /* Define a altura do chat-container para ocupar a tela inteira (100% da altura do viewport) */
-    display: flex;
-    flex-direction: column;
-    background-color: var(--background-color);
-    
-    /* Cor de fundo do chat */
-    border-radius: 10px 10px 10px 10px;
-    -webkit-border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 10px 10px 10px 10px;
-}
-
-#chat-box {
-    flex-grow: 1;
-    /* Faz o chat-box expandir e ocupar o espaço disponível */
-    overflow-y: scroll;
-    /* Adiciona a barra de rolagem vertical */
-}
-
-.message {
-    display: flex;
-    margin: 10px 0;
-}
-
-.user-message {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    
-    display: flex;
-    align-items: flex-start;
-}
-
-.bot-message {
-    padding-top: 20px;
-    padding-bottom: 20px;
-
-
-    display: flex;
-    align-items: flex-end;
-}
-
-.avatar {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-}
-
-.avatar img {
-    background: var(--background-avatar);
-    width: 70%;
-    border-radius: 50%;
-}
-
-.avatar .username {
-    font-size: var(--message-font-size);
-    margin-top: 5px;
-}
-
-.message-bubble {
-    border-radius: 15px;
-    padding: 10px 15px;
-    font-size: var(--message-font-size);
-    max-width: 70%;
-}
-
-.user-message .message-bubble {
-    background-color: var(--user-message-color);
-    /* Cor das mensagens do usuário */
-    color: white;
-}
-
-.bot-message .message-bubble {
-    background-color: var(--bot-message-color);
-    /* Cor das mensagens do bot */
-    color: white;
-}
-
-/* Estilize o botão de enviar e o ícone de adicionar */
-#sendButton {
-    background-color: var(--button-color);
-    /* Cor do botão "Enviar" */
-
-}
-
-#sendButton:hover {
-    background-color: var(--button-color);
-    /* Cor do botão "Enviar" quando hover */
-}
-
-#addAttachmentButton {
-    background-color: #28a745;
-    /* Cor do botão de adicionar */
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-#addAttachmentButton:hover {
-    background-color: #1e7e34;
-    /* Cor do botão de adicionar quando hover */
-}
-
-.typing-message {
-    display: flex;
-    justify-content: flex-start;
-    margin: 10px 0;
-}
-
-.typing-bubble {
-    background-color: #d9d9d9;
-    color: #000;
-    border-radius: 15px;
-    padding: 10px 15px;
-    font-size: 14px;
-    max-width: 70%;
-}
-
-/* Estilos para o botão de fechar */
-.close-button {
-    display: none;
-    position: absolute;
-    top: 10px;
-    /* Posição superior personalizada */
-    right: 10px;
-    /* Posição à direita personalizada */
-    bottom: auto;
-    /* Define o valor padrão para a posição inferior */
-    left: auto;
-    /* Define o valor padrão para a posição esquerda */
-    cursor: pointer;
-    font-size: 24px;
-    color: #ff0000;
-    /* Cor vermelha */
-    z-index: 1;
-    /* Garante que o botão de fechar esteja acima do conteúdo carregado */
-}
-
-/* width */
-::-webkit-scrollbar {
-    width: 4px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: rgb(228, 223, 223);
-    border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: rgb(228, 223, 223);
-}
-
-.input-chat {
-    bottom: 0;
-    padding-left: 5px;
-    padding-right: 5px;
-    position: absolute;
-    width: 90%;
-
-}
-
-.name {
-    font-size: xx-small;
-
-}
-
   /* Estilos personalizados com variáveis CSS */
   @import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500);
   @import url(https://webfonts.huggy.cloud/macke/macke.css);
 
   :root {
-      --user-message-color: #2196f3;
+      --user-message-color: #0d0d0e;
       /* Cor padrão das mensagens do usuário */
       --bot-message-color: #ff6f00;
       /* Cor padrão das mensagens do bot */
       --background-color: #e2dcdc;
       /* Cor padrão de fundo do chat */
-      --button-color: #2196f3;
+      --button-color: #121213;
       /* Cor padrão do botão "Enviar" */
       --button-text-color: #ffffff;
       /* Cor padrão do texto do botão "Enviar" */
@@ -1198,7 +983,7 @@
 
   .lead2-converts_chat_canvas {
       display: none;
-      position: fixed;
+      /* position: fixed; */
       width: 100%;
       height: 100%;
       background-color: white;
@@ -1902,7 +1687,7 @@
       position: absolute;
       top: 0;
       bottom: 50px;
-      width: 100%;
+      width: 70%;
       box-sizing: border-box;
       font-size: 14px;
       transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);

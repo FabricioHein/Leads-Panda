@@ -23,7 +23,6 @@ export default {
       type: null,
       option: false,
       linkFile: null,
-      emoji: false,
       emojiIndex: emojiIndex,
       usuario: '',
       chatON: false,
@@ -34,7 +33,8 @@ export default {
       chatBuilding: this.setChatBuild(),
       messages: [],
       newMessage: '',
-      load: false,    
+      load: false,
+      emoji: false,
       chat: localStorage.getItem('chat') ? JSON.parse(localStorage.getItem('chat')) : null,
       atendimento: null
     }
@@ -765,7 +765,9 @@ export default {
     messageClass(message) {
       return message.username === this.usuario ? 'lead2-converts_chat_balloon lead2-converts_right_balloon' : 'lead2-converts_chat_balloon lead2-converts_left_balloon message_with_photo';
     },
-
+    messageClassSec(message) {
+      return message.username === this.usuario ? '' : 'lead2-converts_chat_balloon_inner innerRight';
+    },
     scrollToBottom() {
       this.$nextTick(() => {
         const chatBox = document.getElementById('lead2-converts_chat_component');

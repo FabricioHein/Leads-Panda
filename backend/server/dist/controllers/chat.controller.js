@@ -36,22 +36,6 @@ let ChatController = class ChatController {
             return error;
         }
     }
-    async getChatInfoData(uuid) {
-        try {
-            return await this.chatService.getChatInfoByUuidCliente(uuid);
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    async getChaByUuid(uuid) {
-        try {
-            return await this.chatService.getChaByUuid(uuid);
-        }
-        catch (error) {
-            return error;
-        }
-    }
     async deletechatInfo(req) {
         try {
             return await this.chatService.deletechatInfo(req.body);
@@ -124,6 +108,38 @@ let ChatController = class ChatController {
             return error;
         }
     }
+    async atualizarChat(req) {
+        try {
+            return await this.chatService.atualizarChat(req.body);
+        }
+        catch (error) {
+            return error;
+        }
+    }
+    async newMessages(req) {
+        try {
+            return await this.chatService.createMessages(req.body);
+        }
+        catch (error) {
+            return error;
+        }
+    }
+    async getChatInfoData(uuid) {
+        try {
+            return await this.chatService.getChatInfoByUuidCliente(uuid);
+        }
+        catch (error) {
+            return error;
+        }
+    }
+    async getChaByUuid(uuid) {
+        try {
+            return await this.chatService.getChaByUuid(uuid);
+        }
+        catch (error) {
+            return error;
+        }
+    }
     async getByChatUuidMessages(uuid) {
         try {
             return await this.chatService.updatechatInfo(uuid);
@@ -143,14 +159,6 @@ let ChatController = class ChatController {
     async novoChat(req) {
         try {
             return await this.chatService.novoChat(req.body);
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    async atualizarChat(req) {
-        try {
-            return await this.chatService.atualizarChat(req.body);
         }
         catch (error) {
             return error;
@@ -182,20 +190,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "getChatInfo", null);
 __decorate([
-    (0, common_1.Get)('/get-info-chat/:uuid'),
-    __param(0, (0, common_1.Param)('uuid')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "getChatInfoData", null);
-__decorate([
-    (0, common_1.Get)('/getChat/:uuid'),
-    __param(0, (0, common_1.Param)('uuid')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "getChaByUuid", null);
-__decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('deletechatInfo'),
     __param(0, (0, common_1.Request)()),
@@ -204,7 +198,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "deletechatInfo", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('createchatInfo'),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -268,6 +261,35 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "createChat", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Put)(),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "atualizarChat", null);
+__decorate([
+    (0, common_1.Post)('newMessages'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "newMessages", null);
+__decorate([
+    (0, common_1.Get)('/get-info-chat/:uuid'),
+    __param(0, (0, common_1.Param)('uuid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "getChatInfoData", null);
+__decorate([
+    (0, common_1.Get)('/getChat/:uuid'),
+    __param(0, (0, common_1.Param)('uuid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ChatController.prototype, "getChaByUuid", null);
+__decorate([
     (0, common_1.Get)('updatechatInfo/uuid'),
     __param(0, (0, common_1.Param)('uuid')),
     __metadata("design:type", Function),
@@ -288,14 +310,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "novoChat", null);
-__decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Put)(),
-    __param(0, (0, common_1.Request)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "atualizarChat", null);
 __decorate([
     (0, common_1.Get)('getByChatUuidMessagesLast/:uuid'),
     __param(0, (0, common_1.Param)('uuid')),

@@ -1,0 +1,105 @@
+<div class="lead2-converts_chat_canvas "
+  style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: block; ">
+  <div class="lead2-converts_chat_head lead2-converts_hide_image">
+    <div class="head_flex">
+      <div class="lead2-converts_head_back_button "><i class="macke macke-chevron-left"></i></div>
+      <div class="lead2-converts_images visible"></div><span class="lead2-converts_head_texts">
+      
+
+        <div class="lead2-converts_head_text1" >    
+        {{chatProps.nome}}  {{chatProps.telefone}}
+        </div>
+
+       
+      </span>
+    </div>
+    
+    <div class="lead2-converts_help_button_container"></div>
+    <div class="lead2-converts_orion_belt_button_container transition"></div>
+    <div class="lead2-converts_orion_belt_button_container schedule"></div>
+    <div class="lead2-converts_orion_belt_button_container schedule"></div>
+  </div>
+  <div class="lead2-converts_chat_component lead2-converts_chat_online lead2-converts_visible chat-conversation-box" 
+    style="--chat-msg-received-text-color: #34474C;" >
+    <div class="lead2-converts_chat_balloons_list" id="lead2-converts_chat_component" >
+
+      <div v-for="message in messages" :key="message.id" :class="messageClass(message)">
+        <img class="image_message"
+          :src="message.avatar"  v-if="message.avatar" />
+  
+  
+          <span class="lead2-converts_chat_balloon_inner innerRight" style="--chat-msg-text-color: #ffffff;">
+          {{ message.text }} 
+        </span>
+  
+        <div class="status">
+          {{ message.username }} {{ ' - '}} {{
+            new Date(message.created_at).toLocaleString('pt-BR', { timezone: 'UTC' })
+          }} 
+          <i class="macke macke-done icon-delivery-msg"></i>
+        </div>
+  
+      </div>
+      <div class="row p-3" v-if="emoji">
+        <Picker :data="emojiIndex" set="twitter" @select="showEmoji" :i18n="{
+          search: 'Buscar',
+          notfound: 'Emoji Não Encontrado',
+          categories: {
+            search: 'Resultado da Busca',
+            recent: 'Mais Usados',
+            smileys: 'Sorrisos e Emotions',
+            people: 'Pessoas e Fitnnes',
+            nature: 'Animais e Natureza',
+            foods: 'Comida e Bebidas',
+            activity: 'Atividades',
+            places: 'Viagens & Lugares',
+            objects: 'Objetos',
+            symbols: 'Simbolos',
+            flags: 'Flags',
+          }
+        }" />
+      </div>
+  
+      <div class="lead2-converts_chat_balloon lead2-converts_left_balloon typing_dots"><span
+          class="lead2-converts_chat_balloon_inner"><span class="jumping-dots"><span class="dot-1">·</span><span
+              class="dot-2">·</span><span class="dot-3">·</span></span></span></div>
+    </div>
+    <div class="ChatForm-text-input" style="--chat-btnIconHover: #8116d7;">
+      <div class="ChatFormAudio" style="--chat-btnIconHover: #8116d7;">
+        <div class="ChatForm-button" style="position: initial; height: auto; padding: 3px;"><i
+            class="macke macke-close ChatFormAudio-close-icon"></i></div>
+        <div class="ChatFormAudio-status"><span class="ChatFormAudio-status-bullet"></span> <span
+            class="ChatFormAudio-status-time">0:00</span></div>
+        <div class="ChatForm-button ChatForm-btnIconHover ChatFormAudio-sendActive"
+          style="position: initial; height: auto; padding: 3px;"><i class="macke macke-send"></i></div>
+      </div>
+      <div class="MenuOptions" v-if="option && type != 'atendimento'"> </div>
+
+
+      <div class="textareacontainer">
+        <input class="input-chat" type="text" v-model="newMessage" placeholder="Digite sua mensagem..."
+          @keyup.enter="sendMessage()" />
+
+      </div>
+      <button id="sendButton" class="btn btn-color rounded-circle" @click="sendMessage()" v-if="newMessage != ''">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send"
+          viewBox="0 0 16 16">
+          <path
+            d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+        </svg>
+      </button>
+      <button id="openEmoji" class="btn btn-color rounded-circle" @click="openEmoji()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-emoji-smile"
+          viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+          <path
+            d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
+        </svg>
+      </button>
+
+    </div>
+
+  </div>
+
+
+</div>

@@ -16,12 +16,7 @@ if (usuario) {
             path: '/chatCliente/:clienteId/:chaveId/:user/:tipo',
             name: 'chat-cliente',
             component: () => import(/* webpackChunkName: "index2" */ '../views/components/chat-cliente/chat-cliente.vue'),
-        },
-        {
-            path: '/chatAtendimento/:clienteId/:chaveId/:user/:telefone/:email/:tipo',
-            name: 'chat-atendimento',
-            component: () => import(/* webpackChunkName: "index2" */ '../views/components/chat-cliente/chat-cliente.vue'),
-        },
+        },        
         {
             path: '/',
             name: 'dashboard',
@@ -116,26 +111,20 @@ if (usuario) {
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/cadastro/usuarios/usuarios.vue'),
         },
         {
-            path: '/leads-ai-chatbot/:uuid',
+            path: '/config/:uuid',
             name: 'chat-bot',
             beforeEnter: guardMyroute,
 
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/chat/chat-bot/chat-bot.vue'),
         },
         {
-            path: '/leads-ai-chatbot/lista',
+            path: '/config/lista',
             name: 'chat-lista',
             beforeEnter: guardMyroute,
 
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/chat/lista/lista-chat-bot.vue'),
         },
-        {
-            path: '/atendimento/lista',
-            name: 'crm-atendimento-lista',
-            beforeEnter: guardMyroute,
-
-            component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/atendimento/atendimento/atendimento.vue'),
-        },
+        
         {
             path: '/atendimento/chat-atendimento',
             name: 'crm-atendimento-chat',

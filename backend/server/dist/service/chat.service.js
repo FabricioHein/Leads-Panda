@@ -15,11 +15,13 @@ const chat_repository_1 = require("../repositories/chat.repository");
 const chat_info_repository_1 = require("../repositories/chat-info.repository");
 const messagen_repository_1 = require("../repositories/messagen.repository");
 const msg_response_1 = require("../utils/msg.response");
+const whatsapp_service_1 = require("./whatsapp.service");
 let ChatService = class ChatService {
-    constructor(messagesRepository, chatRepository, chatInfoRepository) {
+    constructor(messagesRepository, chatRepository, chatInfoRepository, whatsappService) {
         this.messagesRepository = messagesRepository;
         this.chatRepository = chatRepository;
         this.chatInfoRepository = chatInfoRepository;
+        this.whatsappService = whatsappService;
     }
     async getChatInfoByUuid(uuid) {
         try {
@@ -58,12 +60,7 @@ let ChatService = class ChatService {
     async createchatInfo(data) {
         try {
             const chatInfoHas = await this.chatInfoRepository.getChatInfoAllType(data.cliente_id, data.type);
-            if (!chatInfoHas) {
-                return await this.chatInfoRepository.createChatInfo(data);
-            }
-            return {
-                msg: 'Já Existe Um Chat com Esse Tipo'
-            };
+            return await this.chatInfoRepository.createChatInfo(data);
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);
@@ -114,14 +111,25 @@ let ChatService = class ChatService {
             return (0, msg_response_1.ErroBadRequest)(error);
         }
     }
-    async createMessages(data) {
+    async createMessages(msg) {
         try {
-            const chatHas = this.getChatInfoByUuid(data.uuid);
+            const chatHas = await this.getChatInfoByUuid(msg.uuid);
             if (chatHas) {
-                delete data['uuid'];
-                return await this.messagesRepository.createMessages(data);
+                let sendMessage = Object.assign(Object.assign({}, chatHas), msg);
+                if (chatHas.type == 'WhatsApp') {
+                    const whatsapp = await this.whatsappService.sendMessageOficial(sendMessage);
+                    delete msg['uuid'];
+                    if (whatsapp) {
+                        return await this.messagesRepository.createMessages(msg);
+                    }
+                    return (0, msg_response_1.ErroBadRequest)('Erro para Enviar Msg');
+                }
+                else if (chatHas.type == 'web') {
+                    return await this.messagesRepository.createMessages(msg);
+                }
+                return (0, msg_response_1.ErroBadRequest)('Erro para Enviar Msg');
             }
-            console.log(data);
+            ;
             return (0, msg_response_1.ErroBadRequest)('Não Existe o Chat');
         }
         catch (error) {
@@ -221,7 +229,8 @@ ChatService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [messagen_repository_1.MessagesRepository,
         chat_repository_1.ChatRepository,
-        chat_info_repository_1.ChatInfoRepository])
+        chat_info_repository_1.ChatInfoRepository,
+        whatsapp_service_1.WhatsappService])
 ], ChatService);
 exports.ChatService = ChatService;
 //# sourceMappingURL=chat.service.js.map

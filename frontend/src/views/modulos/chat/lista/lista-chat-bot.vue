@@ -31,7 +31,7 @@ import router from '@/router';
 import ChatService from '@/service/chat-service';
 import Acesso from '@/helpers/Acesso'
 import page from '@/views/components/page.vue';
-
+       
 export default {
     setup() {
         useMeta({ title: 'Lista de Chat' });
@@ -71,12 +71,11 @@ export default {
     },
     created() {
         this.init();
-        this.getAcesso()
-
+        this.getAcesso();
     },
     methods: {
         getAcesso() {
-            this.acesso = Acesso.getAcesso('Chat Bot', '/lista', this.permissao);
+            this.acesso = Acesso.getAcesso('Configuração', '/lista', this.permissao);
 
             console.log(this.acesso)
         },
@@ -98,7 +97,7 @@ export default {
         },
         edit(data) {
            
-            router.push(`/leads-ai-chatbot/${data.data.uuid}`);       
+            router.push(`/config/${data.data.uuid}`);       
             
           
         },
@@ -124,7 +123,10 @@ export default {
         },  
         async delet(data) {
             this.params = data.data;
-
+            console.log( this.params)
+            if(this.params.type == 'WhatsApp-qrcode'){
+                // socket.emit('delet-chat', this.params.uuid);
+            }
             if (this.params.chat_info_id) {
                 const chat = new ChatService(this.params, this.token);
                 await chat.deletechatInfo();

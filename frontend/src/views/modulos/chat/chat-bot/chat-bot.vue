@@ -197,7 +197,7 @@ export default {
         },
         async init() {
 
-            let id = (window.location.pathname).replace('/leads-ai-chatbot/', '');
+            let id = (window.location.pathname).replace('/config/', '');
 
 
             if (!id.match('novo')) {
@@ -309,7 +309,7 @@ export default {
 
                         this.showMessage('Criado com Sucesso!');
 
-                        router.push(`/leads-ai-chatbot/${this.formData.chat_info_id}`);
+                        router.push(`/config/${this.formData.chat_info_id}`);
                         this.createChatParams = false;
 
                     } else {
@@ -413,7 +413,7 @@ export default {
 
         },
         getAcesso() {
-            this.acesso = Acesso.getAcesso('Chat Bot', '/novo', this.permissao);
+            this.acesso = Acesso.getAcesso('Configuração', '/novo', this.permissao);
             console.log('acesso', this.acesso)
         },
         submitForm() {

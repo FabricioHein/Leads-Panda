@@ -72,35 +72,7 @@ export default {
   methods: {
     async qrcodeGerar() {
       this.isLoad = !this.isLoad
-      socket.emit('gerar-qrcode', this.params);
-
-      socket.on("status", (status) => {
-
-        if (status === "successChat") {
-          this.status = "Conectado";
-          this.params.status = "conectado";
-          this.showMessage('Conectado com Sucesso');
-        }else{
-          this.status = "Não Conectado";
-          this.params.status = "Não Conectado";
-
-        }
-      })
-      socket.on("qrcode-status", (status) => {
-
-        if (status === "ok") {
-          socket.emit('emit-qrcode');
-          socket.on("emit-qrcode", (data) => {
-            this.linkQrcode = data;
-            this.isLoad = !this.isLoad;
-
-
-            // socket.close()
-
-          })
-        }
-
-      })
+ 
 
 
     },

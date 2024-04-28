@@ -12,47 +12,39 @@ const msg_response_1 = require("../utils/msg.response");
 const whatsapp_api_js_1 = require("whatsapp-api-js");
 const messages_1 = require("whatsapp-api-js/messages");
 const node_1 = require("whatsapp-api-js/setup/node");
-const PrismaService_1 = require("../base/relacional/PrismaService");
-const prisma = new PrismaService_1.PrismaService();
 let WhatsappService = class WhatsappService {
-    async sendMessage() {
+    Whats(data) {
+        let dataWA = {
+            token: '',
+            appSecret: ''
+        };
+        if (data.token_whatsapp)
+            dataWA['token'] = data.token_whatsapp;
+        if (data.app_secret_whatsapp)
+            dataWA['appSecret'] = data.app_secret_whatsapp;
+        if (data.webhook_very_token)
+            dataWA['webhookVerifyToken'] = data.webhook_very_token;
+        return new whatsapp_api_js_1.default((0, node_1.Node18)(dataWA));
+    }
+    async sendMessageOficial(data) {
         try {
-            let data = {
-                token_whatsapp: 'EAATxPolaVr0BOZCTJzSqj5sZA0b2lN9i7QLjmp94UY9tAUKDzXXDsJlWw9WwVaUwzJANu7rOjM7bMqfG18TXThtIXmnjT8jCCmtZC3XLCLLWcDVPP1vkZBhZB9h3tx3usL3D2KUKbZAZApP7yJEzTDByHMvcKlhLiZCQGdeB02OSy2B67ZCLEIuxHr5CGzxDzRHECTTBI7cYZADZAx7cPZBPgzSQA3x7OnzC9ZB7b',
-                app_secret_whatsapp: '9113ea6493357243a61206f11b150d05',
-                webhookVerifyToken: '',
-                wa_id_numero_telefone: '137539496103073',
-                txt: 'testando 1',
-                type: 'txt',
-                to_telefone: '554191596195',
-                uuid: '54045084-b284-41b0-a3e0-5280c9841ff5'
-            };
-            if (data.uuid) {
-                const chatInfo = await prisma.chat_info.findFirst({
-                    where: {
-                        uuid: data.uuid
-                    }
-                });
-                if (chatInfo) {
-                    const wa = new whatsapp_api_js_1.default((0, node_1.Node18)({
-                        token: data.token_whatsapp,
-                        appSecret: data.app_secret_whatsapp,
-                    }));
-                    let menssage;
-                    menssage = new messages_1.Text(data.txt);
-                    console.log(menssage);
-                    if (data.type == 'txt') {
-                        return await wa.sendMessage(data.wa_id_numero_telefone, data.to_telefone, menssage);
-                    }
-                }
-                return {
-                    msg: 'Error para enviar 1'
-                };
+            const wa = this.Whats(data);
+            let menssage;
+            let sendMsg;
+            if (data.type == 'txt') {
+                menssage = new messages_1.Text(data.text, false);
+                sendMsg = await wa.sendMessage(data.wa_id_numero_telefone, data.to_telefone, menssage);
             }
-            return {
-                msg: 'Error para enviar'
-            };
             ;
+            if (data.type == 'image') {
+                menssage = new messages_1.Image(data.image.id, true, '');
+                sendMsg = await wa.sendMessage(data.wa_id_numero_telefone, data.to_telefone, menssage);
+            }
+            ;
+            if (sendMsg.messages[0].id) {
+                return true;
+            }
+            return false;
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);

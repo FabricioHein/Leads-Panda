@@ -17,6 +17,11 @@ class ChatService extends Api {
     async criarChat() {
         return await this.post();
     }
+    async sendMsg() {
+        this.url = '/api/chat/newMessages';
+
+        return await this.post();
+    }
     async getChatsInfo() {
     
         const Chat = await this.get();

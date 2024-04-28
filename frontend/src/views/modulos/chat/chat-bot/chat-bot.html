@@ -1,6 +1,6 @@
 <page :params="acesso">
-
-    <div class="panel-body" v-if="!createChatParams">
+  
+    <div class="panel-body" v-if="!createChatParams && !formData.type == 'WhatsApp-qrcode' ">
         <div class="parent p-2">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -15,7 +15,7 @@
                     <button class="nav-link" id="cores-tab" data-bs-toggle="tab" data-bs-target="#cores" type="button"
                         role="tab" aria-controls="cores" aria-selected="true">Cores </button>
                 </li>
-                <li class="nav-item" role="presentation"  v-if="formData.type == 'web'" >
+                <li class="nav-item" role="presentation" v-if="formData.type == 'web'">
                     <button class="nav-link" id="codigo-tab" data-bs-toggle="tab" data-bs-target="#codigo" type="button"
                         role="tab" aria-controls="codigo" aria-selected="true">Add Código Web</button>
                 </li>
@@ -26,7 +26,7 @@
                 </li>
                 <li class="nav-item" role="presentation" v-if="formData.type == 'WhatsApp'">
                     <button class="nav-link" id="config-tab" data-bs-toggle="tab" data-bs-target="#config" type="button"
-                        role="tab" aria-controls="config" aria-selected="true">Configurações</button>
+                        role="tab" aria-controls="config" aria-selected="true">WhatsApp API</button>
                 </li>
 
             </ul>
@@ -219,7 +219,8 @@
 
                                                                 <div class="container mt-container ">
                                                                     <div class="mb-2">
-                                                                        <label class="form-label">ID Telefone :</label>
+                                                                        <label class="form-label">Identificação do
+                                                                            número de telefone :</label>
                                                                         <div class="input-group">
 
                                                                             <input id="wa_id_numero_telefone"
@@ -259,8 +260,9 @@
                                                                 </div>
                                                                 <div class="container mt-container ">
                                                                     <div class="mb-2">
-                                                                        <label class="form-label">Aplicativo
-                                                                            Secreto :</label>
+                                                                        <label class="form-label">Chave Secreta do
+                                                                            Aplicativo
+                                                                            :</label>
                                                                         <div class="input-group">
 
                                                                             <input id="app_secret_whatsapp"
@@ -567,16 +569,18 @@
                                                             <div class="accordion-body">
 
                                                                 <div class="mb-3">
-            
-                                                                    <quill-editor theme="snow" v-model="formData.modelo_ai"
-                                                                        :options="descricao" style="height: 204px;"></quill-editor>
+
+                                                                    <quill-editor theme="snow"
+                                                                        v-model="formData.modelo_ai"
+                                                                        :options="descricao"
+                                                                        style="height: 204px;"></quill-editor>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                     </div>
 
-                                                    
+
                                                 </div>
 
                                             </div>
@@ -609,49 +613,112 @@
 
         </div>
     </div>
+ 
     <div class="layout-px-spacing" v-if="createChatParams && etapa == 0">
 
         <div class="layout-top-spacing">
-            <div class="row">
+            <div class="row section general-info">
+                <div class="col-xl-6 col-lg-6 col-md-6 layout-spacing">
+                    <div class="container">
+                        <div class="option-container">
+                            <div class="option" @click="selectOption('WhatsApp-qrcode')">
+                                <h4 class="mb-4 mt-2">WhatsApp QRCode</h4>
+                                <img src="https://cdn-icons-png.flaticon.com/256/174/174879.png" style="width: 10%;"
+                                    alt="WhatsApp Icon">
+                                <p>
+                                    Conecte com o QRCode.
+                                </p>
 
-                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-
-                    <div class="section general-info">
-                        <div class="info">
-                            <h6>{{"Selecione uma Opção"}}</h6>
-                        </div>
-
-                        <div class="container">
-
-                            <div class="option-container">
-                                <!-- <div class="option" @click="selectOption('web')">
-                                    <h4 class="mb-4 mt-2">Chat Web</h4>
-                                    <img src="https://static.vecteezy.com/system/resources/previews/015/337/689/original/web-icon-web-sign-free-png.png"
-                                        style="width: 10%;" alt="Chat Web Icon">
-                                    <p>
-                                        Conexão Rápida e Direta: Esqueça as longas esperas por e-mails ou chamadas
-                                        telefônicas. Com nosso Chat Web, você pode obter ajuda instantânea com apenas
-                                        alguns cliques.
-                                    </p>
-                                </div> -->
-                                <div class="option" @click="selectOption('WhatsApp')">
-                                    <h4 class="mb-4 mt-2">Chat What's App</h4>
-                                    <img src="https://cdn-icons-png.flaticon.com/256/174/174879.png" style="width: 10%;"
-                                        alt="WhatsApp Icon">
-                                    <p>
-                                      Faça a integração com What's App, proporcionando conectando com seus Clientes.
-                                    </p>
-                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                <!-- <div class="col-xl-6 col-lg-6 col-md-6 layout-spacing">
+                    <div class="container">
+                        <div class="option-container">
+                            <div class="option" @click="selectOption('WhatsApp')">
+                                <h4 class="mb-4 mt-2">Chat What's Api Oficial</h4>
+                                <img src="https://cdn-icons-png.flaticon.com/256/174/174879.png" style="width: 10%;"
+                                    alt="WhatsApp Icon">
+                                    <p>
+                                        WhatsApp
+                                    </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="col-xl-6 col-lg-6 col-md-6 layout-spacing">
+                    <div class="option" @click="selectOption('web')">
+                        <h4 class="mb-4 mt-2">Chat Web</h4>
+                        <img src="https://static.vecteezy.com/system/resources/previews/015/337/689/original/web-icon-web-sign-free-png.png"
+                            style="width: 10%;" alt="Chat Web Icon">
+                        <p>
+                            Chat Web
+                        </p>
+                    </div>
+                </div> -->
             </div>
+
         </div>
 
     </div>
-    <div class="layout-px-spacing" v-if="createChatParams && etapa == 1">
+
+    <div class="layout-px-spacing" v-if="createChatParams && etapa == 1 && formData.type == 'WhatsApp-qrcode' ">
+
+        <div class="layout-top-spacing">
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing" >
+                    <div class="container">
+                        <div class=" mt-4">
+                            <div class="card-body" v-if="base64Image && !statusQrcode" >
+                                <img id="qrCodeImage" alt="QR Code" :src="base64Image" >
+                                <h4 class="mb-4 mt-2">Escanei o  QRCode</h4>
+                            </div>
+                            <div class="card-body" v-else-if="statusQrcode" >
+                                <i class="fas fa-check-circle fa-3x icon-success"></i>
+                                <h4 class="mb-4 mt-2">WhatsApp Conectado!</h4>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <button @click="gerarQrCode()"  v-if="!base64Image" type="button" class="btn btn-secondary">Gerar QRCode</button>
+
+                    
+                </div>
+            </div>
+        </div>       
+
+    </div>
+    <div class="layout-px-spacing" v-if="!createChatParams && etapa == 2  && formData.type == 'WhatsApp-qrcode' ">
+
+        <div class="layout-top-spacing">
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing" >
+                    <div class="container">
+                        <div class=" mt-4">
+                            <div class="card-body" v-if="base64Image && !statusQrcode" >
+                                <img id="qrCodeImage" alt="QR Code" :src="base64Image" >
+                                <h4 class="mb-4 mt-2">Escanei o  QRCode</h4>
+                            </div>
+                            <div class="card-body" v-else-if="statusQrcode" >
+                                <i class="fas fa-check-circle fa-3x icon-success"></i>
+                                <h4 class="mb-4 mt-2">WhatsApp Conectado!</h4>
+                            </div>
+                        </div>
+                        
+                    </div>
+                 
+
+                    
+                </div>
+            </div>
+        </div>       
+
+    </div>
+    <div class="layout-px-spacing" v-if="createChatParams && etapa == 1 && formData.type == 'WhatsApp'">
 
         <div class="layout-top-spacing">
             <div class="row">
@@ -659,7 +726,6 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
 
                     <div class="section general-info">
-
 
                         <div class="container mt-container">
                             <div class=" mt-4">
@@ -675,7 +741,7 @@
                                             <textarea id="style" style="height: 204px;" v-model="formData.msg_inicial"
                                                 placeholder="Bem-vindo" class="form-control text-chat"></textarea>
                                         </div>
-                                     
+
                                     </form>
                                 </div>
                             </div>
@@ -702,7 +768,7 @@
                         </div>
                         <div class="container mt-container ">
                             <div class="mb-2">
-                                <label class="form-label">ID Telefone :</label>
+                                <label class="form-label">Identificação do número de telefone :</label>
                                 <div class="input-group">
                                     <input id="wa_id_numero_telefone" type="password" class="form-control"
                                         placeholder="" v-model="formData.wa_id_numero_telefone" />
@@ -820,10 +886,10 @@
                         </div>
                         <div class="container mt-container ">
                             <div class="container">
-                               
+
                             </div>
                             <div class="container">
-                                
+
                             </div>
 
                         </div>

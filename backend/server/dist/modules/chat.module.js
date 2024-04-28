@@ -14,12 +14,15 @@ const chat_info_repository_1 = require("../repositories/chat-info.repository");
 const chat_repository_1 = require("../repositories/chat.repository");
 const PrismaService_1 = require("../base/relacional/PrismaService");
 const messagen_repository_1 = require("../repositories/messagen.repository");
+const whatsapp_service_1 = require("../service/whatsapp.service");
 let ChatModule = class ChatModule {
 };
 ChatModule = __decorate([
     (0, common_1.Module)({
+        imports: [],
         controllers: [chat_controller_1.ChatController],
         providers: [
+            whatsapp_service_1.WhatsappService,
             chat_service_1.ChatService,
             chat_info_repository_1.ChatInfoRepository,
             chat_repository_1.ChatRepository,

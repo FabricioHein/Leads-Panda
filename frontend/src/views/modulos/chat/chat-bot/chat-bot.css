@@ -66,6 +66,9 @@
     border: 1px solid #ccc;
 
 }
+.icon-success {
+    color: green; /* Cor do ícone */
+  }
 
 /* Estilos personalizados com variáveis CSS */
 :root {

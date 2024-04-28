@@ -55,7 +55,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'http://localhost:3000',
+                target: process.env.BACKEND,
                 // target: 'https://us-central1-lead2converts-prod.cloudfunctions.net/backend',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, ''),
@@ -63,12 +63,19 @@ module.exports = {
 
             },
             '/apicep': {
-                target: 'https://cdn.apicep.com/file',
+                target:  process.env.CEP,
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/apicep/, ''),
                 secure: true,
 
             },
+            '/socket.io': {
+                target: process.env.SOCKET_SERVER ,
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/socket.io/, ''),
+                secure: true,
+
+            }
         },
     },
 };

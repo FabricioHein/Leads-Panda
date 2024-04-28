@@ -24,13 +24,6 @@ CREATE TABLE "chat_info" (
     "chat_info_id" SERIAL NOT NULL,
     "uuid" TEXT,
     "type" VARCHAR(20),
-    "key_chatgpt" TEXT,
-    "organization_chatgpt" TEXT,
-    "key_facebook" TEXT,
-    "key_instagram" TEXT,
-    "token_whatsapp" TEXT,
-    "app_secret_whatsapp" TEXT,
-    "wa_id_numero_telefone" TEXT,
     "msg_inicial" TEXT,
     "modelo_ai" TEXT,
     "fluxo" JSONB,
@@ -56,20 +49,34 @@ CREATE TABLE "chat_info" (
     "anexo_documento" BOOLEAN DEFAULT true,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
+    "key_chatgpt" TEXT,
+    "organization_chatgpt" TEXT,
+    "key_facebook" TEXT,
+    "key_instagram" TEXT,
+    "token_whatsapp" TEXT,
+    "app_secret_whatsapp" TEXT,
+    "wa_id_numero_telefone" TEXT,
 
     CONSTRAINT "chat_info_pkey" PRIMARY KEY ("chat_info_id")
 );
 
 -- CreateTable
+CREATE TABLE "integracao" (
+    "integracao_id" SERIAL NOT NULL,
+    "cliente_id" INTEGER,
+
+    CONSTRAINT "integracao_pkey" PRIMARY KEY ("integracao_id")
+);
+
+-- CreateTable
 CREATE TABLE "messages" (
     "message_id" SERIAL NOT NULL,
-    "avatar" TEXT,
     "username" VARCHAR(50),
     "text" TEXT,
     "type" VARCHAR(10),
     "whatsapp_id" VARCHAR(150),
     "chat_id" INTEGER NOT NULL,
-    "to_telefone" VARCHAR(20),
+    "atendimento" BOOLEAN DEFAULT false,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
 
@@ -107,6 +114,15 @@ CREATE TABLE "motivos" (
     "updated_at" TIMESTAMP(3),
 
     CONSTRAINT "motivos_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "msg_padrao" (
+    "id" SERIAL NOT NULL,
+    "descricao" TEXT,
+    "configuracaoClienteId" INTEGER,
+
+    CONSTRAINT "msg_padrao_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -781,6 +797,9 @@ CREATE UNIQUE INDEX "_UsersTochat_AB_unique" ON "_UsersTochat"("A", "B");
 ALTER TABLE "chat_info" ADD CONSTRAINT "chat_info_cliente_id_fkey" FOREIGN KEY ("cliente_id") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "integracao" ADD CONSTRAINT "integracao_cliente_id_fkey" FOREIGN KEY ("cliente_id") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "messages" ADD CONSTRAINT "messages_chat_id_fkey" FOREIGN KEY ("chat_id") REFERENCES "chat"("chat_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -794,6 +813,9 @@ ALTER TABLE "chat" ADD CONSTRAINT "chat_taskId_fkey" FOREIGN KEY ("taskId") REFE
 
 -- AddForeignKey
 ALTER TABLE "motivos" ADD CONSTRAINT "motivos_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "msg_padrao" ADD CONSTRAINT "msg_padrao_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "times" ADD CONSTRAINT "times_metasId_fkey" FOREIGN KEY ("metasId") REFERENCES "metas"("id") ON DELETE SET NULL ON UPDATE CASCADE;

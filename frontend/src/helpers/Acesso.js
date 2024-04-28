@@ -6,11 +6,10 @@ class Acesso {
             editar: false,
             deletar: false,
         };
-
+        console.log( modulo, permissao[3])
         permissao.forEach((m) => {
             if (m.modulo == modulo) {
                 console.log(m.modulo, modulo)
-
                 m.submodulos.map((sub) => {
                     if (url == sub.url) {
                         acesso.deletar = sub.deletar;

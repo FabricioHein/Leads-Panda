@@ -3,9 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  //directUrl = env("DIRECT_URL")
 }
 
 model EmailVerification {
@@ -16,6 +16,7 @@ model EmailVerification {
 
   @@map("email_verifications")
 }
+
 model ResetPassword {
   id        String    @id @default(uuid())
   email     String    @unique() @db.VarChar(255)
@@ -29,16 +30,9 @@ model ResetPassword {
 model chat_info {
   chat_info_id           Int                  @id @default(autoincrement())
   uuid                   String?              @db.Text()
-  type               String?              @db.VarChar(20)
-  key_chatgpt            String?              @db.Text()
-  organization_chatgpt   String?              @db.Text()
-  key_facebook           String?              @db.Text()
-  key_instagram          String?              @db.Text()
-  token_whatsapp         String?              @db.Text()
-  app_secret_whatsapp    String?              @db.Text()
-  wa_id_numero_telefone  String?              @db.Text()
+  type                   String?              @db.VarChar(20)
   msg_inicial            String?              @db.Text()
-  modelo_ai              String? @db.Text()
+  modelo_ai              String?              @db.Text()
   fluxo                  Json?
   bot_ativo              Boolean?             @default(true)
   chat_gpt_bot_ativo     Boolean?             @default(false)
@@ -63,18 +57,31 @@ model chat_info {
   created_at             DateTime?            @default(now())
   updated_at             DateTime?            @updatedAt
   chat                   chat[]
+  key_chatgpt            String?              @db.Text()
+  organization_chatgpt   String?              @db.Text()
+  key_facebook           String?              @db.Text()
+  key_instagram          String?              @db.Text()
+  token_whatsapp         String?              @db.Text()
+  app_secret_whatsapp    String?              @db.Text()
+  wa_id_numero_telefone  String?              @db.Text()
   configuracaoCliente    configuracaoCliente? @relation(fields: [cliente_id], references: [id])
+}
+
+model integracao {
+  integracao_id         Int                  @id @default(autoincrement())
+  
+  configuracaoCliente   configuracaoCliente? @relation(fields: [cliente_id], references: [id])
+  cliente_id            Int?
 }
 
 model messages {
   message_id  Int        @id @default(autoincrement())
-  avatar      String?
   username    String?    @db.VarChar(50)
   text        String?
   type        String?    @db.VarChar(10)
   whatsapp_id String?    @db.VarChar(150)
   chat_id     Int
-  to_telefone String?    @db.VarChar(20)
+  atendimento Boolean?  @default(false) 
   created_at  DateTime?  @default(now())
   updated_at  DateTime?  @updatedAt
   arquivos    arquivos[]
@@ -113,6 +120,13 @@ model motivos {
   updated_at            DateTime?            @updatedAt
   configuracaoCliente   configuracaoCliente? @relation(fields: [configuracaoClienteId], references: [id])
   task                  task[]
+}
+
+model msg_padrao {
+  id                    Int                  @id @default(autoincrement())
+  descricao             String?
+  configuracaoCliente   configuracaoCliente? @relation(fields: [configuracaoClienteId], references: [id])
+  configuracaoClienteId Int?
 }
 
 model times {
@@ -268,7 +282,7 @@ model task {
   contato_nome        String?               @db.VarChar(100)
   contato_numero      String?               @db.VarChar(20)
   title               String?               @db.VarChar(100)
-  cpf                   String?                 @db.VarChar(150)
+  cpf                 String?               @db.VarChar(150)
   description         String?
   processoId          Int?
   valor_Inicial       Decimal?              @db.Decimal(10, 2)
@@ -457,6 +471,8 @@ model configuracaoCliente {
   servico             servico[]
   Users               Users[]
   venda               venda[]
+  integracao          integracao[]
+  msg_padrao          msg_padrao[]
 
   @@map("config_clientes")
 }
@@ -715,13 +731,13 @@ model Users {
   themeDark             Boolean?
   operador              String?                 @db.VarChar(150)
   sexoId                Int?
-  clienteId             Int?  
+  clienteId             Int?
   email                 String?                 @unique @db.VarChar(255)
   profile               String?                 @default("admin") @db.VarChar(255)
   created_at            DateTime?               @default(now())
   updated_at            DateTime?               @updatedAt
-  last_login            DateTime?   
-  verifiedAt            DateTime?                   
+  last_login            DateTime?
+  verifiedAt            DateTime?
   timesId               Int?
   cep                   String?                 @db.VarChar(25)
   logradouro            String?                 @db.VarChar(150)

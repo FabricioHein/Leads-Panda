@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '@/router';
 class Api {
     constructor(config, url, token, file) {
         this.url = url;
@@ -66,7 +67,7 @@ class Api {
                 };
             });
 
-        if (response.code === 'ERR_BAD_REQUEST' || response.name === 'AxiosError') {
+        if (response.code === 'ERR_BAD_REQUEST' || response.name === 'AxiosError' || response.statusCode === 401) {
             this.RemoveTokenAcesso();
         } else {
             return response;
@@ -154,6 +155,8 @@ class Api {
     }
     RemoveTokenAcesso() {
         localStorage.removeItem('usuario');
+        router.push('/')
+            
     }
 }
 export default Api;

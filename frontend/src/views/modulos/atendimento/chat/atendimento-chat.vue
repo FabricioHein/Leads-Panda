@@ -97,10 +97,10 @@
             </div>
 
         </div>
-        <div id="container-chat" class="chat-box" :class="{ active: selected_user }">
-        </div>
+        <chatAtendimento  :chatProps="selected_user" :allMessages ="messages" :user="usuario.nome" v-if="selected_user" ></chatAtendimento>        
+       
     </div>
-    <tabelaLayoutVue>
+    <!-- <tabelaLayoutVue>
         <div>
             <div class="painel-modelo">
                 <div class="mt-container">
@@ -154,13 +154,13 @@
 
             </div>
         </div>
-    </tabelaLayoutVue>
+    </tabelaLayoutVue> -->
 </template>
 
-<style src="./atendimento.css"></style>
 
 
 <script >
+import chatAtendimento from '@/views/components/chat/atendimento/chat-atendimento.vue';
 import tabelaLayoutVue from '@/components/tabela-layout.vue';
 import FunilSales from '@/views/components/FunilSales.vue';
 import '@/assets/sass/apps/chat.scss';
@@ -171,7 +171,9 @@ import { mapGetters } from 'vuex';
 export default {
     components: {
         FunilSales,
-        tabelaLayoutVue
+        tabelaLayoutVue,
+        chatAtendimento,
+        
     },
     setup() {
         useMeta({ title: 'Atendimento Chat' });
@@ -214,7 +216,7 @@ export default {
         }
 
     },
-    mounted() {
+    mounted() {     
         this.bind_contact_list();
     },
     computed: {
@@ -222,7 +224,6 @@ export default {
     },
     methods: {
         ver(data) {
-
             this.$router.push(`/crm/leads/`)
         },
         closechat() {
@@ -239,41 +240,16 @@ export default {
                 chatBox.scrollTop = chatBox.scrollHeight;
             });
         },
-        async select_user(chat) {
-
-            const clienteId = chat.cliente_id;
-            const email = chat.email;
-            const telefone = chat.telefone;
-            const chatUuid = chat.chat_info?.uuid || null;
-
-            const url = `/chatAtendimento/${clienteId}/${chatUuid}/${this.usuario.nome}/${telefone}/${email}/atendimento`;
-            this.$nextTick(() => {
-
-                const container = document.getElementById('container-chat');
-                // Cria um elemento <object> para carregar a página HTML
-                const objectElement = document.createElement('object');
-                objectElement.setAttribute('data', url);
-
-                objectElement.style.display = 'flex';
-                objectElement.style.width = '100%';
-                objectElement.style.height = '100%';
-
-                // Remove o elemento <object> anterior, se existir
-                const existingObject = container.querySelector('object');
-                if (existingObject) {
-                    container.removeChild(existingObject);
-                };
-                // Adiciona o novo elemento <object> ao contêiner
-                container.appendChild(objectElement);
-
-            });
-            this.selected_user = chat
+        async select_user(chat) {            
+            this.selected_user = chat;            
+            const getAllMsg = new ChatService({}, this.token, `/api/chat/chatAllMsg/${this.selected_user.chat_id}`);
+            this.messages = await getAllMsg.getAllMessage();
+     
 
 
         },
         search_users() {
             this.filterd_contact_list = this.contact_list.filter((d) => (d.nome || d.telefone).toLowerCase().includes(this.search_user));
-
             this.filterd_contact_list_close = this.contact_list_close.filter((d) => (d.nome || d.telefone).toLowerCase().includes(this.search_user));
 
         },

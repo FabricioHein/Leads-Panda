@@ -35,24 +35,6 @@ export class ChatController {
     }
   }
 
-  @Get('/get-info-chat/:uuid')
-  async getChatInfoData(@Param('uuid',) uuid,) {
-    try {
-      return await this.chatService.getChatInfoByUuidCliente(uuid);
-    } catch (error) {
-      return error;
-    }
-  }
-
-  @Get('/getChat/:uuid')
-  async getChaByUuid(@Param('uuid',) uuid,) {
-    try {
-      return await this.chatService.getChaByUuid(uuid);
-    } catch (error) {
-      return error;
-    }
-  }
-
   @UseGuards(JwtAuthGuard)
   @Post('deletechatInfo')
   async deletechatInfo(@Request() req) {
@@ -63,7 +45,6 @@ export class ChatController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('createchatInfo')
   async createchatInfo(@Request() req) {
     try {
@@ -144,6 +125,45 @@ export class ChatController {
       return error;
     }
   }
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  async atualizarChat(@Request() req) {
+    try {
+      return await this.chatService.atualizarChat(req.body);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  // @UseGuards(JwtAuthGuard)
+  @Post('newMessages')
+  async newMessages(@Request() req) {
+    try {
+      return await this.chatService.createMessages(req.body);
+    } catch (error) {
+      return error;
+    }
+  }
+
+
+  //WEB CHAT
+  @Get('/get-info-chat/:uuid')
+  async getChatInfoData(@Param('uuid',) uuid,) {
+    try {
+      return await this.chatService.getChatInfoByUuidCliente(uuid);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  @Get('/getChat/:uuid')
+  async getChaByUuid(@Param('uuid',) uuid,) {
+    try {
+      return await this.chatService.getChaByUuid(uuid);
+    } catch (error) {
+      return error;
+    }
+  }
 
   @Get('updatechatInfo/uuid')
   async getByChatUuidMessages(@Param('uuid') uuid) {
@@ -154,7 +174,7 @@ export class ChatController {
     }
   }
 
-  @Post('createMessages') 
+  @Post('createMessages')
   async createMessages(@Request() req) {
     try {
       return await this.chatService.createMessages(req.body);
@@ -172,15 +192,6 @@ export class ChatController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Put()
-  async atualizarChat(@Request() req) {
-    try {
-      return await this.chatService.atualizarChat(req.body);
-    } catch (error) {
-      return error;
-    }
-  }
 
   @Get('getByChatUuidMessagesLast/:uuid')
   async getByChatUuidMessagesLast(@Param('uuid') uuid) {

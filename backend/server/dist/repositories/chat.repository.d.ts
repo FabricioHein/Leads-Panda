@@ -44,13 +44,12 @@ export declare class ChatRepository {
         };
         messages: {
             message_id: number;
-            avatar: string;
             username: string;
             text: string;
             type: string;
             whatsapp_id: string;
             chat_id: number;
-            to_telefone: string;
+            atendimento: boolean;
             created_at: Date;
             updated_at: Date;
         }[];

@@ -37,6 +37,9 @@ export class AuthService {
     const payload = { username: data.nome };
     const usuario = await this.usuarioRepository.findOne(data.email);
     const token = this.jwtService.sign(payload);
+    // {
+    //   expiresIn: '5m'
+    // }
     if (usuario) {
       const userLogin = await this.configService.getConfig(usuario.id, token);
       return userLogin;

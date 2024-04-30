@@ -32,13 +32,14 @@ import ChatService from '@/service/chat-service';
 import Acesso from '@/helpers/Acesso'
 import page from '@/views/components/page.vue';
        
+import io from 'socket.io-client';
 export default {
     setup() {
         useMeta({ title: 'Lista de Chat' });
     },
     data() {
         return {
-
+            socket: null,
             acesso: null,
             add: false,
             page: 'Lista de Chat',
@@ -72,6 +73,7 @@ export default {
     created() {
         this.init();
         this.getAcesso();
+        this.socket = io();
     },
     methods: {
         getAcesso() {
@@ -125,12 +127,18 @@ export default {
             this.params = data.data;
             console.log( this.params)
             if(this.params.type == 'WhatsApp-qrcode'){
-                // socket.emit('delet-chat', this.params.uuid);
+                console.log(this.params.uuid)
+                this.socket.emit('disconnected', {
+                    uuid: this.params.uuid
+                });
+
+                // this.socket.on('remove-session', function(msg){
+                //     this.showMessage(msg);
+                // })
             }
             if (this.params.chat_info_id) {
                 const chat = new ChatService(this.params, this.token);
-                await chat.deletechatInfo();
-                this.showMessage('Deletado com Sucesso!');
+                await chat.deletechatInfo();                
             }
             this.init();
 

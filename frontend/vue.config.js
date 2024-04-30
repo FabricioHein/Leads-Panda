@@ -70,7 +70,7 @@ module.exports = {
 
             },
             '/socket.io': {
-                target: process.env.SOCKET_SERVER ,
+                target: process.env.SOCKET_SERVER,
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/socket.io/, ''),
                 secure: true,

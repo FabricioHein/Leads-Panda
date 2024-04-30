@@ -2,7 +2,7 @@
 <style src="./chat-bot.css" scoped></style>
 
 
-<script >
+<script>
 import CodeHighlighter from '@/components/code.vue'; // Ajuste o caminho conforme necessário
 
 import '@/assets/sass/authentication/auth-boxed.scss';
@@ -16,10 +16,14 @@ import InputVue from '@/components/Input-validate.vue';
 import Acesso from '@/helpers/Acesso'
 import page from '@/views/components/page.vue';
 
-import fluxos from '../chat-bot/fluxos/fluxos.vue'
+
 import { quillEditor } from 'vue3-quill';
 import 'vue3-quill/lib/vue3-quill.css';
 import router from '@/router';
+
+import io from 'socket.io-client';
+
+
 
 export default {
     props: {
@@ -33,6 +37,10 @@ export default {
     },
     data() {
         return {
+            load: false,
+            socket: null,
+            statusQrcode: false,
+            base64Image: '',
             codigoJs: `function exemplo() {
         console.log('Hello, World!');
               }`,
@@ -62,15 +70,14 @@ export default {
             icones: [
                 {
                     value: 'Chat Dots',
-                    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
-  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16"><path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
   <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2"/>
 </svg>`
                 }
             ],
             token_whatsapp: false,
             verTokenKey_chatgpt: false,
-            verorganization_chatgpt:false,
+            verorganization_chatgpt: false,
             verToverTokenWa: false,
             verTokapp_secret_whatsappen: false,
             newMessage: '',
@@ -123,11 +130,61 @@ export default {
     components: {
         CodeHighlighter,
         page,
-        fluxos,
         quillEditor,
         InputVue
     },
     methods: {
+        arrayBufferToBase64(buffer) {
+            let binary = '';
+            const bytes = new Uint8Array(buffer);
+            const len = bytes.byteLength;
+            for (let i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
+        },
+        async gerarQrCode() {
+            document.getElementById('add-loader').innerHTML= '<div class="loader dual-loader mx-auto" ></div>'
+            this.load = false;
+            let createChat = await this.createChat();
+
+            if (createChat) {
+
+                this.socket.emit('create-session', {
+                    uuid: this.formData.uuid
+                });
+
+                this.socket.on('qrCode', function (data) {
+                    if (data && data.src) {
+                        this.base64Image = data.src;
+                        document.getElementById('imagemContainer').innerHTML = '';
+                        console.log(this.base64Image);
+                        const img = document.createElement('img');
+                            img.src = this.base64Image;
+
+                            // Adiciona a imagem ao elemento desejado (por exemplo, um elemento com id "imagemContainer")
+                            document.getElementById('imagemContainer').appendChild(img);
+                            document.getElementById('add-loader').innerHTML= ''
+                    }
+
+                });
+
+                this.socket.on('message', function (data) {
+                    if(data.text == 'conected'){
+                      
+                        document.getElementById('imagemContainer').innerHTML = `<div class="card-body" >
+                                <i class="fas fa-check-circle fa-3x icon-success"></i>
+                                <h4 class="mb-4 mt-2">WhatsApp Conectado!</h4>
+                            </div>`;
+                    }
+
+                })
+                
+            };
+
+
+        },
+ 
         verToken(elem) {
             if (elem == 'key_chatgpt') {
                 this.verTokenKey_chatgpt = !this.verTokenKey_chatgpt;
@@ -164,7 +221,8 @@ export default {
         },
         getChat() {
 
-            console.log(this.formData)
+
+
             const url = `/chatCliente/${this.formData.cliente_id}/${this.formData.uuid}/usuario/teste`;
 
             this.$nextTick(() => {
@@ -199,7 +257,6 @@ export default {
 
             let id = (window.location.pathname).replace('/config/', '');
 
-
             if (!id.match('novo')) {
                 this.formData.msg_inicial = `Olá! Bem-vindo, sou o Fabrício Hein. Como posso ajudar você hoje? Por favor, digite sua pergunta ou escolha uma das opções abaixo para obter informações específicas. Estou aqui para tornar sua experiência mais fácil e eficiente. 😊
           Para personalizar melhor nossa assistência, poderia informar seu nome, email e telefone, por favor?`;
@@ -213,9 +270,7 @@ export default {
                     this.getChat();
 
                     if (this.formData.bot_foto) {
-
                         this.messages[0].avatar = this.formData.bot_foto;
-
 
                     }
                 }
@@ -285,9 +340,10 @@ export default {
 
         },
         async createChat() {
-
             var data;
+
             if (this.validadeBot()) {
+
                 if (this.formData.chat_info_id) {
                     this.formData.cliente_id = this.cliente.id;
                     data = new ChatUpdatedModel(this.formData);
@@ -307,10 +363,13 @@ export default {
                     this.formData = novoChat.data;
                     if (this.formData.chat_info_id) {
 
-                        this.showMessage('Criado com Sucesso!');
+                        if (!this.formData.type == 'WhatsApp-qrcode') {
+                            this.showMessage('Criado com Sucesso!');
 
-                        router.push(`/config/${this.formData.chat_info_id}`);
-                        this.createChatParams = false;
+                            router.push(`/config/${this.formData.chat_info_id}`);
+                            this.createChatParams = false;
+                        }
+
 
                     } else {
                         this.showMessage(this.formData.msg, 'error');
@@ -335,8 +394,13 @@ export default {
                 }
             }
 
+
+            return true;
         },
         validadeBot() {
+            if (this.formData.type == 'WhatsApp-qrcode') {
+                return true
+            }
 
             if (!this.formData.bot_nome || this.formData.bot_nome == '') {
                 this.showMessage('Insira um Nome para o Bot', 'error');
@@ -414,7 +478,6 @@ export default {
         },
         getAcesso() {
             this.acesso = Acesso.getAcesso('Configuração', '/novo', this.permissao);
-            console.log('acesso', this.acesso)
         },
         submitForm() {
             // Envie os dados do formulário para o servidor ou realize a lógica de cadastro aqui
@@ -438,8 +501,10 @@ export default {
     created() {
         this.getAcesso()
         this.init();
+        this.socket = io();
 
-
+    },
+    botMessageColor() {
     },
 
 };

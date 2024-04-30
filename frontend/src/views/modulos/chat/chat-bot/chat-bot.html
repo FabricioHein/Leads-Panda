@@ -1,5 +1,5 @@
 <page :params="acesso">
-  
+
     <div class="panel-body" v-if="!createChatParams && !formData.type == 'WhatsApp-qrcode' ">
         <div class="parent p-2">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -672,14 +672,17 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing" >
                     <div class="container">
                         <div class=" mt-4">
-                            <div class="card-body" v-if="base64Image && !statusQrcode" >
-                                <img id="qrCodeImage" alt="QR Code" :src="base64Image" >
-                                <h4 class="mb-4 mt-2">Escanei o  QRCode</h4>
+                 
+                            <div id="imagemContainer">
+
+
                             </div>
-                            <div class="card-body" v-else-if="statusQrcode" >
-                                <i class="fas fa-check-circle fa-3x icon-success"></i>
-                                <h4 class="mb-4 mt-2">WhatsApp Conectado!</h4>
+                            <div id="add-loader">
+
+
                             </div>
+                           
+                          
                         </div>
                         
                     </div>

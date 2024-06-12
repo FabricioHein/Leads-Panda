@@ -9,6 +9,7 @@ export class AuthenticatorController {
     private readonly usuariosService: UsuariosService,
   ) {}
 
+  
   @Post('criar-usuario-cliente')
   async criarNovoCliente(@Request() req) {
     try {

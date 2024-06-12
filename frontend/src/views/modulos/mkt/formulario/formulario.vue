@@ -90,7 +90,7 @@
 
                             <div class="mt-container">
                                 <div class="p-4">
-                                    <label>Nome do Campo:</label>
+                                    <label>Label do Campo:</label>
                                     <input class="form-control" v-model="novoCampo.label" type="text" />
                                     <label>Tipo do Campo:</label>
                                     <select v-model="novoCampo.type" class="form-select">
@@ -249,14 +249,7 @@ export default {
             logo_width: null,
             opcaoAdd: null,
             selectedType: [
-                {
-                    value: 'selecionar',
-                    label: 'Selecionar'
-                },
-                {
-                    value: 'radio',
-                    label: 'Marcador'
-                },
+                          
                 {
                     value: 'checkbox',
                     label: 'Check Box'
@@ -265,10 +258,7 @@ export default {
                     value: 'text',
                     label: 'Texto'
                 },
-                {
-                    value: 'color',
-                    label: 'Cor'
-                },
+              
                 {
                     value: 'number',
                     label: 'Número'
@@ -292,6 +282,10 @@ export default {
                 {
                     value: 'date',
                     label: 'Data'
+                },
+                {
+                    value: 'selecionar',
+                    label: 'Opção para Selecionar'
                 },
             ],
             criarCampo: false,
@@ -333,7 +327,7 @@ export default {
     },
     methods: {
         getAcesso() {
-            this.acesso = Acesso.getAcesso('MKT', '/formulario/novo', this.permissao);
+            this.acesso = Acesso.getAcesso('Marketing', '/formulario/novo', this.permissao);
             console.log('acesso', this.acesso)
         },
         setLogo() {

@@ -1,0 +1,3 @@
+[0503/212842.031:ERROR:dxva_video_decode_accelerator_win.cc(1426)] DXVAVDA fatal error: Could not load mf.dll: Não foi possível encontrar o módulo especificado. (0x7E)
+[0503/212843.769:INFO:CONSOLE(215)] "Another connection wants to delete database 'wawc'. Closing db now to resume the delete request.", source: https://web.whatsapp.com/serviceworker.js (215)
+[0503/212843.769:INFO:CONSOLE(215)] "Another connection wants to delete database 'wawc'. Closing db now to resume the delete request.", source: https://web.whatsapp.com/serviceworker.js (215)

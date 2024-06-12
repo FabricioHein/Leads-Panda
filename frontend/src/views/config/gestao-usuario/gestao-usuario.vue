@@ -6,7 +6,7 @@
             <div class="col-lg-12">
                 <div class="panel-body searchable-container" :class="[grid_type]">
                     <div class="p-3 row">
-                        <h6>Gestão do Usuário</h6>
+                        <h6>Gestão de Permissões e Acessos</h6>
 
                         <div
                             class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
@@ -186,7 +186,7 @@ import UsuarioModel from './usuarioModel';
 import Acesso from '@/helpers/Acesso'
 import page from '@/views/components/page.vue';
 
-useMeta({ title: 'Gestão do Usuário' });
+useMeta({ title: 'Permissões' });
 
 let addContactModal = ref(null);
 const params = ref({ id: null, linkFoto: '', nome: '', email: '', telefone: '', senha: '' });

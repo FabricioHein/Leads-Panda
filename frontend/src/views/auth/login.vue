@@ -1,8 +1,6 @@
-
 <template>
-    <div class="form full-form auth-cover">
+    <div class="form full-form auth-cover" v-if="!params">
         <div class="form-container">
-
             <div class="form-form">
                 <div class="form-form-wrap">
                     <div class="form-container">
@@ -11,9 +9,9 @@
                                 <div class="form">
                                     <img :src="require('@/assets/images/logo-word.png')" style="width: 90px;" />
                                     <div id="username-field" class="field-wrapper input">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" class="feather feather-user">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
@@ -21,9 +19,9 @@
                                     </div>
 
                                     <div id="password-field" class="field-wrapper input mb-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" class="feather feather-lock">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock">
                                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                         </svg>
@@ -52,20 +50,33 @@
                                         </span>
 
                                     </div>
-                                    
+
 
                                 </div>
                             </form>
                             <router-link to="/auth/nova-senha" class="forgot-pass-link">Esqueceu a senha?</router-link>
 
-
-
-                            <div class="field-wrapper text-center p-2">
+                           <div>
+                            <div v-if="btn && isLoading" class="loader dual-loader mx-auto"></div>
+                            <div v-else>
+                                <div class="field-wrapper text-center p-2">
                                 <button v-if="!btn" class="btn btn-primary" :disabled="btn"
-                                    @click="this.logginApp()">Acessar</button>
+                                    @click="this.logginApp()">
+                                    Acessar</button>
                                 <div v-if="btn && isLoading" class="loader dual-loader mx-auto"></div>
+                                
+                            </div>
+                            <div class="field-wrapper text-center p-2">                            
+                                  <button v-if="!btn" class="btn btn-danger" :disabled="btn"
+                                    @click="this.logginAppGoogle()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                                    <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
+                                    </svg> &nbsp Google</button>
+                            </div>
+                            </div>
 
                             </div>
+                           
                             <p class="signup-link register">não tem uma conta? <router-link to="/auth/cadastro">Criar
                                     Conta</router-link></p>
 
@@ -81,6 +92,8 @@
             </div>
         </div>
     </div>
+    <div else>     
+    </div>
 </template>
 <script>
 import '@/assets/sass/authentication/auth-boxed.scss';
@@ -88,6 +101,8 @@ import '@/assets/sass/authentication/auth.scss';
 import { useMeta } from '@/composables/use-meta';
 import store from '@/store';
 import Login from './service/login';
+import router from '@/router';
+
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -101,13 +116,40 @@ export default {
     }),
     data() {
         return {
+            params: null,
             ver: false,
             email: '',
             senha: '',
             btn: false,
             isLoading: false
-
         };
+    },
+    async created() {
+
+
+        if (this.$route.query.token) {
+            this.params = this.$route.query;
+            const loginAcesso = new Login(this.params);
+
+           const acessoGoogle = await loginAcesso.loginAppGoogle();
+
+            console.log(acessoGoogle)
+            if (acessoGoogle.token && acessoGoogle.cliente.id) {
+                localStorage.setItem('usuario', JSON.stringify(acessoGoogle));
+                this.$store.dispatch('setLogin');
+                router.push('/')
+                this.showMessage(`Bem-vindo, ${acessoGoogle.usuario.nome}`);
+            } else {
+                localStorage.removeItem('usuario');
+                this.showMessage(acessoGoogle.message, 'error');
+                this.isLoading = false;
+                this.btn = false
+                router.push('/login')
+
+
+            }
+        }
+        console.log(this.$route.query)
     },
     methods: {
         showMessage(msg = '', type = 'success') {
@@ -170,6 +212,16 @@ export default {
 
             }
         },
+        async logginAppGoogle() {
+
+            this.isLoading = !this.isLoading;
+            this.btn = !this.btn
+
+            // Redireciona para a rota de autenticação do Google
+            window.location.href = 'http://localhost:3000/auth/google';
+
+
+        }
     },
 };
 </script>

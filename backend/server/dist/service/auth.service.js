@@ -22,10 +22,12 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
+const googleapis_1 = require("googleapis");
 const config_service_1 = require("./config.service");
 const jwt_1 = require("@nestjs/jwt");
 const usuario_repository_1 = require("../repositories/usuario.repository");
 const bcrypt_jwt_module_1 = require("bcrypt-jwt-module");
+const axios_1 = require("axios");
 const jwt = new bcrypt_jwt_module_1.BcryptService();
 let AuthService = class AuthService {
     constructor(usuarioRepository, configService, jwtService) {
@@ -33,10 +35,23 @@ let AuthService = class AuthService {
         this.configService = configService;
         this.jwtService = jwtService;
     }
+    async getGoogleCalendarEvents(accessToken) {
+        const oauth2Client = new googleapis_1.google.auth.OAuth2();
+        oauth2Client.setCredentials({ access_token: accessToken });
+        const calendar = googleapis_1.google.calendar({ version: 'v3', auth: oauth2Client });
+        const response = await calendar.events.list({
+            calendarId: 'primary',
+            maxResults: 10,
+            singleEvents: true,
+            orderBy: 'startTime',
+        });
+        return response.data.items;
+    }
     async validateUser(username, pass) {
         const user = await this.usuarioRepository.findOne(username);
         if (user && user.password) {
             const match = await jwt.compare(pass, user.password);
+            '';
             if (match) {
                 const { password } = user, result = __rest(user, ["password"]);
                 return result;
@@ -44,6 +59,39 @@ let AuthService = class AuthService {
             return null;
         }
         return null;
+    }
+    async validarTokenGoogle(token) {
+        try {
+            const response = await axios_1.default.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${token}`);
+            console.log(response);
+            if (response.status === 200 && response.data.aud === 'seu-client-id-do-google') {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (error) {
+            console.error('Erro ao validar token:', error.response.data);
+            return false;
+        }
+    }
+    async loginAcessoGoogle(data) {
+        const { token } = data;
+        const user = await this.usuarioRepository.findOne(data.email);
+        if (user && this.validarTokenGoogle(token)) {
+            const eventosUsuario = await this.getGoogleCalendarEvents(token);
+            console.log(eventosUsuario);
+            const payload = { username: user.nome };
+            var novoToken = this.jwtService.sign(payload);
+            const userLogin = await this.configService.getConfig(user.id, novoToken);
+            return userLogin;
+        }
+        ;
+        return {
+            msg: 'Não Autorizado',
+            status: 401
+        };
     }
     async loginAcesso(data) {
         const payload = { username: data.nome };

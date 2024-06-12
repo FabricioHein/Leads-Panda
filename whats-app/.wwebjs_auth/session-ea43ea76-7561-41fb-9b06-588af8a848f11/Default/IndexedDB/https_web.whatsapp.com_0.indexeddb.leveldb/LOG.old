@@ -1,0 +1,16 @@
+2024/05/03-21:26:12.883 4a78 Reusing MANIFEST C:\Projeto-SmartTI\lead2converts\whats-app\.wwebjs_auth\session-ea43ea76-7561-41fb-9b06-588af8a848f11\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/05/03-21:26:12.884 4a78 Recovering log #201
+2024/05/03-21:26:13.440 4a78 Reusing old log C:\Projeto-SmartTI\lead2converts\whats-app\.wwebjs_auth\session-ea43ea76-7561-41fb-9b06-588af8a848f11\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000201.log 
+2024/05/03-21:26:40.054 38d4 Level-0 table #212: started
+2024/05/03-21:26:40.120 38d4 Level-0 table #212: 1252615 bytes OK
+2024/05/03-21:26:40.122 38d4 Delete type=0 #201
+2024/05/03-21:26:40.238 38d4 Compacting 1@1 + 7@2 files
+2024/05/03-21:26:40.480 38d4 Generated table #213@1: 51361 keys, 2218148 bytes
+2024/05/03-21:26:40.546 38d4 Generated table #214@1: 2371 keys, 2143238 bytes
+2024/05/03-21:26:40.635 38d4 Generated table #215@1: 9182 keys, 2168103 bytes
+2024/05/03-21:26:40.775 38d4 Generated table #216@1: 25506 keys, 2227505 bytes
+2024/05/03-21:26:40.919 38d4 Generated table #217@1: 56841 keys, 2194128 bytes
+2024/05/03-21:26:41.175 38d4 Generated table #218@1: 103326 keys, 2253453 bytes
+2024/05/03-21:26:41.277 38d4 Generated table #219@1: 42432 keys, 923653 bytes
+2024/05/03-21:26:41.277 38d4 Compacted 1@1 + 7@2 files => 14128228 bytes
+2024/05/03-21:26:41.278 38d4 compacted to: files[ 0 0 7 0 0 0 0 ]

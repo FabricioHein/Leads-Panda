@@ -53,6 +53,32 @@ class Api {
 
         return response;
     }
+    async getUserGoogle() {
+        const response = await (
+            await this.conectApiNoToken()
+        )
+            .get(`auth/current_user`, { withCredentials: true })
+            .then((response) => {
+                var user = response.data;
+                console.log(response)
+                if (user) {
+                    // Exibe as informações do usuário e mostra o botão de logout
+                   return user
+                }                
+                return response;
+            })
+            .catch((e) => {
+                return {
+                    ...e.response.data
+                };
+            });
+
+        if (response.code === 'ERR_BAD_REQUEST' || response.name === 'AxiosError' || response.statusCode === 401) {
+            this.RemoveTokenAcesso();
+        } else {
+            return response;
+        }
+    }
     async get() {
         const response = await (
             await this.conectApi()

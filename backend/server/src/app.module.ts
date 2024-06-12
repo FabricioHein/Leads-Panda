@@ -13,6 +13,7 @@ import { ProjetoModule } from './modules/projeto.module';
 import { FirebaseModule } from './modules/firebase.module';
 import { FirebaseService } from './service/firebase.service';
 import { ChatModule } from './modules/chat.module';
+import { AgendaModule } from './modules/agenda.module';
 import { ServeStaticModule } from '@nestjs/serve-static'; 
 
 
@@ -21,6 +22,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     // ServeStaticModule.forRoot({
     //   rootPath: join(__dirname, '..', 'client/dist'), // New
     // }),
+    AgendaModule,
     AuthModule,
     UsersModule,
     ConfigModule,

@@ -17,8 +17,23 @@ import { UsuarioRepository } from 'src/repositories/usuario.repository';
 
 import { PrismaService } from 'src/base/relacional/PrismaService';
 
+import { GoogleStrategy } from '../auth/google.strategy';
+import { AuthController } from '../controllers/auth.controller';
+import { UsuariosService } from 'src/service/usuarios.service';
+import { SendgridService } from 'src/mail/sendgrid/sendgrid.service';
+
+
+import { AuthenticatorService } from '../service/authenticator.service';
+import { ModulosPermissaoRepository } from 'src/repositories/modulos-permissao.repository';
+import { SubModulosPermissaoRepository } from 'src/repositories/sub-modulos-permissao.repository';
+import { ConfigClienteRepository } from 'src/repositories/configCliente.repository';
+import { SubModulosRepository } from 'src/repositories/sub-modulos.repository';
+import { ModulosRepository } from 'src/repositories/modulos.repository';
+
+
 @Module({
   imports: [
+
     UsersModule,
     ConfigModule,
     PassportModule,
@@ -26,18 +41,40 @@ import { PrismaService } from 'src/base/relacional/PrismaService';
     AuthenticatorModule,
     FormularioModule,
     FormularioAskModule,
+    PassportModule.register({ session: true }),
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '10d' },
     }),
   ],
   providers: [
+    UsuariosService,
+    SendgridService,
     AuthService,
     LocalStrategy,
     JwtStrategy,
     UsuarioRepository,
     PrismaService,
+    GoogleStrategy,
+
+    UsuariosService,
+
+    FirebaseService,
+    PrismaService,
+
+ 
+    AuthenticatorService,
+   
+    ModulosPermissaoRepository,
+    SubModulosPermissaoRepository,
+    FirebaseService,
+    ConfigClienteRepository,
+    SubModulosRepository,
+    ModulosRepository,
+    PrismaService,
+
   ],
+  controllers: [AuthController],
   exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }

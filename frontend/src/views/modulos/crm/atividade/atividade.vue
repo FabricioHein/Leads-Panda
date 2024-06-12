@@ -7,9 +7,14 @@ import '@/assets/sass/users/account-setting.scss';
 import { mapGetters } from 'vuex';
 import { useMeta } from '@/composables/use-meta';
 import page from '@/views/components/page.vue';
+//flatpickr
+import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
+import '@/assets/sass/forms/custom-flatpickr.css';
 
 import TaskService from '@/service/task-service';
 import {
+    
     DxDataGrid,
     DxColumn,
     DxFilterRow,
@@ -56,6 +61,7 @@ export default {
         }
     },
     components: {
+        flatPickr,
         page,
         //import tabela devextreme-vue
         DxDataGrid,

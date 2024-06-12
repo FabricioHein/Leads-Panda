@@ -179,6 +179,36 @@ let UsuariosService = class UsuariosService {
     }
     async createUsuarioCliente(data) {
         try {
+            if (data.type == 'google') {
+                const usuario = await this.usuarioRepositorio.getByEmailUser(data.email);
+                console.log(data);
+                if (!usuario) {
+                    console.log(usuario);
+                    let clientGoogle = {};
+                    if (!clientGoogle['nome_empresa']) {
+                        clientGoogle['nome_empresa'] = data.firstName;
+                        clientGoogle['nome_fantasia'] = data.firstName;
+                    }
+                    console.log(clientGoogle);
+                    const criarCliente = await this.configClienteRepository.createCliente({
+                        nome_fantasia: data.firstName,
+                        nome_empresa: data.firstName
+                    });
+                    let novoUsuarioGoogle = {
+                        nome: data.firstName,
+                        sobrenome: data.lastName,
+                        email: data.email,
+                        linkFoto: data.picture
+                    };
+                    novoUsuarioGoogle['isAdmin'] = true;
+                    novoUsuarioGoogle['primeiro_acesso'] = true;
+                    novoUsuarioGoogle['gerente_conta'] = true;
+                    novoUsuarioGoogle['clienteId'] = Number(criarCliente.id);
+                    const user = await this.createUsuario(novoUsuarioGoogle);
+                    return true;
+                }
+                return true;
+            }
             const cliente = data.cliente;
             const dataUsuario = data.usuario;
             if (!cliente.cnpj_cpf) {
@@ -210,6 +240,7 @@ let UsuariosService = class UsuariosService {
                             }
                         }
                         if (!usuario) {
+                            dataUsuario['type'] = 'normal';
                             dataUsuario['isAdmin'] = true;
                             dataUsuario['primeiro_acesso'] = true;
                             dataUsuario['gerente_conta'] = true;
@@ -266,6 +297,7 @@ let UsuariosService = class UsuariosService {
                     const criarCliente = await this.configClienteRepository.createCliente(cliente);
                     if (criarCliente) {
                         dataUsuario['clienteId'] = Number(criarCliente.id);
+                        dataUsuario['type'] = 'normal';
                         await this.createUsuario(dataUsuario);
                         const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
                         if (emailEnviado) {
@@ -322,7 +354,7 @@ let UsuariosService = class UsuariosService {
     }
     async createUsuario(data) {
         try {
-            if (data.password) {
+            if (data.password && data.type != 'google') {
                 data.password = await jwt.hash(data.password);
             }
             const usuario = await this.usuarioRepositorio.getByEmailUser(data.email);
@@ -344,15 +376,7 @@ let UsuariosService = class UsuariosService {
                         else {
                             data['id'] = Number(novoUsuario.id);
                             const permissaoAdmin = await this.permissaoAdmin(data);
-                            return permissaoAdmin
-                                ? {
-                                    msg: 'Usuário Criado com Sucesso',
-                                    status: true
-                                }
-                                : {
-                                    msg: 'Erro para Criar Usuário',
-                                    status: false
-                                };
+                            return permissaoAdmin;
                         }
                     }
                     return {

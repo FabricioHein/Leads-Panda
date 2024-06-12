@@ -1,0 +1,21 @@
+{
+    "type": "service_account",
+    "project_id": "lead2converts-prod",
+    "private_key_id": "15fe63c83509e2d597c6a6bbbc2c47d56e4d7abc",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCmbM0343/DPlut\nD/opqIsZuVL7pIwk4mq+TSZNyYaRUKjzHQYIMJ6vbhKDC+/Of7Ev2EPiijaa8G/r\naWAyGFmCgTFMl2gF4ch8qoEa93SAUuppMNqJrpoeePmGNNZUlpUEvtvXYVKF+5eJ\nzYz3RpZGDc3SA6hCxEk0rnWgzI6TRknTp5kExVIM02gjDG9RpE7bB1AT4rIjVbb9\n2SUh5UgGqawzu8tK1+PmsAJ0acWU64sBuBizEoSawys+jP1RHP/6lkmV/1KoZzIu\nwJ0jsOJHVj2gp27Kug21/Uehge59ge3xAsrNKSq76XjV2nnzJ60fudWf//TDwOsd\nk30KdvhtAgMBAAECggEADTR01AppCMTZ4VFzN/r3joL14qGbvRF6Br94WpOy6bTM\nsv2KjPvOm3zQWzWHQYtAM9ulB0SQMJsDRlqGF3N3JrO5hao9xrmzfrDIrasUw1nQ\n36fQrzv7Xo+avNtUZkHMcSPzrZM7SQY9b+GvXa9sHQLbYd6Ia0PHyzZMfwW8ClNY\nYZpsXqiQdQnnqWT/CjbgHJoePPwb84mjz3XCELoKRG0wf2dSgh5FgCVHeDiVsbVR\neWR/fVqsSWYxLFcbEdo94W5pARakkzQ3QRUqyp+byaBGWEP/ekdbsnMGOz7YFPte\nesLiCkj0p8nerRY8IWlSjfH4r6zGdbtnkUjy3MR8AQKBgQDqs9FPeIHF5AqXBByk\nNEDVzQeag3HbMHFUuc9APom4ImnPlfqtAa6A5AGoyVKwq1zU0seWXM2OQUra0xBM\np/LoaDF9ky6ACSsFvWdyPje7PlE0KoRZrlln1+PrNAyZBPf9oFmTqwyqXzBn7E4z\nvsEfXpAFtGm+svjX1cnwH8MWUQKBgQC1huL9e3q6wEyGIK02R6H62kuU6029wpFQ\nfRGyKBQg5wh7HDAWu1aypTPiD+l/iCEQ1Nk6kNiS5lhJNLqNj7JgQKgGUy192qq5\nLchvb5hYNIle5kSScFL2hF12gbA/OiQn8H7WYvLOTp33XRjRP/KRVdB5+xJdU6TD\nGUm9eOnNXQKBgQCNt04ngkg5yVxrm1v/+l07u7VfowbYpwOHeTqfPCPEP2NMqO7Y\nEC/iO8qUtBtt+crv5uYE8LxdrScZwmARKUgO9PsNLBXj0aVcreUMomzcbuBxc0q/\nK/toLH++wYrpyopDZtMvyxS2uwtrdNAzhnbuDhdAmpNPRpnjGX/5sfQGQQKBgBA4\nXVAJGI5XYH8brF6NSAwCNX65B9lM6W8nvc0Nh77o5fkaK7HcS4LrABfTFCoxH8NB\nQafaCYAW1Qy1iXXcwTOYk2r9Q7NbNqYVUTOj5Rj8mMnCCZ6MKt2cNj3AmN8Ncu2e\nr7a4YLnOjI7t4qnP7PzPjjFYHev47WABgnVLuJiBAoGBAKNG/DE7wabiW1tXQAYD\nSJW5KqBHJ/ZNVcfumZKoL0FsmdUUOfle4r3zOLXQbeDJOZlQND1y9hL7LYx2k62F\n+te5+tzL1QgULq829jqUU/35ISLYzIDpi5lnnF+ESafB2v4wmrl7aT33iTpYfLLG\nRKID9aTExCecnfGZEm4rAYQi\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-4tavs@lead2converts-prod.iam.gserviceaccount.com",
+    "client_id": "110553335795757219423",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-4tavs%40lead2converts-prod.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com",
+    "apiKey": "AIzaSyBGANb7eyCGsaMmZe4kdx2swoaBMyj020U",
+    "authDomain": "lead2converts-prod.firebaseapp.com",
+    "projectId": "lead2converts-prod",
+    "storageBucket": "lead2converts-prod.appspot.com",
+    "messagingSenderId": "431203076451",
+    "appId": "1:431203076451:web:323eec8134c71ea6282b56",
+    "measurementId": "G-PE1ECP7P0V"
+  }
+  

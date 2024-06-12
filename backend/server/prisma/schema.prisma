@@ -68,10 +68,10 @@ model chat_info {
 }
 
 model integracao {
-  integracao_id         Int                  @id @default(autoincrement())
-  
-  configuracaoCliente   configuracaoCliente? @relation(fields: [cliente_id], references: [id])
-  cliente_id            Int?
+  integracao_id Int @id @default(autoincrement())
+
+  configuracaoCliente configuracaoCliente? @relation(fields: [cliente_id], references: [id])
+  cliente_id          Int?
 }
 
 model messages {
@@ -81,7 +81,7 @@ model messages {
   type        String?    @db.VarChar(10)
   whatsapp_id String?    @db.VarChar(150)
   chat_id     Int
-  atendimento Boolean?  @default(false) 
+  atendimento Boolean?   @default(false)
   created_at  DateTime?  @default(now())
   updated_at  DateTime?  @updatedAt
   arquivos    arquivos[]
@@ -127,6 +127,29 @@ model msg_padrao {
   descricao             String?
   configuracaoCliente   configuracaoCliente? @relation(fields: [configuracaoClienteId], references: [id])
   configuracaoClienteId Int?
+}
+
+model agenda {
+  id          Int           @id @default(autoincrement())
+  title       String?
+  description String?
+  className   String?       @db.VarChar(20)
+  status      String?       @db.VarChar(10)
+  date_start  DateTime?
+  date_end    DateTime?
+  created_at  DateTime?     @default(now())
+  updated_at  DateTime?     @updatedAt
+  Users       agenda_user[]
+}
+
+model agenda_user {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  agendaId Int
+  Users    Users  @relation(fields: [userId], references: [id])
+  agenda   agenda @relation(fields: [agendaId], references: [id])
+
+  @@unique([userId, agendaId])
 }
 
 model times {
@@ -759,6 +782,7 @@ model Users {
   sexo                  sexo?                   @relation(fields: [sexoId], references: [id])
   times                 times?                  @relation(fields: [timesId], references: [id])
   venda                 venda[]
+  agenda_user           agenda_user[]
 
   @@map("usuarios")
 }

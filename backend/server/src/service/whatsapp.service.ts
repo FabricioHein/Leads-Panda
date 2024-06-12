@@ -4,7 +4,7 @@ import WhatsAppAPI from "whatsapp-api-js";
 import { Text, Image, Document, Template } from "whatsapp-api-js/messages";
 import * as Contacts from "whatsapp-api-js/messages/contacts";
 import { Node18 } from "whatsapp-api-js/setup/node";
-import * as whatsapp from "wa-multi-session";
+
 import { PrismaService } from 'src/base/relacional/PrismaService';
 
 

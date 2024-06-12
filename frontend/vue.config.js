@@ -61,7 +61,15 @@ module.exports = {
                 rewrite: (path) => path.replace(/^\/api/, ''),
                 secure: true,
 
-            },
+            }, 
+            '/auth': {
+                target: process.env.BACKEND,
+                // target: 'https://us-central1-lead2converts-prod.cloudfunctions.net/backend',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/auth/, ''),
+                secure: true,
+
+            },             
             '/apicep': {
                 target:  process.env.CEP,
                 changeOrigin: true,

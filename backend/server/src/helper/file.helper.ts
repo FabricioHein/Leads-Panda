@@ -15,8 +15,8 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-console.log(firebaseConfig);
-initializeApp(firebaseConfig);
+const config =  firebaseConfig();
+initializeApp(config);
 // Initialize Cloud Storage and get a reference to the service
 const storage = getStorage();
 

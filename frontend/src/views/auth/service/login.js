@@ -9,6 +9,10 @@ class Login extends Api {
     async loginApp() {
         return await this.Logar();
     }
+    async loginAppGoogle() {
+        this.url = '/auth/current_user';
+        return await this.Logar();
+    }
 }
 
 export default Login;

@@ -16,8 +16,8 @@
         <div class="col-lg-12 layout-spacing">
             <div class="task-list-section">
                 <div v-for="project in project_list" :key="project.etapa" class="task-list-container">
-                    <div class="connect-sorting" style="background: #ffff">
-                        <div :style="colorProj(project.color)"></div>
+                    <div class="connect-sorting" :style="colorProjBackground(project.color)">
+                        <div ></div>
 
                         <div class="task-container-header">
                             <i class="bi bi-diagram-3"></i>
@@ -62,7 +62,7 @@
                             <div v-for="task in project.task" :key="project.id + '' + task.id"
                                 @dragover="moveTask(task)" class="card task-text-progress cursor-move ui-sortable-handle cursor-p
                                                                 ">
-                                <div class="card-body" @dblclick="goToTask(task, project)">
+                                <div class="card-body" @click="goToTask(task, project)">
                                     <div v-if="task.image" class="px-2 pt-2">
                                         <img src="@/assets/images/taskboard.jpg" class="img-fluid rounded"
                                             alt="scrumboard" />
@@ -559,6 +559,10 @@ const colorProj = (color) => {
     background: ${color};
     height: 2.5px;
     border-radius: 30px 30px 30px 30px;` : ''
+}
+
+const colorProjBackground = (color) => {
+    return color ? `background: ${color};` : ''
 }
 //Task
 

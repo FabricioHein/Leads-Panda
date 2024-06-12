@@ -1,12 +1,57 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
+import { url } from 'inspector';
 const { Client, MessageMedia, LocalAuth } = require('whatsapp-web.js');
+import { PrismaService } from './base/relacional/PrismaService';
 
 const qrcode = require('qrcode');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 const sessions = [];
 const SESSIONS_FILE = './whatsapp-sessions.json';
+
+const prisma = new PrismaService()
+
+import MessageDTO from './dto/dto-MessageDTO';
+export async function getContacts(id: any) {
+
+
+  try {
+    console.log('get: ' + id);
+    const client = new Client({
+      restartOnAuthFail: true,
+      puppeteer: {
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--single-process', // <- this one doesn't works in Windows
+          '--disable-gpu'
+        ],
+      },
+      webVersionCache: {
+        type: 'remote',
+        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2410.1.html',
+      },
+      authStrategy: new LocalAuth({
+        clientId: id
+      })
+    });
+    // Inicialize o cliente aqui
+    client.initialize();
+
+
+    // return contacts
+  } catch (error) {
+    console.error('Error fetching contacts:', error);
+  }
+
+}
 
 const arrayBufferToBase64 = (buffer: any) => {
   let binary = '';
@@ -58,20 +103,33 @@ const createSessionsFileIfNotExists = function () {
 
 createSessionsFileIfNotExists();
 
-const setSessionsFile = function (sessions: any) {
-  fs.writeFile(SESSIONS_FILE, JSON.stringify(sessions), function (err: any) {
-    if (err) {
-      console.log(err);
+
+const getSessionsFile = async function () {
+
+  const session = await prisma.chat_info.findMany({
+    select: {
+      uuid: true,
+      configuracaoCliente: {
+        select: {
+          id: true
+        }
+      }
     }
   });
+  console.log(session)
+  return session.map((s) => {
+    if (s.configuracaoCliente?.id && s.uuid) {
+      return {
+        id: s.uuid + s.configuracaoCliente?.id,
+        ready: true       
+
+      }
+    }
+
+  }) || [];
 }
 
-const getSessionsFile = function () {
-  return JSON.parse(fs.readFileSync(SESSIONS_FILE));
-}
-
-const initSession = function (id: any, io?: any) {
-  console.log('Creating session: ' + id);
+const removeSession = (id: any, io?: any) => {
   const client = new Client({
     restartOnAuthFail: true,
     puppeteer: {
@@ -86,37 +144,10 @@ const initSession = function (id: any, io?: any) {
         '--single-process', // <- this one doesn't works in Windows
         '--disable-gpu'
       ],
-    }, 
-    webVersionCache: {
-      remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2402.5-beta.html',
-      type: 'remote'
     },
-    authStrategy: new LocalAuth({
-      clientId: id
-    })
-  });
-
-  client.initialize();
-}
-const removeSession = (id: any, io?: any)=>{
-  const client = new Client({
-    restartOnAuthFail: true,
-    puppeteer: {
-      headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-accelerated-2d-canvas',
-        '--no-first-run',
-        '--no-zygote',
-        '--single-process', // <- this one doesn't works in Windows
-        '--disable-gpu'
-      ],
-    }, 
     webVersionCache: {
-      remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2402.5-beta.html',
-      type: 'remote'
+      type: 'remote',
+      remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2410.1.html',
     },
     authStrategy: new LocalAuth({
       clientId: id
@@ -125,155 +156,222 @@ const removeSession = (id: any, io?: any)=>{
 
   client.destroy();
   client.initialize();
+  getSessionsFile();
 
-  const savedSessions = getSessionsFile();
-  const sessionIndex = savedSessions.findIndex((sess: any) => sess.id == id);
-  savedSessions.splice(sessionIndex, 1);
-  setSessionsFile(savedSessions);
-
-  io.emit('remove-session', 'Deletado com Sucesso!');
 
 }
 const createSession = function (id: any, io?: any) {
-  try{
-  const client = new Client({
-    restartOnAuthFail: true,
-    puppeteer: {
-      headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-accelerated-2d-canvas',
-        '--no-first-run',
-        '--no-zygote',
-        '--single-process', // <- this one doesn't works in Windows
-        '--disable-gpu'
-      ],
-    },
-    webVersionCache: {
-      remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2332.15.html',
-      type: 'remote'
-    },
-    authStrategy: new LocalAuth({
-      clientId: id
-    })
-  });
-
-  client.initialize();
-
-  client.on('qr', async (qr: any) => {
-
-
-    qrcode.toDataURL(qr, (err: any, url: any) => {
-
-      io.emit('qrCode', { id: id, src: url });
-      io.emit('message', { id: id, text: 'QR Code received, scan please!' });
+  try {
+    const client = new Client({
+      restartOnAuthFail: true,
+      puppeteer: {
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-accelerated-2d-canvas',
+          '--no-first-run',
+          '--no-zygote',
+          '--single-process', // <- this one doesn't works in Windows
+          '--disable-gpu'
+        ],
+      },
+      webVersionCache: {
+        type: 'remote',
+        remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2409.0.html',
+      },
+      authStrategy: new LocalAuth({
+        clientId: id
+      })
     });
 
-
-  });
-
-  client.on('ready', () => {
-    io.emit('ready', { id: id });
-    io.emit('message', { id: id, text: 'Whatsapp is ready!' });
-
-    const savedSessions = getSessionsFile();
-    const sessionIndex = savedSessions.findIndex((sess: any) => sess.id == id);
-    savedSessions[sessionIndex].ready = true;
-    setSessionsFile(savedSessions);
-    
-  });
-
-  client.on('authenticated', async () => {
-    io.emit('authenticated', { id: id });
-    console.log('Whatsapp is authenticated!');
-
-
-    
-
-    io.emit('message', { id: id, text: 'conected' });
-
-    // client.getContacts()
-    //   .then(async (contatos: any) => {
-
-    //     await contatos.map(async (contato: any) => {
-
-    //       if (contato.id != null && contato.id._serialized != null ) {
-
-
-    //           await client.getProfilePicUrl(contato.id._serialized).then(async (URL: any) => {
-
-
-    //             if (URL != null) {
-    //               console.log(URL)
-
-    //             }
-    //             else {
-    //                 console.log('***  FALHA - Url retornada é nula');
-                   
-    //             }
-    //         });
-
-    //       }
-
-    //     })
-
-
-    //   });
-
-  });
-
-  client.on('auth_failure', function () {
-    console.log('Auth failure, restarting...')
-    io.emit('message', { id: id, text: 'Auth failure, restarting...' });
-  });
-
-  client.on('disconnected', (reason: any) => {
-    io.emit('message', { id: id, text: 'Whatsapp is disconnected!' });
-    client.destroy();
     client.initialize();
 
+    client.on('qr', async (qr: any) => {
 
 
-    // Menghapus pada file sessions
-    const savedSessions = getSessionsFile();
-    const sessionIndex = savedSessions.findIndex((sess: any) => sess.id == id);
-    savedSessions.splice(sessionIndex, 1);
-    setSessionsFile(savedSessions);
+      qrcode.toDataURL(qr, (err: any, url: any) => {
 
-    io.emit('remove-session', id);
-  });
+        if (io) {
+          io.emit('qrCode', { id: id, src: url });
+          io.emit('message', { id: id, text: 'QR Code received, scan please!' });
+        }
 
-  // Tambahkan client ke sessions
-  sessions.push({
-    id: id,
-    client: client
-  });
+      });
 
-  // Menambahkan session ke file
-  const savedSessions = getSessionsFile();
-  const sessionIndex = savedSessions.findIndex((sess: any) => sess.id == id);
 
-  if (sessionIndex == -1) {
-    savedSessions.push({
-      id: id,
-      ready: false,
     });
-    setSessionsFile(savedSessions);
-  }
-  }catch (error) {
+
+    client.on('ready', async () => {
+      if (io) {
+        io.emit('ready', { id: id });
+        io.emit('message', { id: id, text: 'Whatsapp is ready!' });
+
+      }
+   getSessionsFile();
+      
+
+      // const getContacts = await client.getContacts();
+
+      // const contatos = await getContacts.map(async (contato: any) => {
+
+      //   if (contato.id != null && contato.id._serialized != null) {
+
+      //     const urlLink = await client.getProfilePicUrl(contato.id._serialized);
+
+      //     const c = {
+      //       nome: contato.pushname,
+      //       telefone: contato.number,
+      //       link: urlLink
+      //     }
+
+      //     return c;
+
+      //   }
+
+      // });
+
+      // console.log(contatos)
+
+
+
+    });
+    client.on('message', async (message: any) => {
+
+      if (message && !message.title && !message.description) {
+
+        let clientId = Number(id.substr(id.length - 1));
+
+        const msgDto = new MessageDTO(message);
+        let from = String(message.from).split('@')[0];
+        let user_name = msgDto.nome != null ? msgDto.nome : from
+        console.log('user_name', user_name)
+
+        const chat_info = await prisma.chat_info.findFirst(
+          {
+            where: {
+              cliente_id: clientId,
+              type: 'WhatsApp-qrcode'
+            }
+          }
+
+        );
+
+        if (chat_info) {
+
+          const chat = await prisma.chat.findFirst({
+            where: {
+              telefone: from,
+              cliente_id: clientId
+            }
+          });
+
+          if (chat) {
+
+            await prisma.messages.create({
+              data: {
+                chat_id: chat.chat_id,
+                username: user_name,
+                atendimento: false,
+                text: msgDto.msg,
+                type: 'txt',
+                whatsapp_id: String(msgDto.whatsapp_id)
+              }
+            });
+
+          } else {
+            const data = {
+              nome: user_name,
+              uuid: uuidv4(),
+              chat_id: chat_info.chat_info_id,
+              cliente_id: chat_info.cliente_id,
+              telefone: from
+            }
+
+            const chat = await prisma.chat.create({
+              data: data
+            });
+
+            if (chat) {
+
+              await prisma.messages.create({
+                data: {
+                  chat_id: chat.chat_id,
+                  username: String(user_name),
+                  atendimento: false,
+                  text: msgDto.msg,
+                  type: 'txt',
+                  whatsapp_id: String(msgDto.whatsapp_id)
+                }
+              });
+
+            }
+
+          }
+
+
+        }
+
+      }
+
+    })
+    client.on('authenticated', async () => {
+      if (io) {
+        io.emit('authenticated', { id: id });
+        io.emit('message', { id: id, text: 'conected' });
+      }
+      console.log('Whatsapp is authenticated!');
+
+
+    });
+
+    client.on('auth_failure', function () {
+      console.log('Auth failure, restarting...')
+      if (io) {
+        io.emit('message', { id: id, text: 'Auth failure, restarting...' });
+      }
+    });
+
+    client.on('disconnected', (id: any) => {
+      if (io) {
+        io.emit('message', { id: id, text: 'Whatsapp is disconnected!' });
+      }
+      client.destroy();
+      client.initialize();
+
+
+
+      // Menghapus pada file sessions
+     getSessionsFile();
+    
+
+      if (io) {
+        io.emit('remove-session', id);
+      }
+    });
+
+    // Tambahkan client ke sessions
+    sessions.push({
+      id: id,
+      client: client
+    });
+
+    // Menambahkan session ke file
+    getSessionsFile();
+  
+  } catch (error) {
     console.error("Error initializing client:", error);
   }
 }
 
-const init = function (socket?: any) {
-  const savedSessions = getSessionsFile();
+const init = async function (socket?: any) {
+  const savedSessions = await getSessionsFile();
 
   if (savedSessions.length > 0 && !socket) {
 
     savedSessions.forEach((sess: any) => {
-      initSession(sess.id);
+      createSession(sess.id);
     });
   }
 }
@@ -289,15 +387,15 @@ export function initializeSocket(server: http.Server): void {
     init(socket);
 
     socket.on('create-session', function (data: any) {
-      console.log('Create session: ' + data.id);
-      createSession(data.id, socket);
+      console.log('Create session: ' + data.uuid);
+      createSession(data.uuid, socket);
     });
 
     socket.on('disconnected', function (data: any) {
       console.log('disconnected session: ' + data.id);
       removeSession(data.uuid, socket);
     });
-   
+
   });
 
 }

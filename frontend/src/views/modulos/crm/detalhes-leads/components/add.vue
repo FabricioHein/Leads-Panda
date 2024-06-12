@@ -37,7 +37,7 @@
         <label>Previsão de Fechamento</label>
         <input v-model="params.previsao_fechamento" class="form-control" type="date" />
         <label>Número</label>
-        <input type="text" class="form-control" v-maska="'##-#######'" placeholder="__-_______"
+        <input type="text" class="form-control" v-maska="'+55(##)#####-####'" placeholder="__-_______"
           v-model="params.contato_numero" />
         <label>Empresa</label>
         <input type="text" class="form-control" v-model="params.empresa" />

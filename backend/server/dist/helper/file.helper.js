@@ -9,8 +9,8 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-console.log(config_1.default);
-(0, app_1.initializeApp)(config_1.default);
+const config = (0, config_1.default)();
+(0, app_1.initializeApp)(config);
 const storage = (0, storage_1.getStorage)();
 class FileHelper {
     static bufferToStream(binary) {

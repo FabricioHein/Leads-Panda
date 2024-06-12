@@ -315,7 +315,8 @@
                                                         <label>Data Inicio</label>
                                                     
                                                         <div class="w-100">
-                                                            <input type="date" v-model="params.date_start"
+                                                     
+                                                            <input type="datetime-local" v-model="params.date_start"
                                                                 class="form-control" />
                                                         </div>
                                                     </div>
@@ -327,7 +328,7 @@
                                                     <div class="form-group mb-4">
                                                         <label>Data Final</label>
                                                         <div class="w-100">
-                                                            <input type="date" v-model="params.date_end"
+                                                            <input type="datetime-local" v-model="params.date_end"
                                                                 class="form-control" />
                                                         </div>
                                                     </div>

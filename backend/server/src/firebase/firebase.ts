@@ -10,7 +10,8 @@ import {
   updatePassword,
 } from 'firebase/auth';
 
-initializeApp(firebaseConfig);
+const config =  firebaseConfig();
+initializeApp(config);
 
 // Initialize Cloud Storage and get a reference to the service
 

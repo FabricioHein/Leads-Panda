@@ -75,8 +75,7 @@ export default {
         toggleLayoutStyle(state, value) {
             //boxed-layout|large-boxed-layout|full
             value = value || '';
-            localStorage.setItem('layout_style', value);
-            state.layout_style = value;
+            localStorage.setItem('layout_style', 'full');
         },
         setLogin: () => {
             router.push('/');

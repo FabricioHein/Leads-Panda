@@ -4,7 +4,8 @@ exports.Firebase = void 0;
 const app_1 = require("firebase/app");
 const config_1 = require("./config");
 const auth_1 = require("firebase/auth");
-(0, app_1.initializeApp)(config_1.default);
+const config = (0, config_1.default)();
+(0, app_1.initializeApp)(config);
 class Firebase {
     static async signInWithEmailAndPassword(email, password) {
         const auth = (0, auth_1.getAuth)();

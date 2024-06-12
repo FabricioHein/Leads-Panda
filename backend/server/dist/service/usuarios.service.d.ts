@@ -29,7 +29,7 @@ export declare class UsuariosService {
     sendWelcomeEmail(newUser: any): Promise<boolean>;
     verifyTokenRecoverPassword(token: string): Promise<boolean>;
     novaSenhaUsuarioEmail(email: any): Promise<any>;
-    createUsuarioCliente(data: any): Promise<{
+    createUsuarioCliente(data: any): Promise<true | {
         msg: string;
         status: boolean;
     }>;

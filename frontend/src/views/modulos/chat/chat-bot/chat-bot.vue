@@ -151,7 +151,7 @@ export default {
             if (createChat) {
 
                 this.socket.emit('create-session', {
-                    uuid: this.formData.uuid
+                    uuid: this.formData.uuid + this.cliente.id
                 });
 
                 this.socket.on('qrCode', function (data) {

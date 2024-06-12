@@ -273,8 +273,8 @@ export declare class ChatService {
     }>;
     getAllChatOpen(clienteId: any): Promise<({
         chat_info: {
-            uuid: string;
             type: string;
+            uuid: string;
         };
     } & {
         chat_id: number;
@@ -294,8 +294,8 @@ export declare class ChatService {
     })[]>;
     getAllChatClose(clienteId: any): Promise<({
         chat_info: {
-            uuid: string;
             type: string;
+            uuid: string;
         };
     } & {
         chat_id: number;

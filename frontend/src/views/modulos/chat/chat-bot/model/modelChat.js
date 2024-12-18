@@ -27,7 +27,7 @@
             this.texto_input = data.texto_input || null,
             this.tamanho_font_mgm = data.tamanho_font_mgm || null,
             this.tamanho_avatar_usuario = data.tamanho_avatar_usuario || null,
-            this.cliente_id = Number(data.cliente_id),
+            this.empresa_configId = Number(data.empresa_configId),
             this.anexo_documento = data.anexo_documento ? data.anexo_documento : false
 
     }

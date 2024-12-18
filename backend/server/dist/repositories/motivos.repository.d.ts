@@ -2,10 +2,10 @@ import { PrismaService } from 'src/base/relacional/PrismaService';
 export declare class MotivosRepository {
     private prisma;
     constructor(prisma: PrismaService);
-    getMotivosAll(clienteId: any): Promise<{
+    getMotivosAll(empresa_configId: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;
@@ -14,7 +14,7 @@ export declare class MotivosRepository {
     getByIdMotivos(id: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;
@@ -23,7 +23,7 @@ export declare class MotivosRepository {
     createMotivos(data: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;
@@ -32,7 +32,7 @@ export declare class MotivosRepository {
     updateMotivos(id: any, data: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;
@@ -41,7 +41,7 @@ export declare class MotivosRepository {
     deleteMotivos(id: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;

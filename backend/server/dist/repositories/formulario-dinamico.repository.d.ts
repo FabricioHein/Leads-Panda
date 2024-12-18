@@ -2,11 +2,11 @@ import { PrismaService } from 'src/base/relacional/PrismaService';
 export declare class FormularioDinamicoRepository {
     private prisma;
     constructor(prisma: PrismaService);
-    getFormularioDinamicoAll(clienteId: any): Promise<({
+    getFormularioDinamicoAll(empresa_configId: any): Promise<({
         form_ask: {
             id: number;
             formulario_dinamicoId: number;
-            json: import(".prisma/client").Prisma.JsonValue;
+            json: import("@prisma/client/runtime/library").JsonValue;
             created_at: Date;
             updated_at: Date;
         }[];
@@ -15,12 +15,12 @@ export declare class FormularioDinamicoRepository {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -33,12 +33,12 @@ export declare class FormularioDinamicoRepository {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -51,12 +51,12 @@ export declare class FormularioDinamicoRepository {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -69,12 +69,12 @@ export declare class FormularioDinamicoRepository {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -87,12 +87,12 @@ export declare class FormularioDinamicoRepository {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -105,12 +105,12 @@ export declare class FormularioDinamicoRepository {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -123,12 +123,12 @@ export declare class FormularioDinamicoRepository {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;

@@ -11,7 +11,7 @@ export declare class ProjetoService {
         updated_at: Date;
         tipo_projetoId: number;
         operador: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
     }>;
     getAllProjeto(id: any): Promise<{
         id: number;
@@ -20,7 +20,7 @@ export declare class ProjetoService {
         updated_at: Date;
         tipo_projetoId: number;
         operador: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
     }[]>;
     getAllProjetoById(id: any): Promise<{
         processo: {
@@ -34,7 +34,7 @@ export declare class ProjetoService {
         updated_at: Date;
         tipo_projetoId: number;
         operador: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
     }>;
     createProjeto(data: any): Promise<{
         id: number;
@@ -43,7 +43,7 @@ export declare class ProjetoService {
         updated_at: Date;
         tipo_projetoId: number;
         operador: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
     }>;
     deleteProjeto(data: any): Promise<{
         id: number;
@@ -52,6 +52,6 @@ export declare class ProjetoService {
         updated_at: Date;
         tipo_projetoId: number;
         operador: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
     }>;
 }

@@ -73,7 +73,7 @@ export default {
             this.showTabela = false;
 
             const produto = new produtoService(
-                { clienteId: this.cliente.id, }, this.token,
+                { empresa_configId: this.cliente.id, }, this.token,
                 `/produto/todos/${this.cliente.id}`);
 
             this.data = await produto.getAllProdutos();

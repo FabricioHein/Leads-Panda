@@ -1,5 +1,6 @@
 export declare class DateTime {
     static ToDateTime(val: any): Date;
+    static formatToHoraMin(date: any): string;
     static ToFormat(val: any, format: any): any;
     static DateDiff(inicial: any, final: any): any;
     static DateNow(): Date;

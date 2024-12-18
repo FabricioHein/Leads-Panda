@@ -15,10 +15,10 @@ export class FormularioController {
   constructor(private readonly formularioService: FormularioService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('todos/:clienteId')
-  async getAllFormularioDinamico(@Param('clienteId') clienteId) {
+  @Get('todos/:empresa_configId')
+  async getAllFormularioDinamico(@Param('empresa_configId') empresa_configId) {
     try {
-      return await this.formularioService.getAllFormularioDinamico(clienteId);
+      return await this.formularioService.getAllFormularioDinamico(empresa_configId);
     } catch (error) {
       return error;
     }

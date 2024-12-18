@@ -9,7 +9,7 @@ export declare class HistoricoClienteRepository {
         operador: string;
         created_at: Date;
         updated_at: Date;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     getByIdHistoricoCliente(id: any): Promise<{
         id: number;
@@ -18,7 +18,7 @@ export declare class HistoricoClienteRepository {
         operador: string;
         created_at: Date;
         updated_at: Date;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     createHistoricoCliente(data: any): Promise<{
         id: number;
@@ -27,7 +27,7 @@ export declare class HistoricoClienteRepository {
         operador: string;
         created_at: Date;
         updated_at: Date;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     updateHistoricoCliente(id: any, data: any): Promise<{
         id: number;
@@ -36,7 +36,7 @@ export declare class HistoricoClienteRepository {
         operador: string;
         created_at: Date;
         updated_at: Date;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     deleteHistoricoCliente(id: any): Promise<{
         id: number;
@@ -45,6 +45,6 @@ export declare class HistoricoClienteRepository {
         operador: string;
         created_at: Date;
         updated_at: Date;
-        clienteId: number;
+        empresa_configId: number;
     }>;
 }

@@ -13,9 +13,35 @@ import {
   @Controller('api/agenda')
   export class AgendaController {
     constructor(private readonly agendaService: AgendaService) {}
+
+    @Post('agendamento/cliente')
+    async getAgendaByDataUsuario(@Request() req) {
+      try {
+        return await this.agendaService.getAllClienteAngendaUser(req.body);
+      } catch (error) {
+        return error;
+      }
+    }
+    @Post('agendamento/criarAgendamento')
+    async crearAgendamentoExterno(@Request() req) {
+      try {
+        return await this.agendaService.crearAgendamentoExterno(req.body);
+      } catch (error) {
+        return error;
+      }
+    }
+    @Post('agendamento/horarios')
+    async getAllClienteAngendaUser(@Request() req) {
+      try {
+        return await this.agendaService.getAgendaByDataUsuario(req.body);
+      } catch (error) {
+        return error;
+      }
+    }
+
     @UseGuards(JwtAuthGuard)
-    @Get('todos/:userId')
-    async getAllagenda(@Param('userId') id) {
+    @Get('todos/:empresa_configId')
+    async getAllagenda(@Param('empresa_configId') id) {
       try {
         return await this.agendaService.getAllAgenda(id);
       } catch (error) {

@@ -25,11 +25,12 @@ class FileHelper {
     static base64ToBuffer(fileBase64) {
         return Buffer.from(fileBase64, 'base64');
     }
-    static async gravarFileStorage(bufferFile, clienteId, path) {
+    static async gravarFileStorage(bufferFile, empresa_configId, path) {
+        console.log(empresa_configId);
         const metadata = {
             contentType: bufferFile.mimetype,
         };
-        const storageRef = (0, storage_1.ref)(storage, `files/cliente/${clienteId}/${path}`);
+        const storageRef = (0, storage_1.ref)(storage, `files/cliente/${empresa_configId}/${path}`);
         const snapshot = await (0, storage_1.uploadBytesResumable)(storageRef, bufferFile.buffer, metadata);
         const downloadURL = await (0, storage_1.getDownloadURL)(snapshot.ref);
         console.log('File successfully uploaded.');

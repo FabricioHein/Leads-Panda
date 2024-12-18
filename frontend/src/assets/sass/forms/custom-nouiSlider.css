@@ -24,13 +24,13 @@
   display: none; }
 
 .noUi-connect {
-  background: #000000; }
+  background: #4154f1000; }
 
 .noUi-tooltip {
   border: 1px solid #e0e6ed;
   border-radius: 8px;
   background: #fff;
-  color: #000;
+  color: #4154f1;
   padding: 6px 14px;
   font-size: 13px;
   font-weight: 600; }
@@ -41,7 +41,7 @@
 .example-val {
   font-weight: 700;
   font-size: 14px;
-  color: #000000; }
+  color: #4154f1000; }
   .example-val span.precentage-val {
     display: inline-block;
     background: #ffffff;

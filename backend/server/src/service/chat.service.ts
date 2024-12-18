@@ -17,8 +17,8 @@ export class ChatService {
 
   async getChatInfoByUuid(uuid) {
     try {
-      
-      return await this.chatInfoRepository.getByUuidChatInfo(uuid);
+
+      return this.deleteToken(await this.chatInfoRepository.getByUuidChatInfo(uuid));
     } catch (error) {
       return ErroBadRequest(error);
     }
@@ -29,10 +29,10 @@ export class ChatService {
       const { chat_info_id } = data;
       const chatInfo = data;
 
-      return await this.chatInfoRepository.updateChatInfo(
+      return this.deleteToken(await this.chatInfoRepository.updateChatInfo(
         Number(chat_info_id),
         chatInfo,
-      );
+      ));
     } catch (error) {
       return ErroBadRequest(error);
     }
@@ -54,11 +54,16 @@ export class ChatService {
   }
   async createchatInfo(data: any) {
     try {
-      const chatInfoHas =  await this.chatInfoRepository.getChatInfoAllType(
-        data.cliente_id,
-        data.type);
-        return await this.chatInfoRepository.createChatInfo(data);
-   
+      const chatInfoHas = this.deleteToken(await this.chatInfoRepository.getChatInfoAllType(
+        data.empresa_configId,
+        data.type)) ;
+
+      if (chatInfoHas) {
+        return this.deleteToken(await this.chatInfoRepository.createChatInfo(data));
+
+      }
+      return ErroBadRequest("Chat não encontrado!");
+
     } catch (error) {
       return ErroBadRequest(error);
     }
@@ -67,8 +72,8 @@ export class ChatService {
   async deletechatInfo(data: any) {
     try {
 
-      const id = data.chat_info_id;  
-      return await this.chatInfoRepository.deleteChatInfo(id);
+      const id = data.chat_info_id;
+      return this.deleteToken(await this.chatInfoRepository.deleteChatInfo(id));
     } catch (error) {
       return ErroBadRequest(error);
     }
@@ -77,7 +82,7 @@ export class ChatService {
   async getChatInfoByUuidCliente(uuid) {
     try {
 
-      const getChat = await this.chatInfoRepository.getByUuidChatInfo(uuid);
+      const getChat = this.deleteToken(await this.chatInfoRepository.getByUuidChatInfo(uuid));
 
       if (getChat) {
         return getChat;
@@ -112,34 +117,34 @@ export class ChatService {
   }
 
   async createMessages(msg) {
-    try {      
+    try {
       const chatHas = await this.getChatInfoByUuid(msg.uuid);
-      if (chatHas) {   
+      if (chatHas) {
         let sendMessage = {
           ...chatHas,
           ...msg
         }
 
-        if(chatHas.type == 'WhatsApp'){
-          const whatsapp = await this.whatsappService.sendMessageOficial(sendMessage);
-          delete msg['uuid'];
-          if(whatsapp){
-            return await this.messagesRepository.createMessages(msg);
-          }
-          return ErroBadRequest('Erro para Enviar Msg');
+        if (chatHas.type == 'WhatsApp') {
+          // const whatsapp = await this.whatsappService.sendMessageOficial(sendMessage);
+          // delete msg['uuid'];
+          // if (whatsapp) {
+          //   return await this.messagesRepository.createMessages(msg);
+          // }
+          // return ErroBadRequest('Erro para Enviar Msg');
         }
-        else if(chatHas.type == 'web'){
+        else if (chatHas.type == 'web') {
           return await this.messagesRepository.createMessages(msg);
-        }        return ErroBadRequest('Erro para Enviar Msg');
+        }
+        return ErroBadRequest('Erro para Enviar Msg');
 
-     
       };
       return ErroBadRequest('Não Existe o Chat');
     } catch (error) {
       return ErroBadRequest(error);
     }
   }
- //chat
+  //chat
   async getChaByUuid(uuid) {
     try {
       const chat = await this.chatRepository.getByUiidChat(uuid);
@@ -191,18 +196,24 @@ export class ChatService {
   async novoChat(data: any) {
     try {
 
-      const chat = data;
-      const chatInfo = await this.chatInfoRepository.getChatInfoAll(Number(chat.cliente_id));
+      let chat = data;
+      
+      let chatInfo = await this.chatInfoRepository.getByUuidChatInfo(chat.uuid_chat);
 
       if (chatInfo && chat.telefone && chat.email) {
 
-        const telefone = await await this.chatRepository.getChatTelefone(
+        chat['chat_info_id'] = chatInfo.chat_info_id;
+        chat['empresa_configId'] = chatInfo.empresa_configId;
+        delete chat['uuid_chat'];
+
+        let telefone = await await this.chatRepository.getChatTelefoneEmail(
+          chat.email,
           chat.telefone
         );
 
-        if (!telefone) {
+        if (!telefone) {             
 
-          return await this.chatRepository.createChat(data);
+          return await this.chatRepository.createChat(chat);
         }
         return telefone;
       }

@@ -24,6 +24,7 @@ export declare class ConfigController {
         complemento: string;
         cep: string;
         numero: string;
+        currentPlanId: number;
     }>;
-    getDashboard(clienteId: any): Promise<any>;
+    getDashboard(empresa_configId: any): Promise<any>;
 }

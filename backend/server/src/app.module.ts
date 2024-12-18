@@ -13,8 +13,10 @@ import { ProjetoModule } from './modules/projeto.module';
 import { FirebaseModule } from './modules/firebase.module';
 import { FirebaseService } from './service/firebase.service';
 import { ChatModule } from './modules/chat.module';
+
 import { AgendaModule } from './modules/agenda.module';
 import { ServeStaticModule } from '@nestjs/serve-static'; 
+import { PageLinkModule } from './modules/pageLink.module';
 
 
 @Module({
@@ -22,6 +24,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     // ServeStaticModule.forRoot({
     //   rootPath: join(__dirname, '..', 'client/dist'), // New
     // }),
+    PageLinkModule,
     AgendaModule,
     AuthModule,
     UsersModule,
@@ -35,7 +38,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
    
     ProjetoModule,
     FirebaseModule,
-    ChatModule,
+    ChatModule
   ],
   controllers: [AppController],
   providers: [FirebaseService],

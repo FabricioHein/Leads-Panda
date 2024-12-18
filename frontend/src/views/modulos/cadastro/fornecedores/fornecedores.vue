@@ -116,7 +116,7 @@ export default {
             const produto = new FornecedoresModel(this.params);
 
             produto.operador = `Add/Atualizado por ${this.usuario.name} ${this.usuario.sobrenome}`;
-            produto.clienteId = this.cliente.id
+            produto.empresa_configId = this.cliente.id
 
             if (produto.id) {
                 const fornecedor = new fornecedorService(produto, this.token);

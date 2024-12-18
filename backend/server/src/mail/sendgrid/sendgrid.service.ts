@@ -83,11 +83,11 @@ export class SendgridService implements IMailService {
     return new Promise((resolve, reject) => {
 
       let transporter = nodemailer.createTransport({
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
+        host:  process.env.MAIL_TRAP,
+        port: process.env.MAIL_TRAP_PORT,
         auth: {
-          user: '12f126b59f603a',
-          pass: 'b667455a99d366'
+          user:  process.env.MAIL_TRAP_USER,
+          pass: process.env.MAIL_TRAP_PASS
         }
       });
 

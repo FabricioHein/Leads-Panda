@@ -38,9 +38,9 @@ let ProdutoService = class ProdutoService {
             return (0, msg_response_1.ErroBadRequest)(error);
         }
     }
-    async getAllProduto(clienteId) {
+    async getAllProduto(empresa_configId) {
         try {
-            return await this.produtoRepositorio.getProdutoAll(Number(clienteId));
+            return await this.produtoRepositorio.getProdutoAll(Number(empresa_configId));
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);

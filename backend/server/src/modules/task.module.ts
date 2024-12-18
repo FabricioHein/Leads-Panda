@@ -6,7 +6,6 @@ import { PrismaService } from 'src/base/relacional/PrismaService';
 import { TaskSubRepository } from 'src/repositories/tasksub.repository';
 import { AnotacaoRepository } from 'src/repositories/anotacoes.repository';
 import { ArquivosRepository } from 'src/repositories/arquivos.repository';
-import { VendaRepository } from 'src/repositories/venda.repository';
 import { MotivosRepository } from 'src/repositories/motivos.repository';
 import { LogTasksRepository } from '../repositories/logTask.repositoy';
 
@@ -19,7 +18,6 @@ import { LogTasksRepository } from '../repositories/logTask.repositoy';
     TaskSubRepository,
     AnotacaoRepository,
     ArquivosRepository,
-    VendaRepository,
     MotivosRepository,
     LogTasksRepository,
   ],

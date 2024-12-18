@@ -13,12 +13,14 @@ const agenda_controller_1 = require("../controllers/agenda.controller");
 const agenda_repository_1 = require("../repositories/agenda.repository");
 const PrismaService_1 = require("../base/relacional/PrismaService");
 const task_repository_1 = require("../repositories/task.repository");
+const clientes_repository_1 = require("../repositories/clientes.repository");
+const usuario_repository_1 = require("../repositories/usuario.repository");
 let AgendaModule = class AgendaModule {
 };
 AgendaModule = __decorate([
     (0, common_1.Module)({
         controllers: [agenda_controller_1.AgendaController],
-        providers: [task_repository_1.TaskRepository, agenda_repository_1.AgendaRepository, agenda_service_1.AgendaService, PrismaService_1.PrismaService],
+        providers: [task_repository_1.TaskRepository, clientes_repository_1.ClientesRepository, usuario_repository_1.UsuarioRepository, agenda_repository_1.AgendaRepository, agenda_service_1.AgendaService, PrismaService_1.PrismaService],
     })
 ], AgendaModule);
 exports.AgendaModule = AgendaModule;

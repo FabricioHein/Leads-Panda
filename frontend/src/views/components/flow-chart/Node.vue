@@ -78,7 +78,7 @@ export default {
   position: absolute;
 
   background-color: rgb(255, 255, 255);
-  border: 1px solid #000;
+  border: 1px solid #4154f1;
   display: flex;
   justify-content: center;
   align-items: center;

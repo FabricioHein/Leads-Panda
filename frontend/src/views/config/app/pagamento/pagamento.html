@@ -1,0 +1,17 @@
+<div class="layout-px-spacing">
+    <div class="account-settings-container layout-top-spacing" v-if="usuario">
+        <button class="btn btn-primary my-4" @click="showModal = true">Cadastrar Cartão de Crédito</button>
+        <CreditCardModal :showModal="showModal" @close="showModal = false" />
+         
+        <div class="main-content">
+          <Plans 
+            :plans="plans" 
+            :currentPlan="currentPlan" 
+            @select-plan="selectPlan" 
+            @change-plan="changePlan" 
+          />
+          <PaymentHistory :payments="payments" />
+        </div>
+    
+    </div>
+</div>

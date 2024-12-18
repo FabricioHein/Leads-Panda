@@ -4,6 +4,7 @@ class ApiCep {
     constructor(cep) {
         this.cep = cep,
         this.baseURL = 'https://cdn.apicep.com/file';
+        //VIACEP PROCURAR
     }
     async conectApi() {
         const Api = await axios.create({

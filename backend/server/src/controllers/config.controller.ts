@@ -19,10 +19,10 @@ export class ConfigController {
     return await this.configService.atualizarConfig(req.body);
   }
   @UseGuards(JwtAuthGuard)
-  @Get('getDashboard/:clienteId')
-  async getDashboard(@Param('clienteId') clienteId) {
+  @Get('dashboard/:empresa_configId')
+  async getDashboard(@Param('empresa_configId') empresa_configId) {
     try {
-      return await this.configService.getDashboard(clienteId);
+      return await this.configService.getDashboard(empresa_configId);
     } catch (error) {
       return error;
     }

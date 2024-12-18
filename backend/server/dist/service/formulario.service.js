@@ -31,9 +31,9 @@ let FormularioService = class FormularioService {
             return (0, msg_response_1.ErroBadRequest)(error);
         }
     }
-    async getAllFormularioDinamico(clienteId) {
+    async getAllFormularioDinamico(empresa_configId) {
         try {
-            return await this.formularioDinamicoRepository.getFormularioDinamicoAll(Number(clienteId));
+            return await this.formularioDinamicoRepository.getFormularioDinamicoAll(Number(empresa_configId));
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);
@@ -89,9 +89,9 @@ let FormularioService = class FormularioService {
             return (0, msg_response_1.ErroBadRequest)(error);
         }
     }
-    async getByIdFormularioAsk(clienteId) {
+    async getByIdFormularioAsk(empresa_configId) {
         try {
-            return await this.formularioAskRepository.getByIdFormularioAsk(Number(clienteId));
+            return await this.formularioAskRepository.getByIdFormularioAsk(Number(empresa_configId));
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);

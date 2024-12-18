@@ -23,9 +23,9 @@ let ConfigController = class ConfigController {
     async atualizarConfig(req) {
         return await this.configService.atualizarConfig(req.body);
     }
-    async getDashboard(clienteId) {
+    async getDashboard(empresa_configId) {
         try {
-            return await this.configService.getDashboard(clienteId);
+            return await this.configService.getDashboard(empresa_configId);
         }
         catch (error) {
             return error;
@@ -42,8 +42,8 @@ __decorate([
 ], ConfigController.prototype, "atualizarConfig", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('getDashboard/:clienteId'),
-    __param(0, (0, common_1.Param)('clienteId')),
+    (0, common_1.Get)('dashboard/:empresa_configId'),
+    __param(0, (0, common_1.Param)('empresa_configId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)

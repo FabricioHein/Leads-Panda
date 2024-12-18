@@ -24,6 +24,85 @@ let TaskRepository = class TaskRepository {
             where: filter,
         });
     }
+    async countTasksByEmpresa(empresa_configId) {
+        const count = await this.prisma.task.count({
+            where: {
+                processo: {
+                    projeto: {
+                        empresa_config: {
+                            id: empresa_configId
+                        }
+                    }
+                },
+                OR: [{
+                        marcar_venda: null
+                    }, {
+                        marcar_venda: false
+                    }]
+            },
+        });
+        return count;
+    }
+    async sumTasksByEmpresaValorInicial(empresa_configId) {
+        var _a;
+        try {
+            const result = await this.prisma.task.aggregate({
+                _sum: {
+                    valor_Inicial: true,
+                },
+                where: {
+                    processo: {
+                        projeto: {
+                            empresa_config: {
+                                id: empresa_configId
+                            }
+                        }
+                    },
+                    OR: [{
+                            marcar_venda: null
+                        }, {
+                            marcar_venda: false
+                        }]
+                },
+            });
+            const valorInicialSum = (_a = result._sum.valor_Inicial) !== null && _a !== void 0 ? _a : 0;
+            return valorInicialSum;
+        }
+        catch (error) {
+            console.error('Erro ao calcular a soma dos valores iniciais:', error);
+            return 0;
+        }
+    }
+    async sumTasksByEmpresaValorFinal(empresa_configId) {
+        var _a;
+        try {
+            const result = await this.prisma.task.aggregate({
+                _sum: {
+                    valor_Final: true,
+                },
+                where: {
+                    processo: {
+                        projeto: {
+                            empresa_config: {
+                                id: empresa_configId
+                            }
+                        }
+                    },
+                    OR: [{
+                            marcar_venda: null
+                        }, {
+                            marcar_venda: false
+                        }]
+                },
+            });
+            const valorInicialSum = (_a = result._sum.valor_Final) !== null && _a !== void 0 ? _a : 0;
+            return valorInicialSum;
+        }
+        catch (error) {
+            console.error('Erro ao calcular a soma dos valores iniciais:', error);
+            return 0;
+        }
+    }
     async getByIdTask(id) {
         return await this.prisma.task.findFirst({
             where: {
@@ -39,16 +118,25 @@ let TaskRepository = class TaskRepository {
                 sub_task: true,
                 anotacoes: true,
                 arquivos: true,
-                email: true,
                 Contacts: true,
-                Users: true,
-                venda: true,
+                Users: true
             },
         });
     }
     async createTask(data) {
         return await this.prisma.task.create({
             data: data,
+            include: {
+                processo: {
+                    select: {
+                        projeto: {
+                            select: {
+                                id: true
+                            }
+                        }
+                    }
+                }
+            }
         });
     }
     async updateTask(id, data) {

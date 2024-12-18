@@ -23,10 +23,10 @@ export class UsuariosController {
     }
   }
   @UseGuards(JwtAuthGuard)
-  @Get('todos/:clienteId')
-  async getAllUsuario(@Param('clienteId') clienteId) {
+  @Get('todos/:empresa_configId')
+  async getAllUsuario(@Param('empresa_configId') empresa_configId) {
     try {
-      return await this.usuariosService.getAllUsuario(clienteId);
+      return await this.usuariosService.getAllUsuario(empresa_configId);
     } catch (error) {
       return error;
     }

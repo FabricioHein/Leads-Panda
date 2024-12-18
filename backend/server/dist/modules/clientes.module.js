@@ -13,7 +13,6 @@ const clientes_controller_1 = require("../controllers/clientes.controller");
 const clientes_repository_1 = require("../repositories/clientes.repository");
 const PrismaService_1 = require("../base/relacional/PrismaService");
 const historico_cliente_repository_1 = require("../repositories/historico-cliente.repository");
-const whatsapp_module_1 = require("./whatsapp.module");
 let ClientesModule = class ClientesModule {
 };
 ClientesModule = __decorate([
@@ -25,7 +24,7 @@ ClientesModule = __decorate([
             clientes_service_1.ClientesService,
             PrismaService_1.PrismaService,
         ],
-        imports: [whatsapp_module_1.WhatsappModule],
+        imports: [],
     })
 ], ClientesModule);
 exports.ClientesModule = ClientesModule;

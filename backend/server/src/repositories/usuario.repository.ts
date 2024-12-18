@@ -22,11 +22,24 @@ export class UsuarioRepository {
 
     if (user) return user;
   }
-
-  async getUserAll(clienteId) {
+  async getUsuariaClienteAgendamento(empresa_configId) {
+    console.log(empresa_configId)
     return await this.prisma.users.findMany({
       where: {
-        clienteId: clienteId,
+        empresa_configId: Number(empresa_configId),
+      },
+      select:{
+        nome: true,
+        id: true        
+      }
+      
+    });
+  }
+
+  async getUserAll(empresa_configId) {
+    return await this.prisma.users.findMany({
+      where: {
+        empresa_configId: empresa_configId,
       },
       include: {
         permissao_modulos: {
@@ -62,13 +75,18 @@ export class UsuarioRepository {
   async getByEmailUser(email) {
     return await this.prisma.users.findFirst({
       where: {
-        email: email,
+        email: email
       },
     });
   }
-  async createUser(data) {
+  async createUser(empresa_configId, data) {
     return await this.prisma.users.create({
-      data: data,
+      data: {
+        ...data,
+        empresa_config: {
+          connect: { id: empresa_configId } 
+        }
+      },
     });
   }
 
@@ -115,6 +133,13 @@ export class UsuarioRepository {
     return  await this.prisma.emailVerification.findUnique({
       where:{
         email: email
+      }
+    })
+  }
+  async findVerificationCreateCode(code){
+    return  await this.prisma.emailVerification.findUnique({
+      where:{
+       code: code
       }
     })
   }

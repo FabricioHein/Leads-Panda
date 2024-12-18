@@ -85,7 +85,7 @@ export default {
             const usuarioServ = new usuarioService(
                 {}, this.token,
                 `/api/usuario/todos/${this.cliente.id}`);
-
+                
             this.data = await usuarioServ.getAllUsuarios();
 
             if (this.data) {
@@ -110,21 +110,21 @@ export default {
 
             if (validarEmail) {
                 const usuario = new UsuarioModel(this.params);
-             
+
 
                 if (usuario.id) {
                     const usuarioServ = new usuarioService(usuario, this.token);
                     await usuarioServ.AtualizarUsuario();
-                    
+
                 }
                 else {
-                    usuario['clienteId'] = Number(this.cliente.id);
+                    usuario['empresa_configId'] = Number(this.cliente.id);
                     usuario.isTrusted ? delete usuarioServ.isTrusted : "";
 
                     const usuarioServ = new usuarioService(usuario, this.token);
                     const novoUsuario = await usuarioServ.criarUsuario();
 
-                 
+
                 }
                 this.init();
 

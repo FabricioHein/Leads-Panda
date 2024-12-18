@@ -28,9 +28,9 @@ let ClientesController = class ClientesController {
             return error;
         }
     }
-    async getAllClientes(clienteId) {
+    async getAllClientes(empresa_configId) {
         try {
-            return await this.clienteService.getAllClientes(clienteId);
+            return await this.clienteService.getAllClientes(empresa_configId);
         }
         catch (error) {
             return error;
@@ -79,8 +79,8 @@ __decorate([
 ], ClientesController.prototype, "getByIdName", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('todos/:clienteId'),
-    __param(0, (0, common_1.Param)('clienteId')),
+    (0, common_1.Get)('todos/:empresa_configId'),
+    __param(0, (0, common_1.Param)('empresa_configId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)

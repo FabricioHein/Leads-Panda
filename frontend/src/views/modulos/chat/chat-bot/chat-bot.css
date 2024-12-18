@@ -1,3 +1,70 @@
+.round-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #25D366; /* Cor do botão */
+    color: white; /* Cor do ícone */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.round-button-b {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1986ec; /* Cor do botão */
+    color: white; /* Cor do ícone */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.round-button:hover {
+    background-color: #1EB854; /* Cor ao passar o mouse */
+}
+
+.round-button svg {
+    width: 24px;
+    height: 24px;
+}
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1200px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.grid-item:hover {
+    background-color: #0056b3;
+}
+.grid-item img {
+    max-width: 60%;
+    max-height: 60%;
+}
 .ql-container.ql-snow {
     border-top: 0px;
     margin-top: 10px;

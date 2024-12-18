@@ -23,11 +23,13 @@ const firebase_module_1 = require("./modules/firebase.module");
 const firebase_service_1 = require("./service/firebase.service");
 const chat_module_1 = require("./modules/chat.module");
 const agenda_module_1 = require("./modules/agenda.module");
+const pageLink_module_1 = require("./modules/pageLink.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            pageLink_module_1.PageLinkModule,
             agenda_module_1.AgendaModule,
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
@@ -40,7 +42,7 @@ AppModule = __decorate([
             clientes_module_1.ClientesModule,
             projeto_module_1.ProjetoModule,
             firebase_module_1.FirebaseModule,
-            chat_module_1.ChatModule,
+            chat_module_1.ChatModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [firebase_service_1.FirebaseService],

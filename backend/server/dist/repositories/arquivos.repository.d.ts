@@ -9,8 +9,7 @@ export declare class ArquivosRepository {
         created_at: Date;
         updated_at: Date;
         taskId: number;
-        clienteId: number;
-        chatChat_id: number;
+        empresa_configId: number;
         messagesMessage_id: number;
     }[]>;
     getByIdArquivos(id: any): Promise<{
@@ -20,8 +19,7 @@ export declare class ArquivosRepository {
         created_at: Date;
         updated_at: Date;
         taskId: number;
-        clienteId: number;
-        chatChat_id: number;
+        empresa_configId: number;
         messagesMessage_id: number;
     }>;
     createArquivos(data: any): Promise<{
@@ -31,8 +29,7 @@ export declare class ArquivosRepository {
         created_at: Date;
         updated_at: Date;
         taskId: number;
-        clienteId: number;
-        chatChat_id: number;
+        empresa_configId: number;
         messagesMessage_id: number;
     }>;
     updateArquivos(id: any, data: any): Promise<{
@@ -42,8 +39,7 @@ export declare class ArquivosRepository {
         created_at: Date;
         updated_at: Date;
         taskId: number;
-        clienteId: number;
-        chatChat_id: number;
+        empresa_configId: number;
         messagesMessage_id: number;
     }>;
     deleteArquivos(id: any): Promise<{
@@ -53,8 +49,7 @@ export declare class ArquivosRepository {
         created_at: Date;
         updated_at: Date;
         taskId: number;
-        clienteId: number;
-        chatChat_id: number;
+        empresa_configId: number;
         messagesMessage_id: number;
     }>;
     createManyArquivos(data: any): Promise<import(".prisma/client").Prisma.BatchPayload>;

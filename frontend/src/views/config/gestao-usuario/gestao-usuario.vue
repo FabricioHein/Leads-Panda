@@ -216,7 +216,7 @@ onMounted(() => {
 });
 const getAcesso = () => {
 
-const acesso = Acesso.getAcesso('Cadastro', '/gestao/usuarios', permissao);
+const acesso = Acesso.getAcesso('Configuração', '/gestao/usuarios', permissao);
 console.log(acesso);
 
 return acesso
@@ -318,7 +318,7 @@ const save_user = async () => {
 
         delete usuarioModel["id"];
         usuarioModel["senha"] = params.value.senha;
-        usuarioModel["clienteId"] = Number(cliente.id);
+        usuarioModel["empresa_configId"] = Number(cliente.id);
         const usuarioServ = new usuarioService(usuarioModel, store.getters.token);
         const novoUsuario = await usuarioServ.criarUsuario();
         if (novoUsuario.id) {

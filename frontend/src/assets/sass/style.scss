@@ -184,7 +184,7 @@
 }
 
 .header-container .navbar .navbar-item .dropdown-menu a.dropdown-item:hover {
-    color: #000000 !important;
+    color: #4154f1000 !important;
     background: rgb(248, 248, 248) !important;
 }
 
@@ -836,8 +836,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    -webkit-mask-image: radial-gradient(#fff, #000);
-    mask-image: radial-gradient(#fff, #000);
+    -webkit-mask-image: radial-gradient(#fff, #4154f1);
+    mask-image: radial-gradient(#fff, #4154f1);
 }
 .b-avatar .b-avatar-badge {
     border: 3px solid #fff;
@@ -1345,7 +1345,7 @@
 .pagination-default .page-item.active .page-link,
 .pagination-default li:not(.disabled):hover .page-link,
 .pagination-solid li:hover .page-link {
-    color: #000000;
+    color: #4154f1000;
 }
 
 .pagination-solid li.active .page-link,
@@ -1367,7 +1367,7 @@
 
     .first:hover,
     .last:hover {
-        background-color: #000000;
+        background-color: #4154f1000;
     }
 
     .page-item.disabled .page-link,
@@ -1408,7 +1408,7 @@
     }
 
     .page-item:not(.active) .page-link:hover {
-        color: #000000 !important;
+        color: #4154f1000 !important;
         background: inherit !important;
     }
 
@@ -1416,7 +1416,7 @@
     .page-item.last .page-link:hover,
     .page-item.prev .page-link:hover,
     .page-item.next .page-link:hover {
-        background-color: #000000 !important;
+        background-color: #4154f1000 !important;
         color: #fff !important;
     }
 
@@ -1433,7 +1433,7 @@
     }
 
     li.active .page-link {
-        background-color: #000000 !important;
+        background-color: #4154f1000 !important;
         border-radius: 6px;
         color: #fff;
     }
@@ -1477,7 +1477,7 @@
 }
 
 .chat-system .dropdown-menu a.dropdown-item:hover {
-    color: #000000 !important;
+    color: #4154f1000 !important;
     background: rgb(248, 248, 248) !important;
 }
 
@@ -1594,18 +1594,18 @@
                             a {
                                 > div {
                                     span {
-                                        color: #000000;
+                                        color: #4154f1000;
                                     }
                                     svg {
                                         &:not(.feather-chevron-down) {
-                                            color: #000000;
+                                            color: #4154f1000;
                                         }
                                     }
                                 }
                             }
                             > a {
                                 svg.feather.feather-chevron-down {
-                                    color: #000000;
+                                    color: #4154f1000;
                                 }
                             }
                             .submenu {
@@ -1766,19 +1766,19 @@
                     li.menu.active {
                         > a {
                             svg.feather.feather-chevron-down {
-                                color: #000000;
+                                color: #4154f1000;
                             }
                             > div {
                                 svg {
                                     &:not(.feather-chevron-down) {
-                                        color: #000000;
+                                        color: #4154f1000;
                                     }
                                 }
                                 svg.feather.feather-chevron-down {
                                     color: #e0e6ed;
                                 }
                                 span {
-                                    color: #000000;
+                                    color: #4154f1000;
                                     font-weight: 500;
                                 }
                             }
@@ -1938,7 +1938,7 @@
         }
     }
     .setting {
-        background: #000000;
+        background: #4154f1000;
         width: 45px;
         height: 45px;
         position: fixed;
@@ -1963,7 +1963,7 @@
         }
     }
     .tabela {
-        background: #000000;
+        background: #4154f1000;
         width: 45px;
         height: 45px;
         position: fixed;
@@ -2086,7 +2086,7 @@
         }
     }
     .siderbar-tabela {
-        width: 20%;
+        width: 50%;
         position: fixed;
         height: 100%;
         padding: 10px;

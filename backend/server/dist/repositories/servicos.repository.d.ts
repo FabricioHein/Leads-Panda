@@ -9,10 +9,10 @@ export declare class ServicoRepository {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }[]>;
     getByIdServico(id: any): Promise<{
         id: number;
@@ -21,10 +21,10 @@ export declare class ServicoRepository {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }>;
     createServico(data: any): Promise<{
         id: number;
@@ -33,10 +33,10 @@ export declare class ServicoRepository {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }>;
     updateServico(id: any, data: any): Promise<{
         id: number;
@@ -45,10 +45,10 @@ export declare class ServicoRepository {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }>;
     deleteServico(id: any): Promise<{
         id: number;
@@ -57,9 +57,9 @@ export declare class ServicoRepository {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }>;
 }

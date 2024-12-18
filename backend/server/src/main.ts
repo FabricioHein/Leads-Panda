@@ -3,7 +3,9 @@ import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 import * as session from 'express-session';
 import * as passport from 'passport';
-import {jwtConstants} from './auth/constants'
+import {jwtConstants} from './auth/constants';
+import { urlencoded, json } from 'express';
+
 dotenv.config();
 
 async function bootstrap() {
@@ -23,6 +25,8 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(json({ limit: '50mb' }));
+  app.use(urlencoded({ extended: true, limit: '50mb' }));
 
   await app.listen(process.env.PORTA_SERVER);
 

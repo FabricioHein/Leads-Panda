@@ -2,7 +2,6 @@ import { TaskRepository } from 'src/repositories/task.repository';
 import { TaskSubRepository } from 'src/repositories/tasksub.repository';
 import { AnotacaoRepository } from 'src/repositories/anotacoes.repository';
 import { ArquivosRepository } from 'src/repositories/arquivos.repository';
-import { VendaRepository } from 'src/repositories/venda.repository';
 import { MotivosRepository } from 'src/repositories/motivos.repository';
 import { LogTasksRepository } from 'src/repositories/logTask.repositoy';
 export declare class TaskService {
@@ -10,10 +9,9 @@ export declare class TaskService {
     private taskRepositorio;
     private taskSubRepository;
     private arquivosRepository;
-    private vendaRepository;
     private motivosRepository;
     private logTasksRepository;
-    constructor(anotacaoRepository: AnotacaoRepository, taskRepositorio: TaskRepository, taskSubRepository: TaskSubRepository, arquivosRepository: ArquivosRepository, vendaRepository: VendaRepository, motivosRepository: MotivosRepository, logTasksRepository: LogTasksRepository);
+    constructor(anotacaoRepository: AnotacaoRepository, taskRepositorio: TaskRepository, taskSubRepository: TaskSubRepository, arquivosRepository: ArquivosRepository, motivosRepository: MotivosRepository, logTasksRepository: LogTasksRepository);
     historicoTask(data: any): Promise<{
         id: number;
         chave: string;
@@ -36,7 +34,7 @@ export declare class TaskService {
     getAllMotivos(id: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;
@@ -45,7 +43,7 @@ export declare class TaskService {
     createMotivos(data: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;
@@ -54,7 +52,7 @@ export declare class TaskService {
     deleteMotivos(data: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;
@@ -63,7 +61,7 @@ export declare class TaskService {
     atualizarMotivos(data: any): Promise<{
         id: number;
         descricao: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         codigo: string;
         nome: string;
         created_at: Date;
@@ -122,39 +120,6 @@ export declare class TaskService {
         taskId: number;
     }>;
     getByIdTask(id: any): Promise<{
-        processo: {
-            projeto: {
-                id: number;
-                title: string;
-                created_at: Date;
-                updated_at: Date;
-                tipo_projetoId: number;
-                operador: string;
-                configuracaoClienteId: number;
-            };
-            title: string;
-        };
-        email: {
-            id: number;
-            titulo: string;
-            from: string;
-            to: string;
-            html_body: string;
-            data_envio: Date;
-            taskId: number;
-            campanha_mktId: number;
-        }[];
-        arquivos: {
-            id: number;
-            link: string;
-            description: string;
-            created_at: Date;
-            updated_at: Date;
-            taskId: number;
-            clienteId: number;
-            chatChat_id: number;
-            messagesMessage_id: number;
-        }[];
         anotacoes: {
             id: number;
             title: string;
@@ -165,6 +130,16 @@ export declare class TaskService {
             created_at: Date;
             updated_at: Date;
             taskId: number;
+        }[];
+        arquivos: {
+            id: number;
+            link: string;
+            description: string;
+            created_at: Date;
+            updated_at: Date;
+            taskId: number;
+            empresa_configId: number;
+            messagesMessage_id: number;
         }[];
         sub_task: {
             id: number;
@@ -179,15 +154,35 @@ export declare class TaskService {
             updated_at: Date;
             taskId: number;
         }[];
-        venda: {
+        Contacts: {
             id: number;
-            valor_total: import("@prisma/client/runtime/library").Decimal;
-            status: string;
-            configuracaoClienteId: number;
-            taskId: number;
-            usersId: number;
+            name: string;
+            number: string;
+            profilePicUrl: string;
             created_at: Date;
             updated_at: Date;
+            email: string;
+            empresa_configId: number;
+            logradouro: string;
+            bairro: string;
+            estado: string;
+            cidade: string;
+            pais: string;
+            complemento: string;
+            numero: string;
+            cep: string;
+        };
+        processo: {
+            title: string;
+            projeto: {
+                id: number;
+                title: string;
+                created_at: Date;
+                updated_at: Date;
+                tipo_projetoId: number;
+                operador: string;
+                empresa_configId: number;
+            };
         };
         Users: {
             id: number;
@@ -201,7 +196,6 @@ export declare class TaskService {
             themeDark: boolean;
             operador: string;
             sexoId: number;
-            clienteId: number;
             email: string;
             profile: string;
             created_at: Date;
@@ -221,24 +215,7 @@ export declare class TaskService {
             gerente_conta: boolean;
             termos: boolean;
             password: string;
-        };
-        Contacts: {
-            id: number;
-            name: string;
-            number: string;
-            profilePicUrl: string;
-            created_at: Date;
-            updated_at: Date;
-            email: string;
-            configuracaoClienteId: number;
-            logradouro: string;
-            bairro: string;
-            estado: string;
-            cidade: string;
-            pais: string;
-            complemento: string;
-            numero: string;
-            cep: string;
+            empresa_configId: number;
         };
     } & {
         id: number;
@@ -297,6 +274,12 @@ export declare class TaskService {
         arquivado: boolean;
     }[]>;
     createTask(data: any): Promise<{
+        processo: {
+            projeto: {
+                id: number;
+            };
+        };
+    } & {
         id: number;
         contato_nome: string;
         contato_numero: string;
@@ -331,8 +314,7 @@ export declare class TaskService {
         created_at: Date;
         updated_at: Date;
         taskId: number;
-        clienteId: number;
-        chatChat_id: number;
+        empresa_configId: number;
         messagesMessage_id: number;
     }>;
     deleteTask(data: any): Promise<{
@@ -370,8 +352,7 @@ export declare class TaskService {
         created_at: Date;
         updated_at: Date;
         taskId: number;
-        clienteId: number;
-        chatChat_id: number;
+        empresa_configId: number;
         messagesMessage_id: number;
     }>;
     deleteTaskSub(data: any): Promise<{
@@ -395,8 +376,8 @@ export declare class TaskService {
         description_text: string;
         status: string;
         taskId: number;
-        date_end: any;
-        date_start: any;
+        date_end: string;
+        date_start: string;
     }[]>;
     createTaskSub(data: any): Promise<{
         id: number;
@@ -422,36 +403,6 @@ export declare class TaskService {
         updated_at: Date;
         taskId: number;
     }[]>;
-    createVenda(data: any): Promise<{
-        id: number;
-        valor_total: import("@prisma/client/runtime/library").Decimal;
-        status: string;
-        configuracaoClienteId: number;
-        taskId: number;
-        usersId: number;
-        created_at: Date;
-        updated_at: Date;
-    }>;
-    atualizaVendas(data: any): Promise<{
-        id: number;
-        valor_total: import("@prisma/client/runtime/library").Decimal;
-        status: string;
-        configuracaoClienteId: number;
-        taskId: number;
-        usersId: number;
-        created_at: Date;
-        updated_at: Date;
-    }>;
-    deleteVendas(data: any): Promise<{
-        id: number;
-        valor_total: import("@prisma/client/runtime/library").Decimal;
-        status: string;
-        configuracaoClienteId: number;
-        taskId: number;
-        usersId: number;
-        created_at: Date;
-        updated_at: Date;
-    }>;
     deleteAnotacao(data: any): Promise<{
         id: number;
         title: string;

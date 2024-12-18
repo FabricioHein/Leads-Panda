@@ -11,12 +11,12 @@ export declare class FormularioService {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -24,11 +24,11 @@ export declare class FormularioService {
         logo_height: string;
         taskId: number;
     }>;
-    getAllFormularioDinamico(clienteId: any): Promise<({
+    getAllFormularioDinamico(empresa_configId: any): Promise<({
         form_ask: {
             id: number;
             formulario_dinamicoId: number;
-            json: import(".prisma/client").Prisma.JsonValue;
+            json: import("@prisma/client/runtime/library").JsonValue;
             created_at: Date;
             updated_at: Date;
         }[];
@@ -37,12 +37,12 @@ export declare class FormularioService {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -55,12 +55,12 @@ export declare class FormularioService {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -73,12 +73,12 @@ export declare class FormularioService {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -89,7 +89,7 @@ export declare class FormularioService {
     updateFormularioAsk(data: any): Promise<{
         id: number;
         formulario_dinamicoId: number;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
     }>;
@@ -98,12 +98,12 @@ export declare class FormularioService {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -117,12 +117,12 @@ export declare class FormularioService {
         publico: boolean;
         url_formulario: string;
         title: string;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
         projetoId: number;
         processoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         nome_campanha: string;
         link_redirect: string;
         logo: string;
@@ -132,24 +132,24 @@ export declare class FormularioService {
     } | {
         form: boolean;
     }>;
-    getByIdFormularioAsk(clienteId: any): Promise<{
+    getByIdFormularioAsk(empresa_configId: any): Promise<{
         id: number;
         formulario_dinamicoId: number;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
     }>;
     createFormularioAsk(data: any): Promise<{
         id: number;
         formulario_dinamicoId: number;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
     }>;
     deleteFormularioAsk(data: any): Promise<{
         id: number;
         formulario_dinamicoId: number;
-        json: import(".prisma/client").Prisma.JsonValue;
+        json: import("@prisma/client/runtime/library").JsonValue;
         created_at: Date;
         updated_at: Date;
     }>;

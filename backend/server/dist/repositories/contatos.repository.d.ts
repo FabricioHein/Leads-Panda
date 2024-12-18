@@ -2,7 +2,7 @@ import { PrismaService } from 'src/base/relacional/PrismaService';
 export declare class ContatosRepository {
     private prisma;
     constructor(prisma: PrismaService);
-    getContatosAll(clienteId: any): Promise<{
+    getContatosAll(empresa_configId: any): Promise<{
         id: number;
         name: string;
         number: string;
@@ -10,7 +10,7 @@ export declare class ContatosRepository {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -28,7 +28,7 @@ export declare class ContatosRepository {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -46,7 +46,7 @@ export declare class ContatosRepository {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -64,7 +64,7 @@ export declare class ContatosRepository {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -76,8 +76,8 @@ export declare class ContatosRepository {
     }[]>;
     getByIdContatosChat(id: any): Promise<{
         number: string;
-        email: string;
         id: number;
+        email: string;
         name: string;
         profilePicUrl: string;
     }>;
@@ -89,7 +89,7 @@ export declare class ContatosRepository {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -107,7 +107,7 @@ export declare class ContatosRepository {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -125,7 +125,7 @@ export declare class ContatosRepository {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;

@@ -16,10 +16,10 @@ let MotivosRepository = class MotivosRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async getMotivosAll(clienteId) {
+    async getMotivosAll(empresa_configId) {
         return await this.prisma.motivos.findMany({
             where: {
-                configuracaoClienteId: clienteId,
+                empresa_configId: empresa_configId,
             },
         });
     }

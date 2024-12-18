@@ -16,10 +16,10 @@ let ContatosRepository = class ContatosRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async getContatosAll(clienteId) {
+    async getContatosAll(empresa_configId) {
         return await this.prisma.contacts.findMany({
             where: {
-                configuracaoClienteId: clienteId,
+                empresa_configId: empresa_configId,
             },
         });
     }

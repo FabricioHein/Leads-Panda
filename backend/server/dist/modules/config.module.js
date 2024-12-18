@@ -17,6 +17,9 @@ const enum_repository_1 = require("../repositories/enum.repository");
 const usuarios_module_1 = require("./usuarios.module");
 const configCliente_repository_1 = require("../repositories/configCliente.repository");
 const importar_module_1 = require("./importar.module");
+const clientes_repository_1 = require("../repositories/clientes.repository");
+const chat_repository_1 = require("../repositories/chat.repository");
+const task_repository_1 = require("../repositories/task.repository");
 let ConfigModule = class ConfigModule {
 };
 ConfigModule = __decorate([
@@ -29,6 +32,9 @@ ConfigModule = __decorate([
             enum_repository_1.EnumRepository,
             PrismaService_1.PrismaService,
             configCliente_repository_1.ConfigClienteRepository,
+            clientes_repository_1.ClientesRepository,
+            chat_repository_1.ChatRepository,
+            task_repository_1.TaskRepository
         ],
         exports: [config_service_1.ConfigService],
     })

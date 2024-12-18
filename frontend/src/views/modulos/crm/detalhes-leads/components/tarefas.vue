@@ -39,7 +39,8 @@
                                             :class="{ active: selected_tab === '' }">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-list">
                                                 <line x1="8" y1="6" x2="21" y2="6"></line>
                                                 <line x1="8" y1="12" x2="21" y2="12"></line>
                                                 <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -66,7 +67,8 @@
                                             </svg>
                                             Concluídas
                                             <span class="todo-badge badge">
-                                                {{ task_list && task_list.filter((d) => d.status == 'finalizado').length }}
+                                                {{ task_list && task_list.filter((d) => d.status == 'finalizado').length
+                                                }}
                                             </span>
                                         </a>
                                     </li>
@@ -75,14 +77,16 @@
                                             :class="{ active: selected_tab === 'importante' }">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-star">
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-star">
                                                 <polygon
                                                     points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
                                                 </polygon>
                                             </svg>
                                             Importante
                                             <span class="todo-badge badge">
-                                                {{ task_list && task_list.filter((d) => d.status == 'importante').length }}
+                                                {{ task_list && task_list.filter((d) => d.status == 'importante').length
+                                                }}
                                             </span>
                                         </a>
                                     </li>
@@ -139,8 +143,8 @@
                                                 :for="`chk-${task.id}`"></label>
                                         </div>
 
-                                        <div class="todo-content" data-bs-toggle="modal" data-bs-target="#todoShowListItem"
-                                            @click="view_task(task)">
+                                        <div class="todo-content" data-bs-toggle="modal"
+                                            data-bs-target="#todoShowListItem" @click="view_task(task)">
                                             <h5 class="todo-heading">{{ task.title }}</h5>
                                             <p class="meta-date">{{ task.date }}</p>
                                             <p class="todo-text">{{ task.description_text }}</p>
@@ -151,7 +155,7 @@
                                                 <a href="javascript:;" id="ddlPriority"
                                                     class="btn dropdown-toggle btn-icon-only" data-bs-toggle="dropdown"
                                                     aria-expanded="false" :class="[priority_class(task)]">
-                                                    
+
                                                 </a>
                                                 <!-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="ddlPriority">
                                                     <li>
@@ -234,8 +238,11 @@
                                                     <template v-else>
                                                         <li><a href="javascript:;" class="dropdown-item"
                                                                 @click="edit_task(task)">Editar</a></li>
+                                                        <li><a href="javascript:;" class="dropdown-item"
+                                                                @click="task_finalizado(task)">Concluída</a></li>
                                                         <li v-if="task.status == 'importante'"><a href="javascript:;"
-                                                                class="dropdown-item" @click="set_important(task)">Voltar
+                                                                class="dropdown-item"
+                                                                @click="set_important(task)">Voltar
                                                                 para Lista Normal</a></li>
                                                         <li v-else><a href="javascript:;" class="dropdown-item"
                                                                 @click="set_important(task)">Importante</a></li>
@@ -270,7 +277,8 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal" data-bs-dismiss="modal">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    data-bs-dismiss="modal">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-trash">
@@ -286,7 +294,7 @@
                     </div>
                 </div>
                 <div id="addTaskModal" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-md modal-dialog-centered">
+                    <div class="modal-dialog modal-md modal-dialog-right">
                         <div class="modal-content todolist-popup">
                             <div class="modal-header">
                                 <h5 class="modal-title">{{ params.id ? 'Atualizar' : 'Add Tarefa' }}</h5>
@@ -302,8 +310,8 @@
                                                     <div class="form-group mb-4">
                                                         <label>Titulo</label>
                                                         <div class="w-100">
-                                                            <input type="text" v-model="params.title" class="form-control"
-                                                                placeholder="Título" />
+                                                            <input type="text" v-model="params.title"
+                                                                class="form-control" placeholder="Título" />
                                                         </div>
                                                     </div>
 
@@ -313,9 +321,8 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group mb-4">
                                                         <label>Data Inicio</label>
-                                                    
+
                                                         <div class="w-100">
-                                                     
                                                             <input type="datetime-local" v-model="params.date_start"
                                                                 class="form-control" />
                                                         </div>
@@ -340,7 +347,8 @@
                                                     <div class="form-group">
                                                         <label>Descrição</label>
                                                         <div class="w-100">
-                                                            <quill-editor ref="editor" v-model:value="params.description"
+                                                            <quill-editor ref="editor"
+                                                                v-model:value="params.description"
                                                                 :options="editor_options" style="min-height: 200px"
                                                                 @ready="quillEditorReady($event)"></quill-editor>
                                                         </div>
@@ -366,6 +374,27 @@
 </template>
 
 <style>
+.modal-dialog-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 100%;
+    max-width: 400px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog-right {
+    transform: translateX(0);
+}
+
+.modal-dialog-right .modal-content {
+    height: 100%;
+    border-radius: 0;
+    overflow-y: auto; /* Adiciona a capacidade de rolagem vertical */
+}
+
 .todo-inbox .todo-item .todo-item-inner .action-dropdown .dropdown-menu.show,
 .todo-inbox .todo-item .todo-item-inner .priority-dropdown .dropdown-menu.show {
     top: 10px !important;
@@ -382,12 +411,12 @@
 
 .ql-toolbar.ql-snow .ql-picker-label {
     border: 1px solid transparent;
-    color: #000000;
+    color: #4154f1000;
 }
 
 .ql-snow .ql-stroke {
     fill: none;
-    stroke: #000000;
+    stroke: #4154f1000;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2;
@@ -395,7 +424,7 @@
 
 .ql-snow .ql-fill,
 .ql-snow .ql-stroke.ql-fill {
-    fill: #000000;
+    fill: #4154f1000;
 }
 
 #addTaskModal .ql-toolbar.ql-snow {
@@ -423,7 +452,7 @@ import 'vue3-quill/lib/vue3-quill.css';
 import '@/assets/sass/apps/todolist.scss';
 import TaskService from '@/service/task-service';
 import store from '@/store';
-import {DateTime} from '@/helpers/DateTime'
+
 
 import '@/assets/sass/components/custom-modal.scss';
 
@@ -465,11 +494,21 @@ const quillEditorReady = (quill) => {
 };
 const bind_task_list = async () => {
     const taskSub = new TaskService({}, token, `/api/task/todos/subtask/${taskId}`);
-
-    task_list.value = await taskSub.getAllTaskSubs();
+    const allTaks = await taskSub.getAllTaskSubs();
+    task_list.value = allTaks || [];
 
     search_tasks();
 };
+const formatDate = (date) => {// String original
+
+    let data = new Date(date);
+    let dataHora = data.toISOString().split('T')[0]; // Data
+    let horaMinuto = data.toTimeString().split(' ')[0]; // Hora e Minuto
+    let horaMinutoSemSegundos = horaMinuto.split(':').slice(0, 2).join(':'); // Remover os segundos
+
+    return `${dataHora}T${horaMinutoSemSegundos}`
+
+}
 
 const tab_changed = (type) => {
     selected_tab.value = type;
@@ -499,31 +538,36 @@ const priority_class = async (task) => {
     } else if (task.priority == 'high') {
         return 'danger';
     }
-      // const taskSub = new TaskService(task, token);
+    // const taskSub = new TaskService(task, token);
     // await taskSub.atualizarTaskSub();
 
 };
 const set_priority = async (task, name) => {
     task.priority = name;
-   const taskSub = new TaskService(task, token);
+    const taskSub = new TaskService(task, token);
 
 
     await taskSub.atualizarTaskSub();
 
 };
 const task_finalizado = async (task) => {
+    task.date_start = new Date(task.date_start);
+    task.date_end = new Date(task.date_end);
     if (!task.status) {
         task.status = 'finalizado';
     } else {
         task.status = '';
     }
-   
+
     const taskSub = new TaskService(task, token);
     await taskSub.atualizarTaskSub();
     showMessage('Salvo / Alterado com sucesso.');
 
 };
 const set_important = async (task) => {
+    task.date_start = new Date(task.date_start);
+    task.date_end = new Date(task.date_end);
+
     if (task.status == 'importante') {
         task.status = '';
         tab_index.value = 0;
@@ -536,7 +580,8 @@ const set_important = async (task) => {
 
 };
 const delete_task = async (task, type) => {
-
+    task.date_start = new Date(task.date_start);
+    task.date_end = new Date(task.date_end);
     const deletTask = new TaskService({
         id: task.id
     }, token)
@@ -554,13 +599,8 @@ const view_task = (task) => {
 
 const edit_task = (task) => {
     params.value = { id: null, title: '', description: '' };
- 
     if (task) {
         params.value = task;
-        console.log(task)
-
-        // params.value.date_start = DateTime.ToFormat(task.date_end, 'YYYY-MM-DD')
-        showMessage(task, 'Título é Obrigatório', 'error');
     }
     addTaskModal.show();
 };
@@ -573,18 +613,27 @@ const save_task = async () => {
     let description_text = quillEditorData.getText();
     if (params.value.id) {
         //update task
-        let task = task_list.value.find((d) => d.id == params.value.id);
-        task.title = params.value.title;
-        task.description = params.value.description;
-        task.description_text = description_text;
+        let sendTaks = task_list.value.find((d) => d.id == params.value.id);
+        sendTaks.id = params.value.id;
+        sendTaks.title = params.value.title;
+        sendTaks.description = params.value.description;
+        sendTaks.description_text = description_text;
 
-        task.date_start = params.value.date_start;
-        task.date_end = params.value.date_end;
+        sendTaks.date_start = new Date(params.value.date_start);
+        sendTaks.date_end = new Date(params.value.date_end);
 
-        const taskSub = new TaskService(task, token);
+        const taskSub = new TaskService(sendTaks, token);
 
-        await taskSub.atualizarTaskSub();
-        showMessage('Salvo / Criado com sucesso.');
+        let subTaksAtualiza = await taskSub.atualizarTaskSub();
+
+        if (subTaksAtualiza.data.id) {
+            bind_task_list();         
+
+            console.log(sendTaks)
+            showMessage('Atualizado com sucesso.');
+        } else {
+            showMessage('Erro para Atualizar.', 'error');
+        }
 
 
 
@@ -622,7 +671,13 @@ const save_task = async () => {
     search_tasks();
 
 };
-
+const formatToHoraMin = (date) => {
+    let data = new Date(date);
+    let dataHora = data.toISOString().split('T')[0];
+    let horaMinuto = data.toTimeString().split(' ')[0];
+    let horaMinutoSemSegundos = horaMinuto.split(':').slice(0, 2).join(':');
+    return `${dataHora}T${horaMinutoSemSegundos}`
+}
 const showMessage = (msg = '', type = 'success') => {
     const toast = window.Swal.mixin({
         toast: true,

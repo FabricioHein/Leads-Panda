@@ -148,11 +148,15 @@
                                                 </a>
                                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="ddlMore">
                                                    
-                                                   
                                                     <li>
                                                         <a href="javascript:;"
                                                             class="dropdown-item note-important label-group-item label-important position-relative g-dot-important"
-                                                            @click="set_tag(note, 'important')">Important</a>
+                                                            @click="set_tag(note, 'important')">Importante</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;"
+                                                            class="dropdown-item note-important label-group-item label-important position-relative g-dot-important"
+                                                            @click="set_tag(note, 'important')">Importante</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -165,7 +169,7 @@
 
                     <!-- Modal -->
                     <div id="notesMailModal" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-md modal-dialog-centered">
+                        <div class="modal-dialog modal-md modal-dialog-right">
                             <div class="modal-content mailbox-popup">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Add Anotação</h5>
@@ -356,3 +360,26 @@ const showMessage = (msg = '', type = 'success') => {
     });
 };
 </script>
+<style>
+.modal-dialog-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 100%;
+    max-width: 400px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog-right {
+    transform: translateX(0);
+}
+
+.modal-dialog-right .modal-content {
+    height: 100%;
+    border-radius: 0;
+    overflow-y: auto; /* Adiciona a capacidade de rolagem vertical */
+}
+
+</style>

@@ -2,7 +2,7 @@ import { PrismaService } from 'src/base/relacional/PrismaService';
 export declare class ProdutoRepository {
     private prisma;
     constructor(prisma: PrismaService);
-    getProdutoAll(clienteId: any): Promise<{
+    getProdutoAll(empresa_configId: any): Promise<{
         id: number;
         codigo: string;
         nome: string;
@@ -15,7 +15,7 @@ export declare class ProdutoRepository {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }[]>;
     getByIdProduto(id: any): Promise<{
@@ -31,7 +31,7 @@ export declare class ProdutoRepository {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }>;
     createProduto(data: any): Promise<{
@@ -47,7 +47,7 @@ export declare class ProdutoRepository {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }>;
     updateProduto(id: any, data: any): Promise<{
@@ -63,7 +63,7 @@ export declare class ProdutoRepository {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }>;
     deleteProduto(id: any): Promise<{
@@ -79,7 +79,7 @@ export declare class ProdutoRepository {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }>;
 }

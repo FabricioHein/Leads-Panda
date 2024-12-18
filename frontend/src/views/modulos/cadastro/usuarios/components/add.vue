@@ -23,9 +23,7 @@
         <input v-model="params.telefone" v-maska="'+55(##)#####-####'" placeholder="(__) ____-____" type="text"
           class="form-control" />
           <label>Email</label>
-        <InputVue type="text" v-model:value="params.email" />
-
-       
+        <InputVue type="text" v-model:value="params.email" />      
        
 
        
@@ -79,26 +77,16 @@ export default {
       this.cnpj = ! this.cnpj;
     },
     async change_file(event) {
-      let formData = new FormData();
-      formData.append('file', event.target.files[0]);
-      console.log('>> formData >> ', formData);
 
-      const importar = new ImportarService(
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        },
-        this.token,
-        `/api/importar/file/${this.usuario.id}`,
-        formData
-      )
-      const upload = await importar.importarFile()
-      if (upload) {
-        this.showMessage('Carregado com Sucesso')
-      }
-
-      this.params.linkFoto = upload.downloadURL;
+      const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                  this.params.linkFoto = e.target.result
+                  this.showMessage('Carregado com Sucesso')
+                };
+                reader.readAsDataURL(file);
+            };    
 
     },
     showMessage(msg = '', type = 'success') {

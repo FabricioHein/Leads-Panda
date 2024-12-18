@@ -14,7 +14,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -34,17 +33,22 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
-    getUserAll(clienteId: any): Promise<({
+    getUsuariaClienteAgendamento(empresa_configId: any): Promise<{
+        id: number;
+        nome: string;
+    }[]>;
+    getUserAll(empresa_configId: any): Promise<({
         permissao_modulos: ({
             modulo: {
                 subModulo: {
+                    id: number;
                     permissao_sub_modulos: {
-                        ver: boolean;
                         editar: boolean;
+                        ver: boolean;
                         deletar: boolean;
                     }[];
-                    id: number;
                 }[];
             } & {
                 id: number;
@@ -76,7 +80,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -96,6 +99,7 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     })[]>;
     getByIdUser(id: any): Promise<{
         id: number;
@@ -109,7 +113,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -129,6 +132,7 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
     getByEmailUser(email: any): Promise<{
         id: number;
@@ -142,7 +146,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -162,8 +165,9 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
-    createUser(data: any): Promise<{
+    createUser(empresa_configId: any, data: any): Promise<{
         id: number;
         nome: string;
         sobrenome: string;
@@ -175,7 +179,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -195,6 +198,7 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
     updateUser(id: any, data: any): Promise<{
         id: number;
@@ -208,7 +212,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -228,6 +231,7 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
     deleteUser(id: any): Promise<{
         id: number;
@@ -241,7 +245,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -261,6 +264,7 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
     findUnique(email: any): Promise<{
         id: number;
@@ -274,7 +278,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -294,6 +297,7 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
     update(data: any): Promise<{
         id: number;
@@ -307,7 +311,6 @@ export declare class UsuarioRepository {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -327,6 +330,7 @@ export declare class UsuarioRepository {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
     resetPasswordFindUnique(data: any): Promise<{
         id: string;
@@ -356,6 +360,12 @@ export declare class UsuarioRepository {
         createdAt: Date;
     }>;
     findVerificationCreate(email: any): Promise<{
+        id: string;
+        email: string;
+        code: string;
+        createdAt: Date;
+    }>;
+    findVerificationCreateCode(code: any): Promise<{
         id: string;
         email: string;
         code: string;

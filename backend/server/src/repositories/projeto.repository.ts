@@ -5,10 +5,10 @@ import { Injectable } from '@nestjs/common';
 export class ProjetoRepository {
   constructor(private prisma: PrismaService) {}
 
-  async getProjetoAll(clienteId) {
+  async getProjetoAll(empresa_configId) {
     return await this.prisma.projeto.findMany({
       where: {
-        configuracaoClienteId: clienteId,
+        empresa_configId: empresa_configId,
       },
     });
   }

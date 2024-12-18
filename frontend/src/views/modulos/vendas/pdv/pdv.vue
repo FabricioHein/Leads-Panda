@@ -76,7 +76,7 @@ export default {
             this.showTabela = false;
 
             const produto = new produtoService(
-                { clienteId: this.cliente.id, }, this.token,
+                { empresa_configId: this.cliente.id, }, this.token,
                 `/produto/todos/${this.cliente.id}`);
 
             this.data = await produto.getAllProdutos();
@@ -110,7 +110,7 @@ export default {
             const produto = new ProdutoModel(this.params)
 
             produto.operador = `Add/Atualizado por ${this.usuario.username} ${this.usuario.sobrenome}`;
-            produto.clienteId = this.cliente.id
+            produto.empresa_configId = this.cliente.id
 
             if (produto.id) {
                 const produtoServ = new produtoService(produto, this.token);

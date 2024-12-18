@@ -58,40 +58,10 @@ export declare class TaskRepository {
         produtoId: number;
         arquivado: boolean;
     }[]>;
+    countTasksByEmpresa(empresa_configId: any): Promise<number>;
+    sumTasksByEmpresaValorInicial(empresa_configId: any): Promise<0 | import("@prisma/client/runtime/library").Decimal>;
+    sumTasksByEmpresaValorFinal(empresa_configId: any): Promise<0 | import("@prisma/client/runtime/library").Decimal>;
     getByIdTask(id: any): Promise<{
-        processo: {
-            projeto: {
-                id: number;
-                title: string;
-                created_at: Date;
-                updated_at: Date;
-                tipo_projetoId: number;
-                operador: string;
-                configuracaoClienteId: number;
-            };
-            title: string;
-        };
-        email: {
-            id: number;
-            titulo: string;
-            from: string;
-            to: string;
-            html_body: string;
-            data_envio: Date;
-            taskId: number;
-            campanha_mktId: number;
-        }[];
-        arquivos: {
-            id: number;
-            link: string;
-            description: string;
-            created_at: Date;
-            updated_at: Date;
-            taskId: number;
-            clienteId: number;
-            chatChat_id: number;
-            messagesMessage_id: number;
-        }[];
         anotacoes: {
             id: number;
             title: string;
@@ -102,6 +72,16 @@ export declare class TaskRepository {
             created_at: Date;
             updated_at: Date;
             taskId: number;
+        }[];
+        arquivos: {
+            id: number;
+            link: string;
+            description: string;
+            created_at: Date;
+            updated_at: Date;
+            taskId: number;
+            empresa_configId: number;
+            messagesMessage_id: number;
         }[];
         sub_task: {
             id: number;
@@ -116,15 +96,35 @@ export declare class TaskRepository {
             updated_at: Date;
             taskId: number;
         }[];
-        venda: {
+        Contacts: {
             id: number;
-            valor_total: import("@prisma/client/runtime/library").Decimal;
-            status: string;
-            configuracaoClienteId: number;
-            taskId: number;
-            usersId: number;
+            name: string;
+            number: string;
+            profilePicUrl: string;
             created_at: Date;
             updated_at: Date;
+            email: string;
+            empresa_configId: number;
+            logradouro: string;
+            bairro: string;
+            estado: string;
+            cidade: string;
+            pais: string;
+            complemento: string;
+            numero: string;
+            cep: string;
+        };
+        processo: {
+            title: string;
+            projeto: {
+                id: number;
+                title: string;
+                created_at: Date;
+                updated_at: Date;
+                tipo_projetoId: number;
+                operador: string;
+                empresa_configId: number;
+            };
         };
         Users: {
             id: number;
@@ -138,7 +138,6 @@ export declare class TaskRepository {
             themeDark: boolean;
             operador: string;
             sexoId: number;
-            clienteId: number;
             email: string;
             profile: string;
             created_at: Date;
@@ -158,24 +157,7 @@ export declare class TaskRepository {
             gerente_conta: boolean;
             termos: boolean;
             password: string;
-        };
-        Contacts: {
-            id: number;
-            name: string;
-            number: string;
-            profilePicUrl: string;
-            created_at: Date;
-            updated_at: Date;
-            email: string;
-            configuracaoClienteId: number;
-            logradouro: string;
-            bairro: string;
-            estado: string;
-            cidade: string;
-            pais: string;
-            complemento: string;
-            numero: string;
-            cep: string;
+            empresa_configId: number;
         };
     } & {
         id: number;
@@ -206,6 +188,12 @@ export declare class TaskRepository {
         arquivado: boolean;
     }>;
     createTask(data: any): Promise<{
+        processo: {
+            projeto: {
+                id: number;
+            };
+        };
+    } & {
         id: number;
         contato_nome: string;
         contato_numero: string;

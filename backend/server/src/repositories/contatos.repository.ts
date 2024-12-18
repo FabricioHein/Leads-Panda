@@ -4,10 +4,10 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class ContatosRepository {
   constructor(private prisma: PrismaService) {}
-  async getContatosAll(clienteId) {
+  async getContatosAll(empresa_configId) {
     return await this.prisma.contacts.findMany({
       where: {
-        configuracaoClienteId: clienteId,
+        empresa_configId: empresa_configId,
       },
     });
   }

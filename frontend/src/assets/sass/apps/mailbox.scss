@@ -223,7 +223,7 @@
             .nav-link.active,
             .show > .nav-link {
                 background-color: transparent;
-                color: #000000;
+                color: #4154f1000;
                 font-weight: 600;
                 fill: rgba(27, 85, 226, 0.2392156863);
             }
@@ -270,7 +270,7 @@
 
             .nav-link.active svg,
             .show > .nav-link svg {
-                color: #000000;
+                color: #4154f1000;
             }
 
             a.nav-link {
@@ -288,7 +288,7 @@
                 }
 
                 .mail-badge {
-                    background: #000000;
+                    background: #4154f1000;
                     border-radius: 50%;
                     position: absolute;
                     right: 8px;
@@ -364,7 +364,7 @@
                 }
 
                 &.active {
-                    color: #000000;
+                    color: #4154f1000;
                 }
             }
 
@@ -383,7 +383,7 @@
 
                 &:hover {
                     background-color: #fff;
-                    color: #000000;
+                    color: #4154f1000;
                 }
             }
 
@@ -808,7 +808,7 @@
         .mail-title {
             font-size: 24px;
             font-weight: 600;
-            color: #000000;
+            color: #4154f1000;
             margin-bottom: 0;
             align-self: center;
         }
@@ -1054,7 +1054,7 @@
             align-self: center;
             font-size: 19px;
             margin-right: 14px;
-            color: #000000;
+            color: #4154f1000;
             font-weight: 600;
         }
 

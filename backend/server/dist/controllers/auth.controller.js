@@ -37,6 +37,9 @@ let AuthController = class AuthController {
     async getCurrentUser(req) {
         return await this.authService.loginAcessoGoogle(req.body);
     }
+    async validaEmail(uuid) {
+        return await this.authService.validaEmail(uuid);
+    }
     logout(req, res) {
         req.logout();
         res.redirect('/');
@@ -66,6 +69,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getCurrentUser", null);
+__decorate([
+    (0, common_1.Get)('validar-email/:uuid'),
+    __param(0, (0, common_1.Param)('uuid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "validaEmail", null);
 __decorate([
     (0, common_1.Get)('logout'),
     __param(0, (0, common_1.Req)()),

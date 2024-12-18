@@ -77,7 +77,7 @@ export default {
     },
     methods: {
         getAcesso() {
-            this.acesso = Acesso.getAcesso('Cadastro', '/parametros', this.permissao);
+            this.acesso = Acesso.getAcesso('Cadastro', '/produtos', this.permissao);
             console.log(this.acesso)
         },
         async init() {
@@ -115,10 +115,17 @@ export default {
         },
         async save() {
 
-            const produto = new ProdutoModel(this.params)
+       
+
+            const produto = new ProdutoModel(this.params);
+
+            if(!produto.codigo || !produto.nome || !produto.preco_venda ){
+                this.showMessage('Erro: Preencha todos os campos para Salvar!', 'error');
+                return
+            };
 
             produto.operador = `Add/Atualizado por ${this.usuario.username} ${this.usuario.sobrenome}`;
-            produto.clienteId = this.cliente.id;
+            produto.empresa_configId = this.cliente.id;
             
             if (produto.id) {
                 const produtoServ = new produtoService(produto, this.token);
@@ -127,7 +134,7 @@ export default {
             }
             else {
 
-                produto['clienteId'] = Number(this.cliente.id);
+                produto['empresa_configId'] = Number(this.cliente.id);
                 produto.isTrusted ? delete produto.isTrusted : "";
                 const produtoServ = new produtoService(produto, this.token);
                 await produtoServ.criarProduto();

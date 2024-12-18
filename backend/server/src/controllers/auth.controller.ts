@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsuariosService } from '../service/usuarios.service';
 import { AuthService } from '../service/auth.service';
@@ -32,6 +32,11 @@ export class AuthController {
   @Post('current_user')
  async getCurrentUser(@Req() req) {
   return await this.authService.loginAcessoGoogle(req.body);
+
+  }
+  @Get('validar-email/:uuid')
+  async validaEmail(@Param('uuid') uuid){
+    return await this.authService.validaEmail(uuid);
 
   }
 

@@ -25,7 +25,8 @@ class TaskService extends Api {
         return await this.post();
     }
     async criarTask() {
-        return await this.post();
+        const task = await this.post();
+        return task.data;
     }
     async atualizaVendas() {
         this.url = '/api/task/atualizaVendas';

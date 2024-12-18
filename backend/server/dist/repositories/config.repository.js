@@ -30,7 +30,7 @@ let ConfigRepository = class ConfigRepository {
                     cpf: true,
                     telefone: true,
                     email: true,
-                    linkFoto: true,
+                    linkFoto: true
                 },
             });
         }
@@ -40,7 +40,7 @@ let ConfigRepository = class ConfigRepository {
     }
     async getByIdUserEmpresa(id) {
         try {
-            return await this.prisma.configuracaoCliente.findFirst({
+            return await this.prisma.empresa_config.findFirst({
                 where: {
                     Users: {
                         some: {

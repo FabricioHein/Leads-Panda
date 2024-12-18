@@ -6,7 +6,7 @@ export declare class VendaRepository {
         id: number;
         valor_total: import("@prisma/client/runtime/library").Decimal;
         status: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         taskId: number;
         usersId: number;
         created_at: Date;
@@ -16,7 +16,7 @@ export declare class VendaRepository {
         id: number;
         valor_total: import("@prisma/client/runtime/library").Decimal;
         status: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         taskId: number;
         usersId: number;
         created_at: Date;
@@ -26,7 +26,7 @@ export declare class VendaRepository {
         id: number;
         valor_total: import("@prisma/client/runtime/library").Decimal;
         status: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         taskId: number;
         usersId: number;
         created_at: Date;
@@ -36,7 +36,7 @@ export declare class VendaRepository {
         id: number;
         valor_total: import("@prisma/client/runtime/library").Decimal;
         status: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         taskId: number;
         usersId: number;
         created_at: Date;
@@ -46,7 +46,7 @@ export declare class VendaRepository {
         id: number;
         valor_total: import("@prisma/client/runtime/library").Decimal;
         status: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         taskId: number;
         usersId: number;
         created_at: Date;

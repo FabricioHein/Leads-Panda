@@ -30,6 +30,8 @@
 
     </div>
     <div class="row">
+      <hr>
+
       <h6>Endereço</h6>
       <div class="col-6">
         <label>Rua</label>

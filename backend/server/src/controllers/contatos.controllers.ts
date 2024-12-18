@@ -43,10 +43,10 @@ export class ContatosController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('todos/:clienteId')
-  async getAllContatos(@Param('clienteId') clienteId) {
+  @Get('todos/:empresa_configId')
+  async getAllContatos(@Param('empresa_configId') empresa_configId) {
     try {
-      return await this.contatoService.getAllContatos(clienteId);
+      return await this.contatoService.getAllContatos(empresa_configId);
     } catch (error) {
       return error;
     }

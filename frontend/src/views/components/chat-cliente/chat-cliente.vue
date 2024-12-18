@@ -1,5 +1,5 @@
 <template src="./chat-cliente.html"></template>
-  
+
 <script>
 import '@/views/components/chat-cliente/chat.css';
 
@@ -35,11 +35,12 @@ export default {
       newMessage: '',
       load: false,
       emoji: false,
-      chat: localStorage.getItem('chat') ? JSON.parse(localStorage.getItem('chat')) : null,
+      chat: null,
       atendimento: null
     }
   },
   async created() {
+    localStorage.removeItem('chatBuilding');
   },
   async mounted() {
 
@@ -48,7 +49,7 @@ export default {
 
   },
   methods: {
-    closeModal(){
+    closeModal() {
       this.emoji = false;
 
     },
@@ -67,7 +68,6 @@ export default {
     },
     async initChat() {
       var params = this.$route.params
-      var clienteId = params.clienteId;
       var chave = params.chaveId;
       var tipo = params.tipo;
       var telefonParams = params.telefone;
@@ -84,7 +84,7 @@ export default {
       }
 
       //usuario chat     
-      if (clienteId && chave && tipo == 'getchat' || tipo == 'teste') {
+      if (chave && tipo == 'getchat' || tipo == 'teste') {
 
         this.load = true;
         var acesso = `/api/chat/get-info-chat/${chave}`;
@@ -127,17 +127,14 @@ export default {
 
                   this.chat.messages = this.messages;
 
-                  localStorage.setItem("chat", JSON.stringify(this.chat));
                   this.scrollToBottom();
 
-                }
+                };
 
-              }
+              };
 
 
-
-            }
-
+            };
 
           } else {
             this.formData.nomeValida = false;
@@ -169,7 +166,7 @@ export default {
 
               this.messages.push({
                 message_id: qtdMsgm,
-                avatar: this.chatBuilding.bot_foto,
+                //avatar: this.chatBuilding.bot_foto,
                 username: this.chatBuilding.nome || 'Assistente AI',
                 text: this.messages.length == 0 ? this.chatBuilding.msg_inicial : '',
                 created_at: new Date()
@@ -184,9 +181,9 @@ export default {
 
               this.messages.push({
                 message_id: qtdMsgm + 1,
-                avatar: this.chatBuilding.bot_foto,
+                //avatar: this.chatBuilding.bot_foto,
                 username: this.chatBuilding.nome || 'Assistente AI',
-                text: 'Digite o seu Nome',
+                text: 'Digite o seu Nome Completo',
                 created_at: new Date()
               });
 
@@ -255,13 +252,10 @@ export default {
 
                     this.chat.messages = this.messages;
 
-                    localStorage.setItem("chat", JSON.stringify(this.chat));
+
                     this.scrollToBottom();
 
-                  } else {
-                    localStorage.setItem("chat", JSON.stringify(this.chat));
-
-                  }
+                  } else { }
 
                 }
 
@@ -290,7 +284,7 @@ export default {
 
       }
       //usuario chat     
-      else if (clienteId && chave && tipo == 'atendimento' && telefonParams && emailParams) {
+      else if (chave && tipo == 'atendimento' && telefonParams && emailParams) {
 
         this.load = true;
         var acesso = `/api/chat/get-info-chat/${chave}`;
@@ -311,13 +305,11 @@ export default {
           this.chatBuilding = data;
           localStorage.setItem("chatBuilding", JSON.stringify(this.chatBuilding));
 
-
-
           if (this.messages.length == 0) {
 
             this.messages.push({
               message_id: qtdMsgm,
-              avatar: this.chatBuilding.bot_foto,
+              //avatar: this.chatBuilding.bot_foto,
               username: this.chatBuilding.nome || 'Assistente AI',
               text: this.messages.length == 0 ? this.chatBuilding.msg_inicial : '',
               created_at: new Date()
@@ -329,9 +321,9 @@ export default {
 
             this.messages.push({
               message_id: qtdMsgm + 1,
-              avatar: this.chatBuilding.bot_foto,
+              // avatar: this.chatBuilding.bot_foto,
               username: this.chatBuilding.nome || 'Assistente AI',
-              text: 'Digite o seu Nome',
+              text: 'Digite o seu Nome Completo',
               created_at: new Date()
             });
 
@@ -359,16 +351,11 @@ export default {
 
             if (criarChat.data) {
 
-
-
               this.chat = criarChat.data;
-
-              localStorage.setItem("chat", JSON.stringify(this.chat));
 
               if (this.chat.messages) {
 
                 if (this.chat.messages.length > 0) {
-
 
                   this.chat.messages.map((msg) => {
 
@@ -415,11 +402,13 @@ export default {
 
       this.scrollToBottom();
 
-   
+
 
     },
     valida() {
       var telefone = this.formData.telefone;
+      var nome = this.formData.nome;
+
       var email = this.formData.email;
       var textEmail = this.messages.filter((i => i.text == 'Digite o seu Email'));
       var textTelefone = this.messages.filter((i => i.text == 'Digite o seu Telefone'));
@@ -433,7 +422,7 @@ export default {
 
           this.messages.push({
             message_id: this.messages.length + 1,
-            avatar: this.chatBuilding.bot_foto,
+            // avatar: this.chatBuilding.bot_foto,
             username: this.chatBuilding.nome || 'Assistente AI',
             text: 'Digite o seu Email',
             created_at: new Date()
@@ -443,14 +432,15 @@ export default {
 
 
       }
-      if (this.emailValida(email)) {
+      if (this.emailValida(email) && email != '') {
 
         this.formData.emailValida = true;
 
         if (textTelefone.length == 0) {
+
           this.messages.push({
             message_id: this.messages.length + 1,
-            avatar: this.chatBuilding.bot_foto,
+            //avatar: this.chatBuilding.bot_foto,
             username: this.chatBuilding.nome || 'Assistente AI',
             text: 'Digite o seu Telefone',
             created_at: new Date()
@@ -463,9 +453,9 @@ export default {
       }
 
 
-      if (String(telefone).split('-').length >= 2) {
-        this.formData.telefoneValida = true;
+      if (String(telefone).length == 17) {
 
+        this.formData.telefoneValida = true;
         this.startChat();
       }
 
@@ -482,9 +472,13 @@ export default {
       return nome;
     },
     emailValida(value) {
+      if (value == '' || value == undefined || value == null) {
+        return false;
+      };
+
       const email = value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-        ? true
-        : false;
+        ? false
+        : true;
       return email;
     },
     file2Buffer(file) {
@@ -514,40 +508,33 @@ export default {
       this.scrollToBottom()
 
     },
+    closeEmoji() {
+      this.emoji = false;
+      this.scrollToBottom()
+    },
     async getMessages() {
 
-     setInterval(async ()  => {       
+      setInterval(async () => {
+        console.log('buscou')
 
-        // this.chat = JSON.parse(localStorage.getItem('chat'));
+        if (this.chat) {
+          var url = `/api/chat/getByChatUuidMessagesLast/${this.chat.uuid}`;
+          var newMessage = await axios({
+            method: 'get',
+            url: url
+          });
 
-        // if (this.chat) {
-        //   var url = `/api/chat/getByChatUuidMessagesLast/${this.chat.uuid}`;
-        //   var newMessage = await axios({
-        //     method: 'get',
-        //     url: url
-        //   });
+          if (newMessage.data.length > 0) {
+            var hasMsgm = this.messages.filter(i => i.message_id == newMessage.data[0].message_id);
+            if (hasMsgm.length === 0) {
 
-        //   if (newMessage.data) {
+              this.messages.push(newMessage.data[0]);
+              this.scrollToBottom();
+            };
 
-        //     let msg = newMessage.data;
+          }
 
-        //     for (let index = 0; index < this.messages.length; index++) {
-        //        this.messages[index].message_id;
-        //        if(this.messages[index].message_id){
-        //         console.log(this.messages[index].message_id)
-
-
-                
-        //        }
-
-                            
-
-              
-        //     }          
-
-        //   }
-
-        // }
+        }
 
       }, 10000); // Intervalo de 1000 milissegundos (1 segundo)
 
@@ -588,7 +575,7 @@ export default {
 
       var msmSend = {
         // message_id: this.messages.length + 1,
-        avatar: this.chatBuilding.usario_foto || '',
+        //avatar: this.chatBuilding.usario_foto || '',
         username: this.usuario,
         type: 'txt',
         text: this.newMessage
@@ -611,8 +598,7 @@ export default {
           nome: this.formData.nome,
           telefone: this.telefoneString(this.formData.telefone),
           email: this.formData.email,
-          chat_info_id: this.chatBuilding.chat_info_id,
-          cliente_id: this.chatBuilding.cliente_id,
+          uuid_chat: this.chatBuilding.uuid,
           uuid: self.crypto.randomUUID(),
           chat_app: 'web'
         };
@@ -648,10 +634,10 @@ export default {
 
             this.chat.messages = this.messages;
             this.scrollToBottom();
-            localStorage.setItem("chat", JSON.stringify(this.chat));
+
 
           } else {
-            localStorage.setItem("chat", JSON.stringify(this.chat));
+
 
           }
         };
@@ -671,8 +657,8 @@ export default {
       var tipo = params.tipo;
 
       this.usuario = this.chat.nome;
-      
-      if(tipo == 'atendimento'){
+
+      if (tipo == 'atendimento') {
         this.usuario = params.user
       }
 
@@ -681,16 +667,15 @@ export default {
 
       var msmSend = {
         // message_id: this.messages.length + 1,
-        avatar: this.chatBuilding.usario_foto || '',
+        //avatar: this.chatBuilding.usario_foto || '',
         username: this.usuario,
         type: 'txt',
-        text: this.newMessage,
-        to_telefone: this.telefoneString(this.formData.telefone) || this.chat.telefone
+        text: this.newMessage
+        //to_telefone: this.telefoneString(this.formData.telefone) || this.chat.telefone
       };
 
       if (this.chat.chat_id) {
         msmSend['chat_id'] = this.chat.chat_id;
-        msmSend['uuid'] = this.chatBuilding.uuid;
       }
 
 
@@ -709,9 +694,8 @@ export default {
         if (this.newMessage.trim() !== '') {
           this.messages.push(novaMsg.data);
           this.newMessage = '';
+          this.scrollToBottom()
         };
-
-        this.scrollToBottom()
 
 
       } else {
@@ -742,11 +726,11 @@ export default {
 
         var msmSend = {
           // message_id: this.messages.length + 1,
-          avatar: this.chatBuilding.usario_foto || 'https://gravatar.com/avatar/bb005e77609153d683d5bdcc61f97658?s=400&d=robohash&r=x',
+          //avatar: this.chatBuilding.usario_foto || 'https://gravatar.com/avatar/bb005e77609153d683d5bdcc61f97658?s=400&d=robohash&r=x',
           username: this.usuario,
           type: 'img',
           text: anexos,
-          to_telefone: this.telefoneString(this.formData.telefone) || this.chat.telefone
+          //to_telefone: this.telefoneString(this.formData.telefone) || this.chat.telefone
         };
 
         if (this.newMessage.trim() !== '') {
@@ -755,7 +739,7 @@ export default {
         };
         if (this.chat.chat_id) {
           msmSend['chat_id'] = this.chat.chat_id;
-          msmSend['uuid'] = this.chatBuilding.uuid;
+
 
         }
 
@@ -763,17 +747,17 @@ export default {
 
     },
     messageClass(message) {
-      return message.username === this.usuario ? 'lead2-converts_chat_balloon lead2-converts_right_balloon' : 'lead2-converts_chat_balloon lead2-converts_left_balloon message_with_photo';
+      return message.atendimento ? 'lead2-converts_chat_balloon lead2-converts_right_balloon' : 'lead2-converts_chat_balloon lead2-converts_left_balloon message_with_photo';
     },
     messageClassSec(message) {
-      return message.username === this.usuario ? '' : 'lead2-converts_chat_balloon_inner innerRight';
+      return message.atendimento ? '' : 'lead2-converts_chat_balloon_inner innerRight';
     },
     scrollToBottom() {
       this.$nextTick(() => {
         const chatBox = document.getElementById('lead2-converts_chat_component');
         console.log(chatBox.scrollTop, chatBox.scrollHeight)
 
-        if (chatBox) chatBox.scrollTop = 5843 ;
+        if (chatBox) chatBox.scrollTop = 5843;
 
       });
     },
@@ -781,4 +765,3 @@ export default {
 };
 
 </script>
-  

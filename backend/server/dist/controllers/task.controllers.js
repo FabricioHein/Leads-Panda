@@ -36,14 +36,6 @@ let TaskController = class TaskController {
             return error;
         }
     }
-    async atualizaVendas(req) {
-        try {
-            return await this.taskService.atualizaVendas(req.body);
-        }
-        catch (error) {
-            return error;
-        }
-    }
     async deleteTask(req) {
         try {
             return await this.taskService.deleteTask(req.body);
@@ -164,9 +156,9 @@ let TaskController = class TaskController {
             return error;
         }
     }
-    async getAllMotivos(clienteId, req) {
+    async getAllMotivos(empresa_configId, req) {
         try {
-            return await this.taskService.getAllMotivos(clienteId);
+            return await this.taskService.getAllMotivos(empresa_configId);
         }
         catch (error) {
             return error;
@@ -221,14 +213,6 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], TaskController.prototype, "getByIdTask", null);
-__decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Post)('atualizaVendas'),
-    __param(0, (0, common_1.Request)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], TaskController.prototype, "atualizaVendas", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('delete'),
@@ -355,8 +339,8 @@ __decorate([
 ], TaskController.prototype, "getAllAnotacao", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('getAllMotivos/:clienteId'),
-    __param(0, (0, common_1.Param)('clienteId')),
+    (0, common_1.Get)('getAllMotivos/:empresa_configId'),
+    __param(0, (0, common_1.Param)('empresa_configId')),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),

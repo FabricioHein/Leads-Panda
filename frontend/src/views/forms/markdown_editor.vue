@@ -122,11 +122,11 @@
         border-radius: 6px;
     }
     .vue-easymde .editor-toolbar button {
-        color: #000000 !important;
+        color: #4154f1000 !important;
     }
     .vue-easymde .editor-toolbar button.active,
     .vue-easymde .editor-toolbar button:hover {
-        border-color: #000000 !important;
+        border-color: #4154f1000 !important;
         opacity: 0.6;
     }
     .vue-easymde .CodeMirror-fullscreen,

@@ -3,6 +3,7 @@ export declare class ProcessoRepository {
     private prisma;
     constructor(prisma: PrismaService);
     getProcessoAll(id: any): Promise<{
+        id: number;
         task: {
             id: number;
             contato_nome: string;
@@ -31,7 +32,6 @@ export declare class ProcessoRepository {
             produtoId: number;
             arquivado: boolean;
         }[];
-        id: number;
         title: string;
         color: string;
         etapa: number;

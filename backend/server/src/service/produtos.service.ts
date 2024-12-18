@@ -39,9 +39,9 @@ export class ProdutoService {
       return ErroBadRequest(error);
     }
   }
-  async getAllProduto(clienteId) {
+  async getAllProduto(empresa_configId) {
     try {
-      return await this.produtoRepositorio.getProdutoAll(Number(clienteId));
+      return await this.produtoRepositorio.getProdutoAll(Number(empresa_configId));
     } catch (error) {
       return ErroBadRequest(error);
     }

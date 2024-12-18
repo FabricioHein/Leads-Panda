@@ -37,7 +37,7 @@ import motivosService from '@/service/motivos-service';
 
 export default {
     setup() {
-        useMeta({ title: 'Cadastro de Serviços' });
+        useMeta({ title: 'Parâmetros' });
     },
     data() {
         return {
@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         getAcesso() {
-            this.acesso = Acesso.getAcesso('Cadastro', '/parametros', this.permissao);
+            this.acesso = Acesso.getAcesso('Configuração', '/parametros', this.permissao);
             console.log(this.acesso)
         },
         async init() {
@@ -124,7 +124,7 @@ export default {
             }
             else {
 
-                motivos['configuracaoClienteId'] = Number(this.cliente.id);
+                motivos['empresa_configId'] = Number(this.cliente.id);
                 motivos.isTrusted ? delete motivos.isTrusted : "";
                 const motivosServ = new motivosService(motivos, this.token);
                 await motivosServ.criarMotivos();

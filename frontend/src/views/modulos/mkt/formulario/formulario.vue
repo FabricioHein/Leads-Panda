@@ -305,7 +305,7 @@ export default {
                 publico: false,
                 url_formulario: '',
                 projetoId: null,
-                configuracaoClienteId: null,
+                empresa_configId: null,
                 processoId: null,
                 json: [],
                 logo_height: null,
@@ -412,7 +412,7 @@ export default {
         async salvarForm() {
             this.getIdJson();
 
-            this.formulario_dinamico.configuracaoClienteId = Number(this.cliente.id);
+            this.formulario_dinamico.empresa_configId = Number(this.cliente.id);
             let form = this.formulario_dinamico;
 
             if (this.formulario_dinamico.url_formulario === '') {
@@ -454,7 +454,7 @@ export default {
             //     this.showMessage('Insira uma Etapa', 'error');
             //     return false;
             // }
-            if (formulario_dinamico.configuracaoClienteId === null || formulario_dinamico.configuracaoClienteId === '') {
+            if (formulario_dinamico.empresa_configId === null || formulario_dinamico.empresa_configId === '') {
                 this.showMessage('Insira um Cliente', 'error');
                 return false;
             }
@@ -569,7 +569,7 @@ export default {
                     publico: false,
                     url_formulario: '',
                     projetoId: null,
-                    configuracaoClienteId: null,
+                    empresa_configId: null,
                     processoId: null,
                     json: [
                         {

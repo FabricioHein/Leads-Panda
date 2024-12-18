@@ -14,35 +14,35 @@ const config_repository_1 = require("../repositories/config.repository");
 const common_1 = require("@nestjs/common");
 const enum_repository_1 = require("../repositories/enum.repository");
 const configCliente_repository_1 = require("../repositories/configCliente.repository");
+const clientes_repository_1 = require("../repositories/clientes.repository");
+const task_repository_1 = require("../repositories/task.repository");
+const chat_repository_1 = require("../repositories/chat.repository");
 const msg_response_1 = require("../utils/msg.response");
 let ConfigService = class ConfigService {
-    constructor(configRepository, configClienteRepository, enumRepository) {
+    constructor(configRepository, configClienteRepository, enumRepository, clientesRepository, taskRepository, chatRepository) {
         this.configRepository = configRepository;
         this.configClienteRepository = configClienteRepository;
         this.enumRepository = enumRepository;
+        this.clientesRepository = clientesRepository;
+        this.taskRepository = taskRepository;
+        this.chatRepository = chatRepository;
     }
-    async getDashboard(clienteId) {
+    async getDashboard(empresa_configId) {
         try {
+            let empresaId = Number(empresa_configId);
+            const contatos = await this.clientesRepository.countClientesByEmpresa(empresaId);
+            const leads = await this.taskRepository.countTasksByEmpresa(empresaId);
+            const sumTasksByEmpresaValorInicial = await this.taskRepository.sumTasksByEmpresaValorInicial(empresaId);
+            const sumTasksByEmpresaValorFinal = await this.taskRepository.sumTasksByEmpresaValorFinal(empresaId);
+            const chatsAtivos = await this.chatRepository.countChatsByEmpresaAtivo(empresaId);
+            const naochatsAtivos = await this.chatRepository.countChatsByEmpresaNaoAtivo(empresaId);
             const dashBoard = {
-                totalContatos: 10,
-                totalCliente: 10,
-                totalProdutos: 10,
-                totalLeads: 10,
-                tarefas: {
-                    abertas: 10,
-                    pendentes: 10,
-                    concluidas: 10,
-                },
-                totalPotencialNegocio: 5000,
-                totalNegocioAberto: 300,
-                totalNegocioPendentes: 422,
-                ultimasVendas: [
-                    {
-                        id: 1,
-                        valor: 100,
-                        title: 'Teste',
-                    },
-                ],
+                totalCliente: contatos ? contatos : 0,
+                totalLeads: leads ? leads : 0,
+                totalPotencialNegocioInicial: sumTasksByEmpresaValorInicial ? sumTasksByEmpresaValorInicial : 0,
+                totalPotencialNegocioFinal: sumTasksByEmpresaValorFinal ? sumTasksByEmpresaValorFinal : 0,
+                chatAtivos: chatsAtivos ? chatsAtivos : 0,
+                naochatsAtivos: naochatsAtivos ? naochatsAtivos : 0
             };
             return dashBoard;
         }
@@ -140,7 +140,10 @@ ConfigService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [config_repository_1.ConfigRepository,
         configCliente_repository_1.ConfigClienteRepository,
-        enum_repository_1.EnumRepository])
+        enum_repository_1.EnumRepository,
+        clientes_repository_1.ClientesRepository,
+        task_repository_1.TaskRepository,
+        chat_repository_1.ChatRepository])
 ], ConfigService);
 exports.ConfigService = ConfigService;
 //# sourceMappingURL=config.service.js.map

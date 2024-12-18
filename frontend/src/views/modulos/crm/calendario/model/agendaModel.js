@@ -5,9 +5,10 @@ class AgendaModel {
         this.description = data.description ? String(data.description) : undefined;
         this.className = data.className ? String(data.className) : undefined;
         this.status = data.status ? String(data.status) : undefined;
-        this.date_start = data.start ? this.parseDate(data.start) : undefined;
-        this.date_end = data.end ? this.parseDate(data.end) : undefined;
+        this.date_start = data.start ? new Date(data.start): undefined;
+        this.date_end = data.end ? new Date(data.end) : undefined;
         this.userIds = data.userIds ? data.userIds.map(id => Number(id)) : [];
+        this.clientIds = data.clientIds ? data.clientIds.map(id => Number(id)) : [];
     }
 
     parseDate(dateString) {

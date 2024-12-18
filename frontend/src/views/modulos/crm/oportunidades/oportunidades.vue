@@ -2,20 +2,19 @@
     <page :params="getAcesso()">
         <div class="layout-px-spacing">
 
-            <div class="action-btn layout-top-spacing mb-5">
+            <div class="action-btn layout-top-spacing mb-5 p-3">
 
                 <button type="button" id="add-list" class="btn btn-primary" @click="edit_project()">
                     <i class="bi bi-funnel-fill"></i>
-
                     Add Oportunidade</button>
             </div>
 
             <div class="row scrumboard" id="cancel-row">
                 <div class="col-lg-12 layout-spacing">
                     <div class="task-list-section">
-                        <div v-for="project in project_list" :key="project.id" class="task-list-container"
-                            >
-                            <div class="connect-sorting cursor-p" style="background: #ffff" @dblclick="goToProcesso(project.id)" >
+                        <div v-for="project in project_list" :key="project.id" class="task-list-container">
+                            <div class="connect-sorting cursor-p" style="background: #ffff"
+                                @dblclick="goToProcesso(project.id)">
                                 <div :style="colorProj(project.color)"></div>
                                 <div class="task-container-header">
                                     <i class="bi bi-funnel-fill"></i>
@@ -72,21 +71,22 @@
                                                     </div>
                                                     <div class="tb-section-2">
                                                         <a href="javascript:;" @click="goToProcesso(project.id, task)">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round"
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-edit-2 s-task-edit">
                                                                 <path
                                                                     d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
                                                                 </path>
                                                             </svg>
                                                         </a>
-                                                        <a href="javascript:;" @click="delete_confirm(project.id, task)">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round"
+                                                        <a href="javascript:;"
+                                                            @click="delete_confirm(project.id, task)">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-trash-2 s-task-delete">
                                                                 <polyline points="3 6 5 6 21 6"></polyline>
                                                                 <path
@@ -113,13 +113,11 @@
 
             <!-- Modal -->
             <div id="addListModal" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-dialog modal-md modal-dialog-right">
                     <div class="modal-content">
                         <div class="modal-header">
                             <i class="bi bi-funnel-fill"></i>
-
                             <h5 class="modal-title">{{ params.id ? 'Editar Oportunidade' : 'Add Oportunidade' }}</h5>
-
                             <button type="button" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close"
                                 class="btn-close"></button>
                         </div>
@@ -134,10 +132,8 @@
                                                     <input type="text" v-model="params.title" class="form-control"
                                                         placeholder="Nome" />
                                                 </div>
-
                                             </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
@@ -145,9 +141,8 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal"
                                 data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" @click="save_project()">{{ params.id ? 'Atualizar'
-                                :
-                                'Add Oportunidade' }}</button>
+                            <button type="button" class="btn btn-primary" @click="save_project()">{{ params.id ?
+                                'Atualizar' : 'Add Oportunidade' }}</button>
                         </div>
                     </div>
                 </div>
@@ -245,7 +240,27 @@
 
     </page>
 </template>
+<style>
+.modal-dialog-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 100%;
+    max-width: 400px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+}
 
+.modal.show .modal-dialog-right {
+    transform: translateX(0);
+}
+
+.modal-dialog-right .modal-content {
+    height: 100%;
+    border-radius: 0;
+}
+</style>
 
 <script setup>
 import { onMounted, ref } from 'vue';
@@ -355,7 +370,7 @@ const save_project = async () => {
         const processos = new ProjetoService({
             id: Number(proj.id),
             title: String(proj.title),
-            configuracaoClienteId: Number(cliente.id),
+            empresa_configId: Number(cliente.id),
             operador: usuario.nome
         }, token);
 
@@ -374,7 +389,7 @@ const save_project = async () => {
 
         let project = {
             title: params.value.title,
-            configuracaoClienteId: Number(cliente.id),
+            empresa_configId: Number(cliente.id),
             operador: usuario.nome
         };
 

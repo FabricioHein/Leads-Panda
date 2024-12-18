@@ -2,7 +2,7 @@
 export declare class FileHelper {
     static bufferToStream(binary: any): any;
     static base64ToBuffer(fileBase64: any): Buffer;
-    static gravarFileStorage(bufferFile: any, clienteId: any, path: any): Promise<{
+    static gravarFileStorage(bufferFile: any, empresa_configId: any, path: any): Promise<{
         message: string;
         name: string;
         type: string;

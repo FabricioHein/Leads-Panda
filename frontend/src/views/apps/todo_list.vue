@@ -445,18 +445,18 @@
     }
     .ql-toolbar.ql-snow .ql-picker-label {
         border: 1px solid transparent;
-        color: #000000;
+        color: #4154f1000;
     }
     .ql-snow .ql-stroke {
         fill: none;
-        stroke: #000000;
+        stroke: #4154f1000;
         stroke-linecap: round;
         stroke-linejoin: round;
         stroke-width: 2;
     }
     .ql-snow .ql-fill,
     .ql-snow .ql-stroke.ql-fill {
-        fill: #000000;
+        fill: #4154f1000;
     }
     #addTaskModal .ql-toolbar.ql-snow {
         border: 1px solid #bfc9d4;

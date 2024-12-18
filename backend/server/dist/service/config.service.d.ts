@@ -1,29 +1,24 @@
 import { ConfigRepository } from '../repositories/config.repository';
 import { EnumRepository } from 'src/repositories/enum.repository';
 import { ConfigClienteRepository } from 'src/repositories/configCliente.repository';
+import { ClientesRepository } from 'src/repositories/clientes.repository';
+import { TaskRepository } from 'src/repositories/task.repository';
+import { ChatRepository } from 'src/repositories/chat.repository';
 export declare class ConfigService {
     private configRepository;
     private configClienteRepository;
     private enumRepository;
-    constructor(configRepository: ConfigRepository, configClienteRepository: ConfigClienteRepository, enumRepository: EnumRepository);
-    getDashboard(clienteId: any): Promise<{
-        totalContatos: number;
+    private clientesRepository;
+    private taskRepository;
+    private chatRepository;
+    constructor(configRepository: ConfigRepository, configClienteRepository: ConfigClienteRepository, enumRepository: EnumRepository, clientesRepository: ClientesRepository, taskRepository: TaskRepository, chatRepository: ChatRepository);
+    getDashboard(empresa_configId: any): Promise<{
         totalCliente: number;
-        totalProdutos: number;
         totalLeads: number;
-        tarefas: {
-            abertas: number;
-            pendentes: number;
-            concluidas: number;
-        };
-        totalPotencialNegocio: number;
-        totalNegocioAberto: number;
-        totalNegocioPendentes: number;
-        ultimasVendas: {
-            id: number;
-            valor: number;
-            title: string;
-        }[];
+        totalPotencialNegocioInicial: number | import("@prisma/client/runtime/library").Decimal;
+        totalPotencialNegocioFinal: number | import("@prisma/client/runtime/library").Decimal;
+        chatAtivos: number;
+        naochatsAtivos: number;
     }>;
     atualizarConfig(data: any): Promise<{
         id: number;
@@ -47,6 +42,7 @@ export declare class ConfigService {
         complemento: string;
         cep: string;
         numero: string;
+        currentPlanId: number;
     }>;
     getConfig(id: Number, token: string): Promise<{
         token: string;

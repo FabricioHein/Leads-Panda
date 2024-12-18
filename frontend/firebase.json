@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "linkkoub",
     "public": "/dist",
     "ignore": [
       "firebase.json",

@@ -369,7 +369,7 @@ body.dark {
             margin-right: 1rem;
 
             &::before {
-                border: 2px solid #000000;
+                border: 2px solid #4154f1000;
                 background-color: #0e1726;
             }
         }
@@ -1670,7 +1670,7 @@ body.dark {
                     span {
                         &.badge {
                             color: #eaf1ff;
-                            background-color: #000000;
+                            background-color: #4154f1000;
                         }
                     }
                 }
@@ -1865,7 +1865,7 @@ body.dark {
                 border-color: #191e3a;
 
                 p {
-                    background: #000000;
+                    background: #4154f1000;
                     color: #eaf1ff;
                 }
             }
@@ -2317,11 +2317,11 @@ body.dark {
     /*alerts*/
     .alert {
         &.alert-light-primary {
-            color: #000000;
+            color: #4154f1000;
             background-color: rgba(67, 97, 238, 0.15);
 
             .close {
-                color: #000000;
+                color: #4154f1000;
                 text-shadow: none;
             }
         }
@@ -2405,7 +2405,7 @@ body.dark {
     .outline-badge-primary {
         &:hover,
         &:focus {
-            background-color: #000000;
+            background-color: #4154f1000;
             color: #eaf1ff;
         }
     }
@@ -2579,7 +2579,7 @@ body.dark {
     /*loader*/
     .loader {
         border: 7px solid #1b2e4b;
-        border-top: 7px solid #000000;
+        border-top: 7px solid #4154f1000;
 
         &.multi-loader {
             border-bottom: 7px solid #e2a03f;
@@ -2889,11 +2889,11 @@ body.dark {
         .popover-header {
             background-color: #060818;
             border: none;
-            color: #000000;
+            color: #4154f1000;
         }
         .popover-body {
             background-color: #060818;
-            color: #000000;
+            color: #4154f1000;
         }
     }
     .popover-success {
@@ -4971,8 +4971,8 @@ body.dark {
 
         .sidenav-header {
             p {
-                background: #000000;
-                background-image: linear-gradient(to right, #000000 0%, #805dca 100%);
+                background: #4154f1000;
+                background-image: linear-gradient(to right, #4154f1000 0%, #805dca 100%);
             }
         }
 
@@ -5145,7 +5145,7 @@ body.dark {
             }
         }
         .setting {
-            background: #000000;
+            background: #4154f1000;
             color: #fff;
             h5 {
                 color: #fff;
@@ -5494,7 +5494,7 @@ body.dark {
                 }
 
                 .browser-list:nth-child(1) .w-icon {
-                    background: #000000;
+                    background: #4154f1000;
                 }
 
                 .browser-list:nth-child(2) .w-icon {
@@ -5705,7 +5705,7 @@ body.dark {
         .widget-heading {
             .icon-fill-primary {
                 color: #eaf1ff;
-                background-color: #000000;
+                background-color: #4154f1000;
             }
 
             .icon-fill-danger {
@@ -5967,7 +5967,7 @@ body.dark {
                 }
 
                 .custom-control-input:checked ~ .custom-control-label::before {
-                    background: #000000 !important;
+                    background: #4154f1000 !important;
                 }
             }
 
@@ -6280,7 +6280,7 @@ body.dark {
                         }
 
                         .custom-control-input:checked ~ .custom-control-label::before {
-                            background: #000000 !important;
+                            background: #4154f1000 !important;
                         }
                     }
 
@@ -6419,7 +6419,7 @@ body.dark {
         .g-dot-primary {
             &:before {
                 background: rgba(67, 98, 238, 0.53) !important;
-                border: 1px solid #000000 !important;
+                border: 1px solid #4154f1000 !important;
             }
         }
 
@@ -6479,7 +6479,7 @@ body.dark {
                         .tags {
                             .g-dot-personal {
                                 background: rgba(67, 98, 238, 0.53);
-                                border-color: #000000;
+                                border-color: #4154f1000;
                             }
 
                             .g-dot-work {
@@ -6511,7 +6511,7 @@ body.dark {
 
                             &.g-dot-personal:before {
                                 background: rgba(67, 98, 238, 0.53);
-                                border-color: #000000;
+                                border-color: #4154f1000;
                             }
 
                             &.g-dot-work:before {
@@ -6760,7 +6760,7 @@ body.dark {
                     }
 
                     .custom-control-input:checked ~ .custom-control-label::before {
-                        background-color: #000000 !important;
+                        background-color: #4154f1000 !important;
                     }
                 }
             }
@@ -6852,7 +6852,7 @@ body.dark {
                 }
 
                 .custom-control-input:checked ~ .custom-control-label::before {
-                    background-color: #000000 !important;
+                    background-color: #4154f1000 !important;
                 }
 
                 .custom-control-input:checked ~ .custom-control-label::after {
@@ -7109,7 +7109,7 @@ body.dark {
                             }
 
                             .custom-control-input:checked ~ .custom-control-label::before {
-                                background-color: #000000 !important;
+                                background-color: #4154f1000 !important;
                             }
 
                             .custom-control-input:checked ~ .custom-control-label::after {

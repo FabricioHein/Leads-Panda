@@ -45,7 +45,6 @@ export declare class UsuariosService {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -65,17 +64,18 @@ export declare class UsuariosService {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
     getAllUsuario(id: any): Promise<({
         permissao_modulos: ({
             modulo: {
                 subModulo: {
+                    id: number;
                     permissao_sub_modulos: {
-                        ver: boolean;
                         editar: boolean;
+                        ver: boolean;
                         deletar: boolean;
                     }[];
-                    id: number;
                 }[];
             } & {
                 id: number;
@@ -107,7 +107,6 @@ export declare class UsuariosService {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -127,6 +126,7 @@ export declare class UsuariosService {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     })[]>;
     createUsuario(data: any): Promise<{
         msg: string;
@@ -153,7 +153,6 @@ export declare class UsuariosService {
         themeDark: boolean;
         operador: string;
         sexoId: number;
-        clienteId: number;
         email: string;
         profile: string;
         created_at: Date;
@@ -173,6 +172,7 @@ export declare class UsuariosService {
         gerente_conta: boolean;
         termos: boolean;
         password: string;
+        empresa_configId: number;
     }>;
     salvarFotoPerfil(data: any): Promise<never>;
     atualizarPermissoesModulos(data: any): Promise<import(".prisma/client").Prisma.BatchPayload | {

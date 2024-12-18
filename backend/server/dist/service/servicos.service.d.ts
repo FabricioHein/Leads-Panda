@@ -9,10 +9,10 @@ export declare class ServicoService {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }>;
     getAllServico(): Promise<{
         id: number;
@@ -21,10 +21,10 @@ export declare class ServicoService {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }[]>;
     createServico(data: any): Promise<{
         id: number;
@@ -33,10 +33,10 @@ export declare class ServicoService {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }>;
     deleteServico(data: any): Promise<{
         id: number;
@@ -45,9 +45,9 @@ export declare class ServicoService {
         detalhamento: string;
         valor_hora: import("@prisma/client/runtime/library").Decimal;
         ativo: boolean;
+        operador: string;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
-        operador: string;
-        clienteId: number;
     }>;
 }

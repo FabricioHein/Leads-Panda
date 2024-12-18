@@ -30,6 +30,17 @@ export class DateTime {
 
     throw new Error(`Data ${val} no formato inválido para conversão.`);
   }
+    /**
+   * Convert uma data para um data, hora e minuto
+   * @param {Date} date
+   */
+  static formatToHoraMin(date) {
+    let data = new Date(date);
+    let dataHora = data.toISOString().split('T')[0]; 
+    let horaMinuto = data.toTimeString().split(' ')[0]; 
+    let horaMinutoSemSegundos = horaMinuto.split(':').slice(0, 2).join(':'); 
+    return `${dataHora}T${horaMinutoSemSegundos}`
+  }
 
   /**
    * Convert uma data para um formato especifico.

@@ -9,11 +9,26 @@ import store from '@/store';
 import Config from './service/config';
 
 export default {
+    data() {
+        return {
+            params: {}
+        }
+    },
     setup() {
         useMeta({ title: 'Configuração' });
     },
     computed: {
         ...mapGetters(['usuario', 'cliente', 'token'])
+    },
+    created() {
+        this.params = this.cliente;
+    },
+    onMounted() {
+
+
+        this.setTemplateStyle();
+        this.setMenuStyle();
+        this.setLayoutStyle();
     },
     methods: {
         setTemplateStyle() {
@@ -27,13 +42,22 @@ export default {
         },
         change_file(event) {
 
-            this.usuario.linkFoto = URL.createObjectURL(event.target.files[0]);
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.params.logo_link = e.target.result
+                };
+                reader.readAsDataURL(file);
+            };
 
 
         },
         async save() {
-            const configData = JSON.parse(JSON.stringify(this.cliente));
-            const atualizarConfig = new Config(configData, this.token);
+            const cliente = JSON.parse(JSON.stringify(this.cliente));
+            this.params['id'] = cliente.id;
+
+            const atualizarConfig = new Config(this.params, this.token);
             const atualizar = await atualizarConfig.AtualizarConfig();
 
             if (atualizar) {
@@ -56,16 +80,7 @@ export default {
                 padding: '10px 20px',
             });
         },
-        created() {
 
-
-        },
-        onMounted() {
-
-            this.setTemplateStyle();
-            this.setMenuStyle();
-            this.setLayoutStyle();
-        },
     },
 };
 

@@ -20,6 +20,30 @@ let AgendaController = class AgendaController {
     constructor(agendaService) {
         this.agendaService = agendaService;
     }
+    async getAgendaByDataUsuario(req) {
+        try {
+            return await this.agendaService.getAllClienteAngendaUser(req.body);
+        }
+        catch (error) {
+            return error;
+        }
+    }
+    async crearAgendamentoExterno(req) {
+        try {
+            return await this.agendaService.crearAgendamentoExterno(req.body);
+        }
+        catch (error) {
+            return error;
+        }
+    }
+    async getAllClienteAngendaUser(req) {
+        try {
+            return await this.agendaService.getAgendaByDataUsuario(req.body);
+        }
+        catch (error) {
+            return error;
+        }
+    }
     async getAllagenda(id) {
         try {
             return await this.agendaService.getAllAgenda(id);
@@ -62,9 +86,30 @@ let AgendaController = class AgendaController {
     }
 };
 __decorate([
+    (0, common_1.Post)('agendamento/cliente'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AgendaController.prototype, "getAgendaByDataUsuario", null);
+__decorate([
+    (0, common_1.Post)('agendamento/criarAgendamento'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AgendaController.prototype, "crearAgendamentoExterno", null);
+__decorate([
+    (0, common_1.Post)('agendamento/horarios'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AgendaController.prototype, "getAllClienteAngendaUser", null);
+__decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('todos/:userId'),
-    __param(0, (0, common_1.Param)('userId')),
+    (0, common_1.Get)('todos/:empresa_configId'),
+    __param(0, (0, common_1.Param)('empresa_configId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)

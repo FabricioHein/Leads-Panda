@@ -371,7 +371,7 @@ export default {
 
 .connection {
   fill: none;
-  stroke: #000;
+  stroke: #4154f1;
   stroke-width: 1px;
   /* Reduz a largura do traço */
 }

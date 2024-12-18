@@ -9,16 +9,16 @@
 	===============================
 */
 .loader {
-  border: 7px solid #fff;
+  border: 7px solid #4154f1;
   border-radius: 50%;
-  border-top: 7px solid #000000;
+  border-top: 7px solid #4154f1000;
   width: 58px;
   height: 58px;
   -webkit-animation: spin 2s linear infinite;
   /* Safari */
   animation: spin 2s linear infinite; }
   .loader.dual-loader {
-    border-bottom: 7px solid #000000; }
+    border-bottom: 7px solid #4154f1000; }
   .loader.multi-loader {
     border-bottom: 7px solid #e2a03f;
     border-right: 7px solid #1abc9c;

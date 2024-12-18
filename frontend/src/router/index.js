@@ -1,11 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
 import store from '../store';
-
 const usuario = JSON.parse(localStorage.getItem('usuario'));
-
-
-
 
 var routes;
 
@@ -13,9 +8,15 @@ if (usuario) {
 
     routes = [
         {
-            path: '/chatCliente/:clienteId/:chaveId/:user/:tipo',
+            path: '/chatCliente/:chaveId/:user/:tipo',
             name: 'chat-cliente',
             component: () => import(/* webpackChunkName: "index2" */ '../views/components/chat-cliente/chat-cliente.vue'),
+        },
+        {
+            path: '/home',
+            name: 'dashboard',
+            beforeEnter: guardMyroute,
+            component: () => import(/* webpackChunkName: "index2" */ '../views/modulos/dashboard/dashboard.vue'),
         },
         {
             path: '/',
@@ -42,6 +43,12 @@ if (usuario) {
             name: 'configApp',
             beforeEnter: guardMyroute,
             component: () => import(/* webpackChunkName: "index2" */ '../views/config/app/config.vue'),
+        },
+        {
+            path: '/config/pagamentos',
+            name: 'pagamentos',
+            beforeEnter: guardMyroute,
+            component: () => import(/* webpackChunkName: "index2" */ '../views/config/app/pagamento/pagamento.vue'),
         },
 
         //users
@@ -70,8 +77,8 @@ if (usuario) {
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/crm/oportunidades/oportunidades.vue'),
         },
         {
-            path: '/crm/clientes',
-            name: 'crm-cliente',
+            path: '/cadastro/contatos',
+            name: 'crm-contatos',
             beforeEnter: guardMyroute,
 
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/cadastro/clientes/clientes.vue'),
@@ -94,7 +101,7 @@ if (usuario) {
             path: '/crm/minha-agenda',
             name: 'minha-agenda',
             beforeEnter: guardMyroute,
-            component: () => import(/* webpackChunkName: "apps-calendario" */ '../views/modulos/crm/calendario/calendario.vue'),
+            component: () => import(/* webpackChunkName: "apps-calendario" */ '../views/modulos/crm/calendario/agenda-pipe.vue'),
         },
         {
             path: '/crm/atividades',
@@ -109,20 +116,8 @@ if (usuario) {
             beforeEnter: guardMyroute,
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/cadastro/usuarios/usuarios.vue'),
         },
-        {
-            path: '/config/:uuid',
-            name: 'chat-bot',
-            beforeEnter: guardMyroute,
-
-            component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/chat/chat-bot/chat-bot.vue'),
-        },
-        {
-            path: '/config/lista',
-            name: 'chat-lista',
-            beforeEnter: guardMyroute,
-
-            component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/chat/lista/lista-chat-bot.vue'),
-        },
+       
+     
 
         {
             path: '/atendimento/chat-atendimento',
@@ -131,12 +126,21 @@ if (usuario) {
 
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/atendimento/chat/atendimento-chat.vue'),
         },
+      
+        
         {
-            path: '/crm/conexao',
-            name: 'crm-conexao',
+            path: '/config/:uuid',
+            name: 'integracoes',
             beforeEnter: guardMyroute,
 
-            component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/crm/conexao/conexao.vue'),
+            component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/chat/chat-bot/chat-bot.vue'),
+        },
+        {
+            path: '/config/lista',
+            name: 'lista',
+            beforeEnter: guardMyroute,
+
+            component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/chat/lista/lista-chat-bot.vue'),
         },
 
         //Módulo Venda
@@ -166,7 +170,7 @@ if (usuario) {
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/cadastro/clientes/clientes.vue'),
         },
         {
-            path: '/cadastro/parametros',
+            path: '/config/parametros',
             name: 'parametros',
             beforeEnter: guardMyroute,
 
@@ -184,25 +188,18 @@ if (usuario) {
             path: '/cadastro/fornecedores',
             name: 'fornecedores',
             beforeEnter: guardMyroute,
-
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/cadastro/fornecedores/fornecedores.vue'),
         },
 
 
         {
-            path: '/cadastro/gestao/usuarios',
+            path: '/config/gestao/usuarios',
             name: 'usuarios',
             beforeEnter: guardMyroute,
-
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/config/gestao-usuario/gestao-usuario.vue'),
         },
         //mkt
-        {
-            path: '/mkt/editor/html',
-            name: 'editor-html',
-            beforeEnter: guardMyroute,
-            component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/mkt/editor-html/editor-html.vue'),
-        },
+
         {
             path: '/mkt/formularios/lista',
             name: 'formulario-lista',
@@ -220,9 +217,50 @@ if (usuario) {
             name: 'ask-empresa-formulario',
             component: () => import(/* webpackChunkName: "apps-contacts" */ '../views/modulos/mkt/formulario/ask-formulario/ask-formulario.vue'),
         },
+        {
+            path: '/agendamento', name: 'agendamento',
+            props: (route) => ({
+                clientId: route.query.clientId,
+            }), component: () => import(/* webpackChunkName: "auth-login" */ '../components/agendamento.vue')
+        },
+        {
+            path: '/meus-link/linkCreate/:id', name: 'criar-link',
+            props: (route) => ({
+                id: route.query.id
+            }),
+            component: () => import(/* webpackChunkName: "auth-login" */ '../components/linkCompany.vue')
+        },
+        {
+            path: '/link/:company', name: 'getPageLink-link',
+            props: (route) => ({
+                company: route.query.company,
+            }), component: () => import(/* webpackChunkName: "auth-login" */ '../components/getPageLink.vue')
+        },
+        {
+            path: '/meus-link/lista-links',
+            beforeEnter: guardMyroute,
+            name: 'lista-links', component: () => import(/* webpackChunkName: "auth-login" */ '../views/modulos/link/lista/link-lista.vue')
+        }
+
     ];
 } else {
     routes = [
+       
+
+        {
+            path: '/:company', name: 'getPageLink-link',
+            props: (route) => ({
+                company: route.query.company,
+            }), component: () => import(/* webpackChunkName: "auth-login" */ '../components/getPageLink.vue')
+        },
+
+        {
+            path: '/agendamento', name: 'agendamento',
+            props: (route) => ({
+                clientId: route.query.clientId,
+            }), component: () => import(/* webpackChunkName: "auth-login" */ '../components/agendamento.vue')
+        },
+
         {
             path: '/auth/nova-senha',
             name: 'esqueceu-senha',
@@ -230,7 +268,7 @@ if (usuario) {
             meta: { layout: 'registro' },
         },
         {
-            path: '/chatCliente/:clienteId/:chaveId/:user/:chatId',
+            path: '/chatCliente/:chaveId/:user/:tipo',
             name: 'chat-cliente',
             component: () => import(/* webpackChunkName: "index2" */ '../views/components/chat-cliente/chat-cliente.vue'),
         },
@@ -251,8 +289,15 @@ if (usuario) {
             }),
             meta: { layout: 'auth' },
         },
-        { path: '/:pathMatch(.*)*', component: () => import(/* webpackChunkName: "pages-error404" */ '../views/pages/error404.vue') },
-
+        {
+            path: '/', 
+            beforeEnter: (to, from, next) => {
+                // Redireciona para outra rota
+                next('/login'); // Substitua '/nova-rota' pela rota desejada
+              },
+            component: () => import(/* webpackChunkName: "pages-error404" */ '../views/pages/error404.vue')
+           
+        },
         {
             path: '/auth/cadastro',
             name: 'cadastro',
@@ -260,11 +305,13 @@ if (usuario) {
             meta: { layout: 'registro' },
         },
         {
-            path: '/',
-            name: 'home',
-            component: () => import(/* webpackChunkName: "auth-login" */ '../views/index/index.vue'),
-            meta: { layout: 'auth' },
+            path: '/validar-email/:uuid',
+            name: 'validar-email',
+            component: () => import(/* webpackChunkName: "auth-login" */ '../views/auth/verifica_email.vue'),
+            meta: { layout: 'registro' },
         },
+        { path: '/:pathMatch(.*)*', component: () => import(/* webpackChunkName: "pages-error404" */ '../views/pages/error404.vue') }
+
     ];
 
 }

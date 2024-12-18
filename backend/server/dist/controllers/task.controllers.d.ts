@@ -4,7 +4,6 @@ export declare class TaskController {
     constructor(taskService: TaskService);
     getAllTask(): Promise<any>;
     getByIdTask(id: any, req: any): Promise<any>;
-    atualizaVendas(req: any): Promise<any>;
     deleteTask(req: any): Promise<any>;
     createTask(req: any): Promise<any>;
     getAllTaskSubtask(id: any, req: any): Promise<any>;
@@ -20,7 +19,7 @@ export declare class TaskController {
     atualizarTaskSub(req: any): Promise<any>;
     deleteAnotacao(req: any): Promise<any>;
     getAllAnotacao(id: any, req: any): Promise<any>;
-    getAllMotivos(clienteId: any, req: any): Promise<any>;
+    getAllMotivos(empresa_configId: any, req: any): Promise<any>;
     getByIdMotivos(id: any, req: any): Promise<any>;
     atualizarMotivos(req: any): Promise<any>;
     createMotivos(req: any): Promise<any>;

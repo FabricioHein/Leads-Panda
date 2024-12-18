@@ -7,10 +7,12 @@ import { AuthService } from '../service/auth.service';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private authService: AuthService) {
     super({
-      clientID: '431203076451-8k15okmtojojjgclcpj1kdq0lslb10d0.apps.googleusercontent.com',
-      clientSecret: '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',
-      callbackURL: 'http://localhost:3000/auth/google/callback',
-      scope: ['email', 'profile', 'https://www.googleapis.com/auth/calendar.readonly'],
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: process.env.CALLBACK_URL,
+      scope: ['email', 'profile']
+      // scope: ['email', 'profile', 'https://www.googleapis.com/auth/calendar.readonly'],
+
     });
   }
 

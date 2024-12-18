@@ -2,26 +2,54 @@
     <div class="layout-px-spacing">
         <div class="layout-top-spacing" v-if="usuario">
             <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                <div class="section general-info">
-                    <div class="row p-2">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="chart-container">
-                                <canvas id="leadsChart"></canvas>
+                <div class="container py-5">
+                    <h1 class="mb-4">Dashboard</h1>
+                    <div class="row">
+                        <!-- Card 1 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-info">Potencial de Negócio Inicial</h5>
+                                    <p class="card-text display-4">{{ 'R$ ' + moneyBRL(dashData.totalPotencialNegocioInicial) }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="chart-container">
-                                <canvas id="vendasChart"></canvas>
+                        <!-- Card 2 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-success">Total de Leads em Negociação</h5>
+                                    <p class="card-text display-4">{{ dashData.totalLeads }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="chart-container">
-                                <canvas id="atendimentosChart"></canvas>
+                        <!-- Card 3 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-info">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-primary">Total de Contatos</h5>
+                                    <p class="card-text display-4">{{ dashData.totalCliente }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="chart-container">
-                                <canvas id="usuarios"></canvas>
+                        <!-- Card 4 -->
+                      
+                        <!-- Card 5 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-danger">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-danger">Conversas Ativas</h5>
+                                    <p class="card-text display-4">{{ dashData.chatAtivos }}</p>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 6 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-secondary">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-secondary">Conversas Inativas</h5>
+                                    <p class="card-text display-4">{{ dashData.naochatsAtivos }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -37,6 +65,7 @@ import { mapGetters } from 'vuex';
 import Acesso from '@/helpers/Acesso'
 import '@/assets/sass/scrollspyNav.scss';
 import '@/assets/sass/users/account-setting.scss';
+import DashService from '@/service/dash';
 
 export default {
     setup() {
@@ -44,10 +73,14 @@ export default {
     data() {
         return {
             acesso: {},
-            leadsData: [10, 20, 15, 25, 30, 22, 18],
-            vendasData: [5, 10, 8, 12, 15, 11, 9],
-            atendimentosData: [15, 25, 20, 30, 35, 28, 22],
-            days: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
+            dashData: {
+                totalCliente: 0,
+                totalLeads: 0,
+                totalPotencialNegocioInicial: 0,
+                totalPotencialNegocioFinal: 0,
+                chatAtivos: 0,
+                naochatsAtivos: 0
+            }
         }
     },
 
@@ -59,45 +92,18 @@ export default {
 
     },
     mounted() {
-        this.createChart('line', 'leadsChart', 'Leads Diários', this.leadsData);
-        this.createChart('bar', 'vendasChart', 'Vendas Diárias', this.vendasData);
-        this.createChart('line', 'atendimentosChart', 'Atendimentos Diários', this.atendimentosData);
-        this.createChart('line', 'usuarios', 'Atendimentos Diários', this.atendimentosData);
+        this.fetchdata();
     },
     methods: {
-        createChart(type, chartId, label, data) {
-            var ctx = document.getElementById(chartId).getContext('2d');
-            var randomColor = this.generateRandomColor();
-            new Chart(ctx, {
-                type: type,
-                data: {
-                    labels: this.days,
-                    datasets: [{
-                        label: label,
-                        data: data,
-                        backgroundColor: randomColor,
-                        borderColor: randomColor,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+        moneyBRL(money){
+    return Number(money).toLocaleString('pt-br',  {minimumFractionDigits: 2})
+
+},
+        async fetchdata() {
+            const dash = new DashService({}, this.token, `/api/config/dashboard/${this.cliente.id}`);
+            this.dashData = await dash.getAllDashs();
 
 
-        },
-        generateRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         },
         getAcesso() {
             this.acesso = Acesso.getAcesso('Cadastro', '/clientes', this.permissao);

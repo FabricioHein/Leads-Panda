@@ -32,15 +32,7 @@ export class TaskController {
       return error;
     }
   }
-  @UseGuards(JwtAuthGuard)
-  @Post('atualizaVendas')
-  async atualizaVendas(@Request() req) {
-    try {
-      return await this.taskService.atualizaVendas(req.body);
-    } catch (error) {
-      return error;
-    }
-  }
+
   @UseGuards(JwtAuthGuard)
   @Post('delete')
   async deleteTask(@Request() req) {
@@ -179,10 +171,10 @@ export class TaskController {
 
   //motivos
   @UseGuards(JwtAuthGuard)
-  @Get('getAllMotivos/:clienteId')
-  async getAllMotivos(@Param('clienteId') clienteId, @Request() req) {
+  @Get('getAllMotivos/:empresa_configId')
+  async getAllMotivos(@Param('empresa_configId') empresa_configId, @Request() req) {
     try {
-      return await this.taskService.getAllMotivos(clienteId);
+      return await this.taskService.getAllMotivos(empresa_configId);
     } catch (error) {
       return error;
     }

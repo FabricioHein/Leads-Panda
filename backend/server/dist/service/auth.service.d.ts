@@ -9,6 +9,10 @@ export declare class AuthService {
     getGoogleCalendarEvents(accessToken: string): Promise<any>;
     validateUser(username: string, pass: string): Promise<any>;
     validarTokenGoogle(token: string): Promise<boolean>;
+    validaEmail(uuid: any): Promise<{
+        msg: string;
+        status: number;
+    }>;
     loginAcessoGoogle(data: any): Promise<{
         token: string;
         usuario: any;

@@ -4,10 +4,10 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class FormularioDinamicoRepository {
   constructor(private prisma: PrismaService) {}
-  async getFormularioDinamicoAll(clienteId) {
+  async getFormularioDinamicoAll(empresa_configId) {
     return await this.prisma.formulario_dinamico.findMany({
       where: {
-        configuracaoClienteId: clienteId,
+        empresa_configId: empresa_configId,
       },
       include: {
         form_ask: true,

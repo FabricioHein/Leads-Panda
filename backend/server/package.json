@@ -38,7 +38,7 @@
     "@nestjs/serve-static": "^4.0.0",
     "@nestjs/swagger": "^7.1.7",
     "@nestjs/websockets": "^10.3.8",
-    "@prisma/client": "^5.7.0",
+    "@prisma/client": "^5.19.0",
     "@sendgrid/mail": "^7.7.0",
     "@sentry/node": "^7.57.0",
     "axios": "^1.4.0",
@@ -84,7 +84,6 @@
     "stream": "^0.0.2",
     "ts-node": "^10.9.1",
     "uuid": "^9.0.1",
-    "whatsapp-api-js": "^2.6.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -106,7 +105,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.3.2",
-    "prisma": "^5.7.0",
+    "prisma": "^5.19.0",
     "source-map-support": "^0.5.20",
     "ts-jest": "29.0.3",
     "ts-loader": "^9.2.3",

@@ -5,23 +5,23 @@ import { Injectable } from '@nestjs/common';
 export class ConfigClienteRepository {
   constructor(private prisma: PrismaService) {}
   async getCliente() {
-    return await this.prisma.configuracaoCliente.findFirstOrThrow();
+    return await this.prisma.empresa_config.findFirstOrThrow();
   }
   async getByIdCliente(id) {
-    return await this.prisma.configuracaoCliente.findFirst({
+    return await this.prisma.empresa_config.findFirst({
       where: {
         id: id,
       },
     });
   }
   async createCliente(data) {
-    return await this.prisma.configuracaoCliente.create({
+    return await this.prisma.empresa_config.create({
       data: data,
     });
   }
 
   async updateCliente(id, data) {
-    return await this.prisma.configuracaoCliente.update({
+    return await this.prisma.empresa_config.update({
       where: {
         id: id,
       },
@@ -30,7 +30,7 @@ export class ConfigClienteRepository {
   }
 
   async deleteCliente(id) {
-    return await this.prisma.configuracaoCliente.delete({
+    return await this.prisma.empresa_config.delete({
       where: {
         id: id,
       },

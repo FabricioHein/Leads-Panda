@@ -34,10 +34,10 @@
 
                         <div class="col-xl-4 col-lg-6 col-md-4 col-sm-6 col layout-spacing">
                             <div class="color-box">
-                                <span class="cl-example" style="background-color: #000000"></span>
+                                <span class="cl-example" style="background-color: #4154f1000"></span>
                                 <div class="cl-info">
                                     <h5 class="cl-title">Primary</h5>
-                                    <span>#000000</span>
+                                    <span>#4154f1000</span>
                                 </div>
                             </div>
                         </div>

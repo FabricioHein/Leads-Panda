@@ -140,7 +140,7 @@ export default {
         async save() {
             const formulario = new formularioModel(this.params);
             formulario.operador = `Add/Atualizado por ${this.usuario.username} ${this.usuario.sobrenome}`;
-            formulario.clienteId = this.cliente.id;
+            formulario.empresa_configId = this.cliente.id;
 
             if (formulario.id) {
                 const formularioServ = new FormularioService(formulario, this.token);
@@ -149,7 +149,7 @@ export default {
             }
             else {
 
-                formulario['clienteId'] = Number(this.cliente.id);
+                formulario['empresa_configId'] = Number(this.cliente.id);
                 formulario.isTrusted ? delete formulario.isTrusted : "";
                 const formularioServ = new FormularioService(formulario, this.token);
                 await formularioServ.criarformulario();

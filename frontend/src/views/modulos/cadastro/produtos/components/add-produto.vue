@@ -75,26 +75,17 @@ export default {
       });
     },
     async change_file(event) {
-      let formData = new FormData();
-      formData.append('file', event.target.files[0]);
-      console.log('>> formData >> ', formData);
 
-      const importar = new ImportarService(
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        },
-        this.token,
-        `/api/importar/file/${this.usuario.id}`,
-        formData
-      )
-      const upload = await importar.importarFile()
-      if (upload) {
-        this.showMessage('Carregado com Sucesso')
-      }
+      const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                  this.params.link_img = e.target.result
+                  this.showMessage('Carregado com Sucesso')
+                };
+                reader.readAsDataURL(file);
+            };
 
-      this.params.link_img = upload.downloadURL;
 
     },
   },

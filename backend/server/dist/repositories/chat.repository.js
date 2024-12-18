@@ -16,6 +16,38 @@ let ChatRepository = class ChatRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    async countChatsByEmpresaNaoAtivo(empresa_configId) {
+        const count = await this.prisma.chat.count({
+            where: {
+                AND: [
+                    {
+                        empresa_configId: empresa_configId,
+                    },
+                    {
+                        data_close: {
+                            not: null
+                        }
+                    }
+                ]
+            },
+        });
+        return count;
+    }
+    async countChatsByEmpresaAtivo(empresa_configId) {
+        const count = await this.prisma.chat.count({
+            where: {
+                AND: [
+                    {
+                        empresa_configId: empresa_configId,
+                    },
+                    {
+                        data_close: null
+                    }
+                ]
+            },
+        });
+        return count;
+    }
     async getChatByTelefoneByUuidInfoChat(chat_telefone, uuid_chat_info) {
         return await this.prisma.chat.findMany({
             where: {
@@ -35,7 +67,7 @@ let ChatRepository = class ChatRepository {
     async getChatAll(clienteId) {
         return await this.prisma.chat.findMany({
             where: {
-                cliente_id: clienteId,
+                empresa_configId: clienteId,
             },
             include: {
                 chat_info: {
@@ -46,10 +78,17 @@ let ChatRepository = class ChatRepository {
             },
         });
     }
-    async getChatTelefone(telefone) {
+    async getChatTelefoneEmail(email, telefone) {
         return await this.prisma.chat.findFirst({
             where: {
-                telefone: String(telefone)
+                AND: [
+                    {
+                        email: email
+                    },
+                    {
+                        telefone: telefone
+                    }
+                ]
             },
             include: {
                 messages: {
@@ -68,7 +107,7 @@ let ChatRepository = class ChatRepository {
     async getAllChatClose(clienteId) {
         return await this.prisma.chat.findMany({
             where: {
-                cliente_id: clienteId,
+                empresa_configId: clienteId,
                 chat_open: true,
             },
             include: {
@@ -84,7 +123,7 @@ let ChatRepository = class ChatRepository {
     async getAllChatOpen(clienteId) {
         return await this.prisma.chat.findMany({
             where: {
-                cliente_id: clienteId,
+                empresa_configId: clienteId,
                 chat_open: false,
             },
             include: {

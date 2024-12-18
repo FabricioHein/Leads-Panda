@@ -131,7 +131,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background-color: #000;
+      background-color: #4154f1;
       opacity: 0.38
   }
 
@@ -985,10 +985,8 @@
       display: none;
       /* position: fixed; */
       width: 100%;
-      height: 100%;
       background-color: white;
       border-radius: 10px 10px 10px 10px;
-      z-index: 100000;
       font-family: "Rubik", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
       right: 0;
       top: 0;
@@ -1772,7 +1770,7 @@
   }
 
   .lead2-converts_chat_balloon_inner a {
-      color: #000;
+      color: #4154f1;
       text-decoration: underline
   }
 

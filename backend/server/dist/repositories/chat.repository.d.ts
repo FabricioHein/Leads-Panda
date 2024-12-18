@@ -2,6 +2,8 @@ import { PrismaService } from 'src/base/relacional/PrismaService';
 export declare class ChatRepository {
     private prisma;
     constructor(prisma: PrismaService);
+    countChatsByEmpresaNaoAtivo(empresa_configId: any): Promise<number>;
+    countChatsByEmpresaAtivo(empresa_configId: any): Promise<number>;
     getChatByTelefoneByUuidInfoChat(chat_telefone: any, uuid_chat_info: any): Promise<{
         chat_id: number;
         uuid: string;
@@ -9,7 +11,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -29,7 +31,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -38,7 +40,7 @@ export declare class ChatRepository {
         chat_app: string;
         taskId: number;
     })[]>;
-    getChatTelefone(telefone: any): Promise<{
+    getChatTelefoneEmail(email: any, telefone: any): Promise<{
         chat_info: {
             uuid: string;
         };
@@ -60,7 +62,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -81,7 +83,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -102,7 +104,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -118,7 +120,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -134,7 +136,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -150,7 +152,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -166,7 +168,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;
@@ -182,7 +184,7 @@ export declare class ChatRepository {
         telefone: string;
         email: string;
         chat_info_id: number;
-        cliente_id: number;
+        empresa_configId: number;
         created_at: Date;
         updated_at: Date;
         chat_open: boolean;

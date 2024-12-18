@@ -25,10 +25,10 @@ export class FormularioService {
       return ErroBadRequest(error);
     }
   }
-  async getAllFormularioDinamico(clienteId) {
+  async getAllFormularioDinamico(empresa_configId) {
     try {
       return await this.formularioDinamicoRepository.getFormularioDinamicoAll(
-        Number(clienteId),
+        Number(empresa_configId),
       );
     } catch (error) {
       return ErroBadRequest(error);
@@ -98,10 +98,10 @@ export class FormularioService {
       return ErroBadRequest(error);
     }
   }
-  async getByIdFormularioAsk(clienteId) {
+  async getByIdFormularioAsk(empresa_configId) {
     try {
       return await this.formularioAskRepository.getByIdFormularioAsk(
-        Number(clienteId),
+        Number(empresa_configId),
       );
     } catch (error) {
       return ErroBadRequest(error);

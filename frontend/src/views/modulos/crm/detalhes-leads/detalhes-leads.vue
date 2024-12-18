@@ -64,7 +64,7 @@ export default {
                     id: (this.params.venda).length > 0 ? Number(this.params.venda[0].id) : undefined,
                     valor_total: Number(this.params.valor_Final),
                     status: 'venda',
-                    configuracaoClienteId: Number(this.cliente.id),
+                    empresa_configId: Number(this.cliente.id),
                     usersId: Number(this.usuario.id),
                     taskId: Number(this.params.id)
                 }, this.token);
@@ -120,12 +120,11 @@ export default {
         async init() {
 
             let id = (window.location.pathname).replace('/crm/leads/', '')
-            if (!id.match('novo')) {
-                this.hasLead = true;
-                
+            if (!id.match('novo')) {                
                 const task = new TaskService({}, this.token, `/api/task/${id}`);
                 const getById = await task.getByIdTask();
-                if (getById) {
+                if (getById.id) {
+                    this.hasLead = true;
                     getById.valor_Final= Number(getById.valor_Final);
                     getById.valor_Inicial= Number(getById.valor_Inicial);
 

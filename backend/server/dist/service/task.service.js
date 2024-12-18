@@ -16,17 +16,15 @@ const data_helper_1 = require("../helper/data.helper");
 const tasksub_repository_1 = require("../repositories/tasksub.repository");
 const anotacoes_repository_1 = require("../repositories/anotacoes.repository");
 const arquivos_repository_1 = require("../repositories/arquivos.repository");
-const venda_repository_1 = require("../repositories/venda.repository");
 const motivos_repository_1 = require("../repositories/motivos.repository");
 const logTask_repositoy_1 = require("../repositories/logTask.repositoy");
 const msg_response_1 = require("../utils/msg.response");
 let TaskService = class TaskService {
-    constructor(anotacaoRepository, taskRepositorio, taskSubRepository, arquivosRepository, vendaRepository, motivosRepository, logTasksRepository) {
+    constructor(anotacaoRepository, taskRepositorio, taskSubRepository, arquivosRepository, motivosRepository, logTasksRepository) {
         this.anotacaoRepository = anotacaoRepository;
         this.taskRepositorio = taskRepositorio;
         this.taskSubRepository = taskSubRepository;
         this.arquivosRepository = arquivosRepository;
-        this.vendaRepository = vendaRepository;
         this.motivosRepository = motivosRepository;
         this.logTasksRepository = logTasksRepository;
     }
@@ -100,7 +98,13 @@ let TaskService = class TaskService {
         try {
             const { id } = data;
             const dataTask = data;
-            return await this.taskSubRepository.updateTaskSub(Number(id), dataTask);
+            const taskSub = await this.taskSubRepository.updateTaskSub(Number(id), dataTask);
+            if (taskSub) {
+                ;
+                return taskSub;
+            }
+            ;
+            return (0, msg_response_1.ErroBadRequest)('Not Found');
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);
@@ -179,8 +183,8 @@ let TaskService = class TaskService {
                     description_text: s.description_text,
                     status: s.status,
                     taskId: s.taskId,
-                    date_end: data_helper_1.DateTime.ToFormat(s.date_end, 'YYYY-MM-DD'),
-                    date_start: data_helper_1.DateTime.ToFormat(s.date_start, 'YYYY-MM-DD'),
+                    date_end: data_helper_1.DateTime.formatToHoraMin(s.date_end),
+                    date_start: data_helper_1.DateTime.formatToHoraMin(s.date_start),
                 };
             });
         }
@@ -199,38 +203,6 @@ let TaskService = class TaskService {
     async getAnotacaoAllId(id) {
         try {
             return await this.anotacaoRepository.getAnotacaoAll(Number(id));
-        }
-        catch (error) {
-            return (0, msg_response_1.ErroBadRequest)(error);
-        }
-    }
-    async createVenda(data) {
-        try {
-            return await this.vendaRepository.createVenda(data);
-        }
-        catch (error) {
-            return (0, msg_response_1.ErroBadRequest)(error);
-        }
-    }
-    async atualizaVendas(data) {
-        try {
-            const { id } = data;
-            const updateVenda = data;
-            if (!id) {
-                return await this.createVenda(updateVenda);
-            }
-            else {
-                return await this.vendaRepository.updateVenda(id, updateVenda);
-            }
-        }
-        catch (error) {
-            return (0, msg_response_1.ErroBadRequest)(error);
-        }
-    }
-    async deleteVendas(data) {
-        try {
-            const id = data.id;
-            return await this.vendaRepository.deleteVenda(id);
         }
         catch (error) {
             return (0, msg_response_1.ErroBadRequest)(error);
@@ -267,7 +239,7 @@ let TaskService = class TaskService {
                 task: {
                     processo: {
                         projeto: {
-                            configuracaoClienteId: Number(clientId),
+                            empresa_configId: Number(clientId),
                         },
                     },
                 },
@@ -316,7 +288,7 @@ let TaskService = class TaskService {
             const filter = {
                 processo: {
                     projeto: {
-                        configuracaoClienteId: Number(clientId),
+                        empresa_configId: Number(clientId),
                     },
                 },
                 AND: [],
@@ -374,7 +346,6 @@ TaskService = __decorate([
         task_repository_1.TaskRepository,
         tasksub_repository_1.TaskSubRepository,
         arquivos_repository_1.ArquivosRepository,
-        venda_repository_1.VendaRepository,
         motivos_repository_1.MotivosRepository,
         logTask_repositoy_1.LogTasksRepository])
 ], TaskService);

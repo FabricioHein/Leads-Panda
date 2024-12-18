@@ -1,40 +1,39 @@
 <div class="lead2-converts_chat_canvas "
-style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: block;">
-<div class="lead2-converts_chat_head lead2-converts_hide_image" >
-  <div class="head_flex">
-    <div class="lead2-converts_head_back_button "><i class="macke macke-chevron-left"></i></div>
-    <div class="lead2-converts_images visible"></div><span class="lead2-converts_head_texts">
-      <div class="lead2-converts_head_text1" v-if="type != 'atendimento'" >Atendimento Digital</div>
-    </span>
+  style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: block;">
+  <div class="lead2-converts_chat_head lead2-converts_hide_image">
+    <div class="head_flex">
+      <div class="lead2-converts_head_back_button "><i class="macke macke-chevron-left"></i></div>
+      <div class="lead2-converts_images visible"></div><span class="lead2-converts_head_texts">
+        <div class="lead2-converts_head_text1" v-if="type != 'atendimento'">Atendimento Digital</div>
+      </span>
+    </div>
+    <div class="lead2-converts_help_button_container"></div>
+    <div class="lead2-converts_orion_belt_button_container transition"></div>
+    <div class="lead2-converts_orion_belt_button_container schedule"></div>
+    <div class="lead2-converts_orion_belt_button_container schedule"></div>
   </div>
-  <div class="lead2-converts_help_button_container"></div>
-  <div class="lead2-converts_orion_belt_button_container transition"></div>
-  <div class="lead2-converts_orion_belt_button_container schedule"></div>
-  <div class="lead2-converts_orion_belt_button_container schedule"></div>
-</div>
-<div  class="lead2-converts_chat_component lead2-converts_chat_online lead2-converts_visible"
-  style="--chat-msg-received-text-color: #34474C;">
-  <div class="lead2-converts_chat_balloons_list" id="lead2-converts_chat_component" >
+  <div class="lead2-converts_chat_component lead2-converts_chat_online lead2-converts_visible"
+    style="--chat-msg-received-text-color: #34474C;">
+    <div class="lead2-converts_chat_balloons_list" id="lead2-converts_chat_component" @click="closeEmoji()">
 
-    <div v-for="message in messages" :key="message.id" :class="messageClass(message)">
-      <img class="image_message"
-        :src="message.avatar"  v-if="message.avatar" />
+      <div v-for="message in messages" :key="message.id" :class="messageClass(message)">
+        <img class="image_message" :src="message.avatar" v-if="message.avatar" />
 
 
         <span class="lead2-converts_chat_balloon_inner innerRight" style="--chat-msg-text-color: #ffffff;">
-        {{ message.text }} 
-      </span>
+          {{ message.text }}
+        </span>
 
-      <div class="status">
-        {{ message.username }} {{ ' - '}} {{
+        <div class="status">
+          {{ message.username }} {{ ' - '}} {{
           new Date(message.created_at).toLocaleString('pt-BR', { timezone: 'UTC' })
-        }} 
-        <i class="macke macke-done icon-delivery-msg"></i>
-      </div>
+          }}
+          <i class="macke macke-done icon-delivery-msg"></i>
+        </div>
 
-    </div>
-    <div class="row p-3" v-if="emoji">
-      <Picker :data="emojiIndex" set="twitter" @select="showEmoji" :i18n="{
+      </div>
+      <div class="row p-3" v-if="emoji">
+        <Picker :data="emojiIndex" set="twitter" @select="showEmoji" :i18n="{
         search: 'Buscar',
         notfound: 'Emoji Não Encontrado',
         categories: {
@@ -51,23 +50,23 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
           flags: 'Flags',
         }
       }" />
-    </div>
+      </div>
 
-    <div class="lead2-converts_chat_balloon lead2-converts_left_balloon typing_dots"><span
-        class="lead2-converts_chat_balloon_inner"><span class="jumping-dots"><span class="dot-1">·</span><span
-            class="dot-2">·</span><span class="dot-3">·</span></span></span></div>
-  </div>
-  <div class="ChatForm-text-input" style="--chat-btnIconHover: #8116d7;">
-    <div class="ChatFormAudio" style="--chat-btnIconHover: #8116d7;">
-      <div class="ChatForm-button" style="position: initial; height: auto; padding: 3px;"><i
-          class="macke macke-close ChatFormAudio-close-icon"></i></div>
-      <div class="ChatFormAudio-status"><span class="ChatFormAudio-status-bullet"></span> <span
-          class="ChatFormAudio-status-time">0:00</span></div>
-      <div class="ChatForm-button ChatForm-btnIconHover ChatFormAudio-sendActive"
-        style="position: initial; height: auto; padding: 3px;"><i class="macke macke-send"></i></div>
+      <div class="lead2-converts_chat_balloon lead2-converts_left_balloon typing_dots"><span
+          class="lead2-converts_chat_balloon_inner"><span class="jumping-dots"><span class="dot-1">·</span><span
+              class="dot-2">·</span><span class="dot-3">·</span></span></span></div>
     </div>
-    <div class="MenuOptions" v-if="option && type != 'atendimento'">
-      <!-- <div class="MenuOptions-list-item" style="--chat-item-color: #8116d7;"><i
+    <div class="ChatForm-text-input" style="--chat-btnIconHover: #8116d7;">
+      <div class="ChatFormAudio" style="--chat-btnIconHover: #8116d7;">
+        <div class="ChatForm-button" style="position: initial; height: auto; padding: 3px;"><i
+            class="macke macke-close ChatFormAudio-close-icon"></i></div>
+        <div class="ChatFormAudio-status"><span class="ChatFormAudio-status-bullet"></span> <span
+            class="ChatFormAudio-status-time">0:00</span></div>
+        <div class="ChatForm-button ChatForm-btnIconHover ChatFormAudio-sendActive"
+          style="position: initial; height: auto; padding: 3px;"><i class="macke macke-send"></i></div>
+      </div>
+      <div class="MenuOptions" v-if="option && type != 'atendimento'">
+        <!-- <div class="MenuOptions-list-item" style="--chat-item-color: #8116d7;"><i
                       class="macke macke-finalize macke_item"></i>Finalizar atendimento</div>
               <div class="MenuOptions-list-item" style="--chat-item-color: #8116d7;"><i
                       class="macke macke-pencil macke_item"></i>Alterar meus dados</div>
@@ -77,72 +76,83 @@ style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: bl
                       class="macke macke-email macke_item"></i>Enviar por e-mail</div>
               <div class="MenuOptions-list-item" style="--chat-item-color: #8116d7;"><label><i
                           class="macke macke-attach macke_item"></i>Enviar arquivo</label></div> -->
-      <!-- <div class="MenuOptions-iconBallon"><svg width="30" height="12" viewBox="0 0 30 15" fill="none"
+        <!-- <div class="MenuOptions-iconBallon"><svg width="30" height="12" viewBox="0 0 30 15" fill="none"
                       xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 0H29V1H28L15 14.5L1.5 1H1V0Z" fill="white"></path>
                       <path fill-rule="evenodd" clip-rule="evenodd"
                           d="M0 0H1.70711L2.3601 0.652992L13.9008 13.0815C14.4943 13.7205 15.5057 13.7205 16.0992 13.0815L27.6399 0.652992L28.2929 0H30V1H28.7071L28.3601 1.34703L16.832 13.7619C15.8429 14.8271 14.1571 14.8271 13.168 13.7619L1.6399 1.34701L1.29289 1H0V0Z"
                           fill="#E9E9E9" stroke="#e9e9e9"></path>
                   </svg></div> -->
-    </div>
-    <div class="MenuOptions" v-if="option && type == 'atendimento'">
-      
-    </div>
-    <!-- <div class="ChatForm-button ChatForm-options-button" @click="getOption" style="--chat-DotsIcon-color: #8116d7;"><i
+      </div>
+      <div class="MenuOptions" v-if="option && type == 'atendimento'">
+
+      </div>
+      <!-- <div class="ChatForm-button ChatForm-options-button" @click="getOption" style="--chat-DotsIcon-color: #8116d7;"><i
         class="macke macke-dots"></i></div> -->
 
-    <div class="textareacontainer">
-      <input class="input-chat" v-if="formData.nomeValida && formData.emailValida && formData.telefoneValida"
-        type="text" v-model="newMessage" placeholder="Digite sua mensagem..." @keyup.enter="sendMessage" />
+      <div class="textareacontainer">
+        <input class="input-chat" v-if="formData.nomeValida && formData.emailValida && formData.telefoneValida"
+          type="text" v-model="newMessage" placeholder="Digite sua mensagem..." @keyup.enter="sendMessage" />
 
 
 
-      <!-- cadastros info -->
+        <!-- cadastros info -->
 
-      <input type="text" class="input-chat" v-model="formData.nome" placeholder="Digite seu Nome Completo"
-        v-if="!formData.nomeValida && !formData.emailValida && !formData.telefoneValida && !chat "
-        @keyup.enter="valida"  />
+        <input type="text" class="input-chat" v-model="formData.nome" placeholder="Digite seu Nome Completo"
+          v-if="!formData.nomeValida && !formData.emailValida && !formData.telefoneValida && !chat "
+          @keyup.enter="valida" />
 
-      <input type="text" class="input-chat" v-model="formData.email" placeholder="Digite seu Email"
-        v-if="formData.nomeValida && !formData.emailValida && !formData.telefoneValida && !chat"
-        @keyup.enter="valida" />
+        <input type="text" class="input-chat" v-model="formData.email" placeholder="Digite seu Email"
+          v-if="formData.nomeValida && !formData.emailValida && !formData.telefoneValida && !chat"
+          @keyup.enter="valida" />
 
-      <input type="text" class="input-chat" v-model="formData.telefone" v-maska="'+55(##)#####-####'"
-        placeholder="Digite seu Telefone"
-        v-if="formData.nomeValida && formData.emailValida && !formData.telefoneValida && !chat"
-        @keyup.enter="valida" />
+        <input type="text" class="input-chat" v-model="formData.telefone" v-maska="'+55(##)#####-####'"
+          placeholder="Digite seu Telefone"
+          v-if="formData.nomeValida && formData.emailValida && !formData.telefoneValida && !chat"
+          @keyup.enter="valida" />
 
-    </div>
-    <button id="valida" type="button" class="btn btn-color rounded-circle" @click="valida" v-if="!formData.nomeValida || !formData.emailValida || !formData.telefoneValida
+        
+
+      </div>
+      <button id="valida" type="button" class="btn btn-color rounded-circle" @click="valida" v-if="!formData.nomeValida || !formData.emailValida || !formData.telefoneValida
       ">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send"
-        viewBox="0 0 16 16">
-        <path
-          d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
-      </svg>
-    </button>
-    <button id="sendButton" class="btn btn-color rounded-circle" @click="sendMessage" v-if="newMessage != ''
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send"
+          viewBox="0 0 16 16">
+          <path
+            d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+        </svg>
+      </button>
+      <button id="sendButton" class="btn btn-color rounded-circle" @click="sendMessage" v-if="newMessage != ''
       && formData.nomeValida && formData.emailValida && formData.telefoneValida 
       ">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send"
-        viewBox="0 0 16 16">
-        <path
-          d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
-      </svg>
-    </button>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send"
+          viewBox="0 0 16 16">
+          <path
+            d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+        </svg>
+      </button>
 
-    <button id="openEmoji" class="btn btn-color rounded-circle" @click="openEmoji()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-emoji-smile"
-        viewBox="0 0 16 16">
-        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-        <path
-          d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
-      </svg>
-    </button>
-
-  </div>
-
+      <button id="openEmoji" class="btn btn-color rounded-circle" @click="openEmoji()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-emoji-smile"
+          viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+          <path
+            d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
+        </svg>
+      </button>
+     
+    </div>   
+   
+    <div class="info" style="
+    height: 25px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;">
+    <footer>@LinkKoub</footer>
 </div>
 
+   
+  </div>
+  
 
 </div>

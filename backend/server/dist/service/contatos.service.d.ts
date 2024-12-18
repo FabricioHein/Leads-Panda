@@ -10,7 +10,7 @@ export declare class ContatosService {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -22,8 +22,8 @@ export declare class ContatosService {
     }>;
     getByIdContatosChat(id: any): Promise<{
         number: string;
-        email: string;
         id: number;
+        email: string;
         name: string;
         profilePicUrl: string;
     }>;
@@ -35,7 +35,7 @@ export declare class ContatosService {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -53,7 +53,7 @@ export declare class ContatosService {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -71,7 +71,7 @@ export declare class ContatosService {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -89,7 +89,7 @@ export declare class ContatosService {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;
@@ -107,7 +107,7 @@ export declare class ContatosService {
         created_at: Date;
         updated_at: Date;
         email: string;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         logradouro: string;
         bairro: string;
         estado: string;

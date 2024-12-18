@@ -16,7 +16,7 @@ export declare class FornecedorService {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     getAllFornecedor(): Promise<{
         id: number;
@@ -32,7 +32,7 @@ export declare class FornecedorService {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }[]>;
     createFornecedor(data: any): Promise<{
         id: number;
@@ -48,7 +48,7 @@ export declare class FornecedorService {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     deleteFornecedor(data: any): Promise<{
         id: number;
@@ -64,6 +64,6 @@ export declare class FornecedorService {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }>;
 }

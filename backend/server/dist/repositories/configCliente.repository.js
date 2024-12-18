@@ -17,17 +17,24 @@ let ConfigClienteRepository = class ConfigClienteRepository {
         this.prisma = prisma;
     }
     async getCliente() {
-        return await this.prisma.configuracaoCliente.findFirstOrThrow();
+        return await this.prisma.empresa_config.findFirstOrThrow();
     }
     async getByIdCliente(id) {
-        return await this.prisma.configuracaoCliente.findFirst({
+        return await this.prisma.empresa_config.findFirst({
             where: {
                 id: id,
             },
         });
     }
+    async getByEmail(email) {
+        return await this.prisma.empresa_config.findFirst({
+            where: {
+                email: email
+            },
+        });
+    }
     async getByCnpjEmailCliente(cnpj_cpf, email) {
-        return await this.prisma.configuracaoCliente.findFirst({
+        return await this.prisma.empresa_config.findFirst({
             where: {
                 AND: [
                     {
@@ -41,19 +48,19 @@ let ConfigClienteRepository = class ConfigClienteRepository {
         });
     }
     async getByCnpjCliente(cnpj_cpf) {
-        return await this.prisma.configuracaoCliente.findFirst({
+        return await this.prisma.empresa_config.findFirst({
             where: {
                 cnpj_cpf: cnpj_cpf,
             },
         });
     }
     async createCliente(data) {
-        return await this.prisma.configuracaoCliente.create({
+        return await this.prisma.empresa_config.create({
             data: data,
         });
     }
     async updateCliente(id, data) {
-        return await this.prisma.configuracaoCliente.update({
+        return await this.prisma.empresa_config.update({
             where: {
                 id: id,
             },
@@ -61,7 +68,7 @@ let ConfigClienteRepository = class ConfigClienteRepository {
         });
     }
     async deleteCliente(id) {
-        return await this.prisma.configuracaoCliente.delete({
+        return await this.prisma.empresa_config.delete({
             where: {
                 id: id,
             },

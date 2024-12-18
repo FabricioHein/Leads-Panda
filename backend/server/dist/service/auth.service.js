@@ -76,13 +76,37 @@ let AuthService = class AuthService {
             return false;
         }
     }
+    async validaEmail(uuid) {
+        try {
+            const code = await this.usuarioRepository.findVerificationCreateCode(uuid);
+            if (code) {
+                const usuario = await this.usuarioRepository.getByEmailUser(code.email);
+                console.log(usuario);
+                if (usuario) {
+                    await this.usuarioRepository.updateUser(usuario.id, {
+                        verifiedAt: new Date()
+                    });
+                    return {
+                        msg: 'Verificado com Sucesso!',
+                        status: 200
+                    };
+                }
+                ;
+            }
+            ;
+        }
+        catch (error) {
+            return {
+                msg: 'Erro ao validar usuario:',
+                status: 400
+            };
+        }
+    }
     async loginAcessoGoogle(data) {
         const { token } = data;
         const user = await this.usuarioRepository.findOne(data.email);
         if (user && this.validarTokenGoogle(token)) {
-            const eventosUsuario = await this.getGoogleCalendarEvents(token);
-            console.log(eventosUsuario);
-            const payload = { username: user.nome };
+            const payload = { username: user.nome, id: user.id };
             var novoToken = this.jwtService.sign(payload);
             const userLogin = await this.configService.getConfig(user.id, novoToken);
             return userLogin;

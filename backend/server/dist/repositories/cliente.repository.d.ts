@@ -24,6 +24,7 @@ export declare class ConfigClienteRepository {
         complemento: string;
         cep: string;
         numero: string;
+        currentPlanId: number;
     }>;
     getByIdCliente(id: any): Promise<{
         id: number;
@@ -47,6 +48,7 @@ export declare class ConfigClienteRepository {
         complemento: string;
         cep: string;
         numero: string;
+        currentPlanId: number;
     }>;
     createCliente(data: any): Promise<{
         id: number;
@@ -70,6 +72,7 @@ export declare class ConfigClienteRepository {
         complemento: string;
         cep: string;
         numero: string;
+        currentPlanId: number;
     }>;
     updateCliente(id: any, data: any): Promise<{
         id: number;
@@ -93,6 +96,7 @@ export declare class ConfigClienteRepository {
         complemento: string;
         cep: string;
         numero: string;
+        currentPlanId: number;
     }>;
     deleteCliente(id: any): Promise<{
         id: number;
@@ -116,5 +120,6 @@ export declare class ConfigClienteRepository {
         complemento: string;
         cep: string;
         numero: string;
+        currentPlanId: number;
     }>;
 }

@@ -6,7 +6,6 @@ import { TaskSubRepository } from 'src/repositories/tasksub.repository';
 
 import { AnotacaoRepository } from 'src/repositories/anotacoes.repository';
 import { ArquivosRepository } from 'src/repositories/arquivos.repository';
-import { VendaRepository } from 'src/repositories/venda.repository';
 import { MotivosRepository } from 'src/repositories/motivos.repository';
 import { LogTasksRepository } from 'src/repositories/logTask.repositoy';
 import { ErroBadRequest } from 'src/utils/msg.response';
@@ -17,7 +16,6 @@ export class TaskService {
     private taskRepositorio: TaskRepository,
     private taskSubRepository: TaskSubRepository,
     private arquivosRepository: ArquivosRepository,
-    private vendaRepository: VendaRepository,
     private motivosRepository: MotivosRepository,
     private logTasksRepository: LogTasksRepository,
   ) {}
@@ -92,8 +90,13 @@ export class TaskService {
     try {
       const { id } = data;
       const dataTask = data;
+      const taskSub = await this.taskSubRepository.updateTaskSub(Number(id), dataTask);
+      if(taskSub){
+;
+        return taskSub
+      };      
 
-      return await this.taskSubRepository.updateTaskSub(Number(id), dataTask);
+      return ErroBadRequest('Not Found');
     } catch (error) {
       return ErroBadRequest(error);
     }
@@ -171,8 +174,8 @@ export class TaskService {
           description_text: s.description_text,
           status: s.status,
           taskId: s.taskId,
-          date_end: DateTime.ToFormat(s.date_end, 'YYYY-MM-DD'),
-          date_start: DateTime.ToFormat(s.date_start, 'YYYY-MM-DD'),
+          date_end: DateTime.formatToHoraMin(s.date_end),
+          date_start: DateTime.formatToHoraMin(s.date_start),
         };
       });
     } catch (error) {
@@ -189,34 +192,6 @@ export class TaskService {
   async getAnotacaoAllId(id) {
     try {
       return await this.anotacaoRepository.getAnotacaoAll(Number(id));
-    } catch (error) {
-      return ErroBadRequest(error);
-    }
-  }
-  async createVenda(data: any) {
-    try {
-      return await this.vendaRepository.createVenda(data);
-    } catch (error) {
-      return ErroBadRequest(error);
-    }
-  }
-  async atualizaVendas(data: any) {
-    try {
-      const { id } = data;
-      const updateVenda = data;
-      if (!id) {
-        return await this.createVenda(updateVenda);
-      } else {
-        return await this.vendaRepository.updateVenda(id, updateVenda);
-      }
-    } catch (error) {
-      return ErroBadRequest(error);
-    }
-  }
-  async deleteVendas(data: any) {
-    try {
-      const id = data.id;
-      return await this.vendaRepository.deleteVenda(id);
     } catch (error) {
       return ErroBadRequest(error);
     }
@@ -249,7 +224,7 @@ export class TaskService {
         task: {
           processo: {
             projeto: {
-              configuracaoClienteId: Number(clientId),
+              empresa_configId: Number(clientId),
             },
           },
         },
@@ -299,7 +274,7 @@ export class TaskService {
       const filter = {
         processo: {
           projeto: {
-            configuracaoClienteId: Number(clientId),
+            empresa_configId: Number(clientId),
           },
         },
         AND: [],

@@ -8,7 +8,8 @@ class UsuarioService extends Api {
         this.token = token;
     }
     async AtualizarUsuario() {
-        return await this.update();
+        const data = await this.update()
+        return data.data;
     }
     async deleteUsuario() {
         this.url = '/api/usuario/delete';
@@ -30,6 +31,11 @@ class UsuarioService extends Api {
         let recupearSenhaEmail = await this.get();
 
         return recupearSenhaEmail.data;
+    }
+    async verificaEmail(uuid) {
+   
+        let verificaEmail = await this.get();
+        return verificaEmail.data;
     }
     async atualizarPermissaoModulos() {
         this.url = '/api/usuario/atualizar/permissao';

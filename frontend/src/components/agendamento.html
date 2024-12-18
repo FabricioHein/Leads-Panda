@@ -1,0 +1,91 @@
+<div id="app" class="container">
+  <img src="https://via.placeholder.com/150" alt="Logo" class="logo">
+  <ul class="links">
+
+    <button v-if="agenda" class="btn btn-primary w-100" @click="toggleAgenda">Agendar</button>
+
+  </ul>
+  <div v-if="agenda && showAgenda" :class="{ active: showAgenda }">
+    <div class=" mt-5 d-flex justify-content-center align-items-center flex-column">
+      <div class="card w-100 p-4 shadow-sm">
+        <div class="card-body">
+
+          <h2 class="text-center">Agendamento de Atendimentos</h2>
+
+          <!-- Etapa 1: Informações Pessoais -->
+          <div v-if="step === 1 && hasCpf">
+            <h3 class="text-center mt-4">Informações Pessoais</h3>
+            <div class="mb-3">
+              <label for="CPF" class="form-label">CPF</label>
+              <input type="text" id="CPF" v-maska="'###.###.###-##'" v-model="cpf" class="form-control">
+            </div>
+            <button class="btn btn-primary mt-3 w-100" @click="nextStepGetCpf">Próximo</button>
+          </div>
+
+          <div v-if="step === 1 && !hasCpf">
+            <h3 class="text-center mt-4">Preencha os dados</h3>
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" id="nome" v-model="nome" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="telefone" class="form-label">Telefone</label>
+              <input type="text" id="telefone" v-maska="'+55(##)#####-####'" v-model="telefone" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="CPF" class="form-label">CPF</label>
+              <input type="text" id="CPF" v-maska="'###.###.###-##'" v-model="cpf" class="form-control">
+            </div>
+            <button class="btn btn-primary mt-3 w-100" @click="nextCreateCliente">Próximo</button>
+          </div>
+
+          <!-- Etapa 2: Seleção de Atendente -->
+          <div v-if="step === 2">
+            <h3 class="text-center mt-4">Escolha um Atendente</h3>
+            <div v-for="attendant in attendants" :key="attendant.id" class="form-check">
+              <input class="form-check-input" type="radio" :value="attendant.id" v-model="selectedAttendant">
+              <label class="form-check-label">{{ attendant.nome }}</label>
+            </div>
+            <button class="btn btn-secondary mt-3 w-100" @click="prevStep">Voltar</button>
+            <button class="btn btn-primary mt-3 w-100" @click="nextStep">Próximo</button>
+          </div>
+
+          <!-- Etapa 3: Seleção de Data -->
+          <div v-if="step === 3">
+            <h3 class="text-center mt-4">Escolha uma Data</h3>
+            <input type="date" v-model="selectedDate" class="form-control">
+            <button class="btn btn-secondary mt-3 w-100" @click="prevStep">Voltar</button>
+            <button class="btn btn-primary mt-3 w-100" @click="getDateAtentend">Próximo</button>
+          </div>
+
+          <!-- Etapa 4: Seleção de Horário -->
+          <div v-if="step === 4">
+            <h3 class="text-center mt-4">Escolha um Horário</h3>
+            <div v-for="time in times" :key="time" class="form-check">
+              <input class="form-check-input" type="radio" :value="time" v-model="selectedTime">
+              <label class="form-check-label">{{ time }}</label>
+            </div>
+            <button class="btn btn-secondary mt-3 w-100" @click="prevStep">Voltar</button>
+            <button class="btn btn-primary mt-3 w-100" @click="nextStep">Próximo</button>
+          </div>
+
+          <!-- Etapa 5: Resumo -->
+          <div v-if="step === 5">
+            <h3 class="text-center mt-4">Resumo</h3>
+            <p><strong>Nome:</strong> {{ nome }}</p>
+            <p><strong>CPF:</strong> {{ cpf }}</p>
+            <p><strong>Atendente:</strong> {{ selectedAttendant }}</p>
+            <p><strong>Horário:</strong> {{ selectedTime }}</p>
+            <p><strong>Data:</strong> {{ formatDateToBrazilian(selectedDate) }}</p>
+            <button class="btn btn-secondary mt-3 w-100" @click="prevStep">Voltar</button>
+            <button class="btn btn-success mt-3 w-100" @click="enviarAgendamento">Concluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <p>&copy; 2024 Minha Empresa. Todos os direitos reservados.</p>
+  </div>
+</div>

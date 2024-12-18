@@ -18,7 +18,7 @@
                         </div>
 
                         <div class="info">
-                            <h6>{{add ? page : "Produtos / Serviço"}}</h6>
+                            <h6>{{add ? page : "Produtos / Serviços"}}</h6>
                             <add :params="params" v-if="add" />
 
                         </div>
@@ -109,8 +109,9 @@
     </div>
     <div class="account-settings-footer" v-if="add">
         <div class="as-footer-container">
-            <button type="button" class="btn btn-success" @click="save">Salvar</button>
             <button type="button" class="btn btn-danger" @click="back">Cancelar</button>
+            <button type="button" class="btn btn-success" @click="save">Salvar</button>
+
         </div>
     </div>
 </page>

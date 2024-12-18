@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/base/relacional/PrismaService';
-import { ErroBadRequest } from 'src/utils/msg.response';
 
 export type User = any;
 

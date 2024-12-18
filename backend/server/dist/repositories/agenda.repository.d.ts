@@ -3,8 +3,20 @@ import AgendaRetornoModel from 'src/infra/DTO/agenda-dto';
 export declare class AgendaRepository {
     private prisma;
     constructor(prisma: PrismaService);
-    getAgendaAll(userId: any): Promise<AgendaRetornoModel[]>;
+    getAgendaByDataUsuario(atendimentoId: any, date: any): Promise<AgendaRetornoModel[]>;
+    getAgendaAll(empresa_configId: any): Promise<AgendaRetornoModel[]>;
     getByIdAgenda(id: any): Promise<{
+        id: number;
+        title: string;
+        description: string;
+        className: string;
+        status: string;
+        date_start: Date;
+        date_end: Date;
+        created_at: Date;
+        updated_at: Date;
+    }>;
+    crearAgendamentoExterno(data: any): Promise<{
         id: number;
         title: string;
         description: string;

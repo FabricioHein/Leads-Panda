@@ -62,6 +62,7 @@ export default {
   async mounted() {
 
     this.scrollToBottom();
+    this.getMessagens();
 
   },
   computed: {
@@ -70,7 +71,6 @@ export default {
   methods: {
     closeModal() {
       this.emoji = false;
-
     },
     setChatBuild() {
 
@@ -112,7 +112,15 @@ export default {
       this.scrollToBottom()
 
     },
+    closeAll(){
+      this.emoji = false;
+      this.option = false;
 
+    },
+    closeEmoji() {
+      this.emoji = false;
+      this.scrollToBottom()
+    },
     openEmoji() {
       this.emoji = !this.emoji;
       this.scrollToBottom()
@@ -133,14 +141,13 @@ export default {
     async sendMessage() {
 
       var msmSend = {
+        atendimento: true,
         username: this.user,
         type: 'txt',
         text: this.newMessage,
-        to_telefone: this.chatProps.telefone
       };
       if (this.chatProps.chat_id) {
         msmSend['chat_id'] = this.chatProps.chat_id;
-        msmSend['uuid'] = this.chatProps.chat_info.uuid;
       };
 
       const API = new ChatService(msmSend, this.token, '/api/chat/newMessages');
@@ -173,14 +180,42 @@ export default {
 
     },
     messageClass(message) {
+      console.log(message)
       return message.atendimento ? 'lead2-converts_chat_balloon lead2-converts_right_balloon' : 'lead2-converts_chat_balloon lead2-converts_left_balloon message_with_photo';
     },
     getMessagens() {
-      this.$nextTick(() => {
-        console.log(this.this.chatProps.chat_id)
+
+      setInterval(async () => {
 
 
-      });
+        if (this.chatProps.uuid) {
+
+
+          var url = `/api/chat/getByChatUuidMessagesLast/${this.chatProps.uuid}`;
+
+          const API = new ChatService({}, this.token, url);
+
+          API.get().then((newMessage) => {
+
+            if (newMessage.data.length > 0) {
+
+              var hasMsgm = this.messages.filter(i => i.message_id == newMessage.data[0].message_id);
+              console.log(hasMsgm)
+
+              if (hasMsgm.length === 0) {
+
+                this.messages.push(newMessage.data[0]);
+                this.scrollToBottom();
+              };
+
+            }
+          })
+
+
+
+        }
+
+      }, 10000); // Intervalo de 1000 milissegundos (1 segundo)
     },
     scrollToBottom() {
       this.$nextTick(() => {

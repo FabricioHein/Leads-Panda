@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <form-wizard shape="tab" title="" subtitle="" class="pills text-only" color="#000000">
+                                <form-wizard shape="tab" title="" subtitle="" class="pills text-only" color="#4154f1000">
                                     <tab-content title="1 Home">
                                         <p>Try the keyboard navigation by clicking arrow left or right!</p>
                                     </tab-content>
@@ -84,7 +84,7 @@
                                         <highlight>
                                             <pre>
 &lt;!-- Text only --&gt;
-&lt;form-wizard shape=&quot;tab&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;pills text-only&quot; color=&quot;#000000&quot;&gt;
+&lt;form-wizard shape=&quot;tab&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;pills text-only&quot; color=&quot;#4154f1000&quot;&gt;
     &lt;tab-content title=&quot;1 Home&quot;&gt;
         &lt;p&gt;Try the keyboard navigation by clicking arrow left or right!&lt;/p&gt;
     &lt;/tab-content&gt;
@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <form-wizard shape="tab" title="" subtitle="" class="pills" color="#000000">
+                                <form-wizard shape="tab" title="" subtitle="" class="pills" color="#4154f1000">
                                     <tab-content title="" icon="far fa-list-alt">
                                         <p>Try the keyboard navigation by clicking arrow left or right!</p>
                                     </tab-content>
@@ -133,7 +133,7 @@
                                         <highlight>
                                             <pre>
 &lt;!-- Icon only --&gt;
-&lt;form-wizard shape=&quot;tab&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;pills&quot; color=&quot;#000000&quot;&gt;
+&lt;form-wizard shape=&quot;tab&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;pills&quot; color=&quot;#4154f1000&quot;&gt;
     &lt;tab-content title=&quot;&quot; icon=&quot;far fa-list-alt&quot;&gt;
         &lt;p&gt;Try the keyboard navigation by clicking arrow left or right!&lt;/p&gt;
     &lt;/tab-content&gt;
@@ -163,7 +163,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <form-wizard shape="tab" title="" subtitle="" class="pills" color="#000000">
+                                <form-wizard shape="tab" title="" subtitle="" class="pills" color="#4154f1000">
                                     <tab-content title="Home" icon="far fa-list-alt">
                                         <p>Try the keyboard navigation by clicking arrow left or right!</p>
                                     </tab-content>
@@ -182,7 +182,7 @@
                                         <highlight>
                                             <pre>
 &lt;!-- Text & Icon only --&gt;
-&lt;form-wizard shape=&quot;tab&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;pills&quot; color=&quot;#000000&quot;&gt;
+&lt;form-wizard shape=&quot;tab&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;pills&quot; color=&quot;#4154f1000&quot;&gt;
     &lt;tab-content title=&quot;Home&quot; icon=&quot;far fa-list-alt&quot;&gt;
         &lt;p&gt;Try the keyboard navigation by clicking arrow left or right!&lt;/p&gt;
     &lt;/tab-content&gt;
@@ -220,7 +220,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <form-wizard title="" subtitle="" class="circle" color="#000000">
+                                <form-wizard title="" subtitle="" class="circle" color="#4154f1000">
                                     <tab-content title="" icon="far fa-list-alt">
                                         <p>Try the keyboard navigation by clicking arrow left or right!</p>
                                     </tab-content>
@@ -239,7 +239,7 @@
                                         <highlight>
                                             <pre>
 &lt;!-- Circle Icon only --&gt;
-&lt;form-wizard title=&quot;&quot; subtitle=&quot;&quot; class=&quot;circle&quot; color=&quot;#000000&quot;&gt;
+&lt;form-wizard title=&quot;&quot; subtitle=&quot;&quot; class=&quot;circle&quot; color=&quot;#4154f1000&quot;&gt;
     &lt;tab-content title=&quot;&quot; icon=&quot;far fa-list-alt&quot;&gt;
         &lt;p&gt;Try the keyboard navigation by clicking arrow left or right!&lt;/p&gt;
     &lt;/tab-content&gt;
@@ -269,7 +269,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <form-wizard title="" subtitle="" class="circle" color="#000000">
+                                <form-wizard title="" subtitle="" class="circle" color="#4154f1000">
                                     <tab-content title="Home" icon="far fa-list-alt">
                                         <p>Try the keyboard navigation by clicking arrow left or right!</p>
                                     </tab-content>
@@ -288,7 +288,7 @@
                                         <highlight>
                                             <pre>
 &lt;!-- Text & Icon only --&gt;
-&lt;form-wizard title=&quot;&quot; subtitle=&quot;&quot; class=&quot;circle&quot; color=&quot;#000000&quot;&gt;
+&lt;form-wizard title=&quot;&quot; subtitle=&quot;&quot; class=&quot;circle&quot; color=&quot;#4154f1000&quot;&gt;
     &lt;tab-content title=&quot;Home&quot; icon=&quot;far fa-list-alt&quot;&gt;
         &lt;p&gt;Try the keyboard navigation by clicking arrow left or right!&lt;/p&gt;
     &lt;/tab-content&gt;
@@ -326,7 +326,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <form-wizard shape="square" title="" subtitle="" class="square" color="#000000">
+                                <form-wizard shape="square" title="" subtitle="" class="square" color="#4154f1000">
                                     <tab-content title="" icon="far fa-list-alt">
                                         <p>Try the keyboard navigation by clicking arrow left or right!</p>
                                     </tab-content>
@@ -345,7 +345,7 @@
                                         <highlight>
                                             <pre>
 &lt;!-- Icon only --&gt;
-&lt;form-wizard shape=&quot;square&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;square&quot; color=&quot;#000000&quot;&gt;
+&lt;form-wizard shape=&quot;square&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;square&quot; color=&quot;#4154f1000&quot;&gt;
     &lt;tab-content title=&quot;&quot; icon=&quot;far fa-list-alt&quot;&gt;
         &lt;p&gt;Try the keyboard navigation by clicking arrow left or right!&lt;/p&gt;
     &lt;/tab-content&gt;
@@ -394,7 +394,7 @@
                                         <highlight>
                                             <pre>
 &lt;!-- Text & Icon only --&gt;
-&lt;form-wizard shape=&quot;square&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;square&quot; color=&quot;#000000&quot;&gt;
+&lt;form-wizard shape=&quot;square&quot; title=&quot;&quot; subtitle=&quot;&quot; class=&quot;square&quot; color=&quot;#4154f1000&quot;&gt;
     &lt;tab-content title=&quot;Home&quot; icon=&quot;far fa-list-alt&quot;&gt;
         &lt;p&gt;Try the keyboard navigation by clicking arrow left or right!&lt;/p&gt;
     &lt;/tab-content&gt;

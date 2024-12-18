@@ -117,7 +117,7 @@ let UsuariosService = class UsuariosService {
     async sendWelcomeEmail(newUser) {
         const subject = 'Confirmação de e-mail';
         const code = (0, crypto_1.randomUUID)();
-        const linkVerification = `${process.env.FRONTEND_URL}/auth/validar-email/${code}`;
+        const linkVerification = `${process.env.FRONTEND_URL}/validar-email/${code}`;
         const templatePath = (0, getEmailTemplatePath_1.getEmailTemplatePath)('confirm-email.hbs');
         const emailSent = await this.mailService.sendEmaiNodemailer({
             to: newUser.email,
@@ -203,8 +203,8 @@ let UsuariosService = class UsuariosService {
                     novoUsuarioGoogle['isAdmin'] = true;
                     novoUsuarioGoogle['primeiro_acesso'] = true;
                     novoUsuarioGoogle['gerente_conta'] = true;
-                    novoUsuarioGoogle['clienteId'] = Number(criarCliente.id);
-                    const user = await this.createUsuario(novoUsuarioGoogle);
+                    novoUsuarioGoogle['empresa_configId'] = Number(criarCliente.id);
+                    await this.createUsuario(novoUsuarioGoogle);
                     return true;
                 }
                 return true;
@@ -244,7 +244,7 @@ let UsuariosService = class UsuariosService {
                             dataUsuario['isAdmin'] = true;
                             dataUsuario['primeiro_acesso'] = true;
                             dataUsuario['gerente_conta'] = true;
-                            dataUsuario['clienteId'] = Number(criarCliente.id);
+                            dataUsuario['empresa_configId'] = Number(criarCliente.id);
                             const usuarioNovo = await this.createUsuario(dataUsuario);
                             if (usuarioNovo) {
                                 const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
@@ -296,7 +296,12 @@ let UsuariosService = class UsuariosService {
                 if (!usuario) {
                     const criarCliente = await this.configClienteRepository.createCliente(cliente);
                     if (criarCliente) {
-                        dataUsuario['clienteId'] = Number(criarCliente.id);
+                        dataUsuario['empresa_configId'] = Number(criarCliente.id);
+                        empresa_config: {
+                            connect: {
+                                id: 4;
+                            }
+                        }
                         dataUsuario['type'] = 'normal';
                         await this.createUsuario(dataUsuario);
                         const emailEnviado = await this.sendWelcomeEmail(dataUsuario);
@@ -362,9 +367,12 @@ let UsuariosService = class UsuariosService {
             delete usuarioInfo['modulos'];
             delete usuarioInfo['sub'];
             if (!usuario) {
-                const novoUsuario = await this.usuarioRepositorio.createUser(Object.assign({}, usuarioInfo));
+                let empresa_configId = usuarioInfo.empresa_configId;
+                delete usuarioInfo['empresa_configId'];
+                delete usuarioInfo['type'];
+                const novoUsuario = await this.usuarioRepositorio.createUser(empresa_configId, usuarioInfo);
                 if (novoUsuario) {
-                    if (data.clienteId) {
+                    if (data.empresa_configId) {
                         if (data.modulos && data.sub) {
                             data['id'] = Number(novoUsuario.id);
                             await this.atualizarPermissoesModulos(data);

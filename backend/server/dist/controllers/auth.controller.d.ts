@@ -67,5 +67,9 @@ export declare class AuthController {
         msg: string;
         status: number;
     }>;
+    validaEmail(uuid: any): Promise<{
+        msg: string;
+        status: number;
+    }>;
     logout(req: any, res: any): void;
 }

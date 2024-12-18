@@ -81,7 +81,7 @@ export default {
     },
     methods: {
         getAcesso() {
-            this.acesso = Acesso.getAcesso('Cadastro', '/clientes', this.permissao);
+            this.acesso = Acesso.getAcesso('Cadastro', '/contatos', this.permissao);
             console.log(this.acesso)
         },
         async init() {
@@ -119,7 +119,7 @@ export default {
 
             if (this.params) {
                 const clienteServ = new clienteService({
-                    clienteId: Number(this.params.id),
+                    empresa_configId: Number(this.params.id),
                     chave: "histórico do cliente",
                     valor: this.historicoDescricao,
                     operador: this.usuario.nome,
@@ -143,7 +143,7 @@ export default {
                     await clienteServ.atualizarCliente();
 
                     const historicoService = new clienteService({
-                        clienteId: Number(cliente.id),
+                        empresa_configId: Number(cliente.id),
                         chave: "Atualização Cliente",
                         valor: "Atualização Dados do Cliente",
                         operador: this.usuario.name,
@@ -153,13 +153,13 @@ export default {
                     this.params.historico_cliente.push(historico.data);
                 }
                 else {
-                    cliente['configuracaoClienteId'] = Number(this.cliente.id);
+                    cliente['empresa_configId'] = Number(this.cliente.id);
                     cliente.isTrusted ? delete cliente.isTrusted : "";
                     const clienteServ = new clienteService(cliente, this.token);
                     const novoCliente = await clienteServ.criarCliente();
 
                     const historicoService = new clienteService({
-                        clienteId: Number(novoCliente.id),
+                        empresa_configId: Number(novoCliente.id),
                         chave: "Novo Cliente",
                         valor: "Novo Cliente",
                         operador: this.usuario.name,

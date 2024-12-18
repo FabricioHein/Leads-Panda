@@ -24,10 +24,10 @@
           class="form-control" />
           <label>Email</label>
         <InputVue type="text" v-model:value="params.email" />
-        <label>RG</label>
-        <input v-model="params.rg" type="text" v-maska="'###.###.###-##'" class="form-control" />
         <label>Data Nascimento</label>
         <input v-model="params.data_nascimento" type="date" class="form-control" />
+        <label>RG</label>
+        <input v-model="params.rg" type="text" v-maska="'###.###.###-##'" class="form-control" />       
 
         <div v-if="cpf || params.cpf">
           <label>CPF</label>
@@ -99,26 +99,16 @@ export default {
       }
     },
     async change_file(event) {
-      let formData = new FormData();
-      formData.append('file', event.target.files[0]);
-      console.log('>> formData >> ', formData);
 
-      const importar = new ImportarService(
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        },
-        this.token,
-        `/api/importar/file/${this.usuario.id}`,
-        formData
-      )
-      const upload = await importar.importarFile()
-      if (upload) {
-        this.showMessage('Carregado com Sucesso')
-      }
-
-      this.params.linkFoto = upload.downloadURL;
+      const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                  this.params.linkFoto = e.target.result
+                  this.showMessage('Carregado com Sucesso')
+                };
+                reader.readAsDataURL(file);
+            };   
 
     },
     showMessage(msg = '', type = 'success') {

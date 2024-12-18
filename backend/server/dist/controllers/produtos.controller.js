@@ -20,9 +20,9 @@ let ProdutosController = class ProdutosController {
     constructor(produtoService) {
         this.produtoService = produtoService;
     }
-    async getAllProduto(clienteId) {
+    async getAllProduto(empresa_configId) {
         try {
-            return await this.produtoService.getAllProduto(clienteId);
+            return await this.produtoService.getAllProduto(empresa_configId);
         }
         catch (error) {
             return error;
@@ -63,8 +63,8 @@ let ProdutosController = class ProdutosController {
 };
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('todos/:clienteId'),
-    __param(0, (0, common_1.Param)('clienteId')),
+    (0, common_1.Get)('todos/:empresa_configId'),
+    __param(0, (0, common_1.Param)('empresa_configId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)

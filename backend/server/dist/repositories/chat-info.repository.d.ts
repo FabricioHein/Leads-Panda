@@ -8,7 +8,7 @@ export declare class ChatInfoRepository {
         type: string;
         msg_inicial: string;
         modelo_ai: string;
-        fluxo: import(".prisma/client").Prisma.JsonValue;
+        fluxo: import("@prisma/client/runtime/library").JsonValue;
         bot_ativo: boolean;
         chat_gpt_bot_ativo: boolean;
         atendimento_manual: boolean;
@@ -27,7 +27,7 @@ export declare class ChatInfoRepository {
         texto_input: string;
         tamanho_font_mgm: number;
         tamanho_avatar_usuario: number;
-        cliente_id: number;
+        empresa_configId: number;
         anexo_documento: boolean;
         created_at: Date;
         updated_at: Date;
@@ -45,7 +45,7 @@ export declare class ChatInfoRepository {
         type: string;
         msg_inicial: string;
         modelo_ai: string;
-        fluxo: import(".prisma/client").Prisma.JsonValue;
+        fluxo: import("@prisma/client/runtime/library").JsonValue;
         bot_ativo: boolean;
         chat_gpt_bot_ativo: boolean;
         atendimento_manual: boolean;
@@ -64,7 +64,7 @@ export declare class ChatInfoRepository {
         texto_input: string;
         tamanho_font_mgm: number;
         tamanho_avatar_usuario: number;
-        cliente_id: number;
+        empresa_configId: number;
         anexo_documento: boolean;
         created_at: Date;
         updated_at: Date;
@@ -82,7 +82,7 @@ export declare class ChatInfoRepository {
         type: string;
         msg_inicial: string;
         modelo_ai: string;
-        fluxo: import(".prisma/client").Prisma.JsonValue;
+        fluxo: import("@prisma/client/runtime/library").JsonValue;
         bot_ativo: boolean;
         chat_gpt_bot_ativo: boolean;
         atendimento_manual: boolean;
@@ -101,7 +101,7 @@ export declare class ChatInfoRepository {
         texto_input: string;
         tamanho_font_mgm: number;
         tamanho_avatar_usuario: number;
-        cliente_id: number;
+        empresa_configId: number;
         anexo_documento: boolean;
         created_at: Date;
         updated_at: Date;
@@ -119,7 +119,7 @@ export declare class ChatInfoRepository {
         type: string;
         msg_inicial: string;
         modelo_ai: string;
-        fluxo: import(".prisma/client").Prisma.JsonValue;
+        fluxo: import("@prisma/client/runtime/library").JsonValue;
         bot_ativo: boolean;
         chat_gpt_bot_ativo: boolean;
         atendimento_manual: boolean;
@@ -138,7 +138,7 @@ export declare class ChatInfoRepository {
         texto_input: string;
         tamanho_font_mgm: number;
         tamanho_avatar_usuario: number;
-        cliente_id: number;
+        empresa_configId: number;
         anexo_documento: boolean;
         created_at: Date;
         updated_at: Date;
@@ -156,7 +156,7 @@ export declare class ChatInfoRepository {
         type: string;
         msg_inicial: string;
         modelo_ai: string;
-        fluxo: import(".prisma/client").Prisma.JsonValue;
+        fluxo: import("@prisma/client/runtime/library").JsonValue;
         bot_ativo: boolean;
         chat_gpt_bot_ativo: boolean;
         atendimento_manual: boolean;
@@ -175,7 +175,7 @@ export declare class ChatInfoRepository {
         texto_input: string;
         tamanho_font_mgm: number;
         tamanho_avatar_usuario: number;
-        cliente_id: number;
+        empresa_configId: number;
         anexo_documento: boolean;
         created_at: Date;
         updated_at: Date;
@@ -193,7 +193,7 @@ export declare class ChatInfoRepository {
         type: string;
         msg_inicial: string;
         modelo_ai: string;
-        fluxo: import(".prisma/client").Prisma.JsonValue;
+        fluxo: import("@prisma/client/runtime/library").JsonValue;
         bot_ativo: boolean;
         chat_gpt_bot_ativo: boolean;
         atendimento_manual: boolean;
@@ -212,7 +212,7 @@ export declare class ChatInfoRepository {
         texto_input: string;
         tamanho_font_mgm: number;
         tamanho_avatar_usuario: number;
-        cliente_id: number;
+        empresa_configId: number;
         anexo_documento: boolean;
         created_at: Date;
         updated_at: Date;
@@ -230,7 +230,7 @@ export declare class ChatInfoRepository {
         type: string;
         msg_inicial: string;
         modelo_ai: string;
-        fluxo: import(".prisma/client").Prisma.JsonValue;
+        fluxo: import("@prisma/client/runtime/library").JsonValue;
         bot_ativo: boolean;
         chat_gpt_bot_ativo: boolean;
         atendimento_manual: boolean;
@@ -249,7 +249,7 @@ export declare class ChatInfoRepository {
         texto_input: string;
         tamanho_font_mgm: number;
         tamanho_avatar_usuario: number;
-        cliente_id: number;
+        empresa_configId: number;
         anexo_documento: boolean;
         created_at: Date;
         updated_at: Date;

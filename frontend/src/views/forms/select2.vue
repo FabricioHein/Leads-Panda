@@ -281,22 +281,22 @@
 <style>
     .select2 .multiselect__option--highlight {
         background: #fff;
-        color: #000000;
+        color: #4154f1000;
     }
     .select2 .multiselect__option--selected {
         background-color: rgba(27, 85, 226, 0.23921568627450981);
-        color: #000000;
+        color: #4154f1000;
         font-weight: normal;
     }
     .select2 .multiselect__option--disabled {
         background: inherit !important;
     }
     .select2 .multiselect__tag {
-        color: #000;
+        color: #4154f1;
         background: #e4e4e4;
     }
     .select2 .multiselect__tag-icon:after {
-        color: #000 !important;
+        color: #4154f1 !important;
     }
     .select2 .multiselect__tag-icon:focus,
     .select2 .multiselect__tag-icon:hover {

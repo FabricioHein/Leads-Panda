@@ -2,6 +2,9 @@ import { ConfigRepository } from '../repositories/config.repository';
 import { Injectable } from '@nestjs/common';
 import { EnumRepository } from 'src/repositories/enum.repository';
 import { ConfigClienteRepository } from 'src/repositories/configCliente.repository';
+import { ClientesRepository } from 'src/repositories/clientes.repository';
+import { TaskRepository } from 'src/repositories/task.repository';
+import { ChatRepository } from 'src/repositories/chat.repository';
 import { ErroBadRequest } from 'src/utils/msg.response';
 
 @Injectable()
@@ -10,9 +13,12 @@ export class ConfigService {
     private configRepository: ConfigRepository,
     private configClienteRepository: ConfigClienteRepository,
     private enumRepository: EnumRepository,
-  ) {}
+    private clientesRepository: ClientesRepository,
+    private taskRepository: TaskRepository,
+    private chatRepository: ChatRepository
+  ) { }
 
-  async getDashboard(clienteId) {
+  async getDashboard(empresa_configId) {
     try {
       //total de contatos
       //total de clientes
@@ -23,27 +29,23 @@ export class ConfigService {
       //soma total de negócios abertos
       //soma total de negócios pendentes;
       //lista das ultimas vendas
+      let empresaId = Number(empresa_configId);
+
+      const contatos = await this.clientesRepository.countClientesByEmpresa(empresaId);
+      const leads = await this.taskRepository.countTasksByEmpresa(empresaId);
+      const sumTasksByEmpresaValorInicial = await this.taskRepository.sumTasksByEmpresaValorInicial(empresaId);
+      const sumTasksByEmpresaValorFinal = await this.taskRepository.sumTasksByEmpresaValorFinal(empresaId);
+
+      const chatsAtivos = await this.chatRepository.countChatsByEmpresaAtivo(empresaId);
+      const naochatsAtivos = await this.chatRepository.countChatsByEmpresaNaoAtivo(empresaId);
 
       const dashBoard = {
-        totalContatos: 10,
-        totalCliente: 10,
-        totalProdutos: 10,
-        totalLeads: 10,
-        tarefas: {
-          abertas: 10,
-          pendentes: 10,
-          concluidas: 10,
-        },
-        totalPotencialNegocio: 5000,
-        totalNegocioAberto: 300,
-        totalNegocioPendentes: 422,
-        ultimasVendas: [
-          {
-            id: 1,
-            valor: 100,
-            title: 'Teste',
-          },
-        ],
+        totalCliente: contatos ? contatos : 0,
+        totalLeads: leads ? leads : 0,
+        totalPotencialNegocioInicial: sumTasksByEmpresaValorInicial ? sumTasksByEmpresaValorInicial : 0,
+        totalPotencialNegocioFinal: sumTasksByEmpresaValorFinal ? sumTasksByEmpresaValorFinal : 0,
+        chatAtivos: chatsAtivos ? chatsAtivos : 0,
+        naochatsAtivos: naochatsAtivos ? naochatsAtivos : 0
       };
 
       return dashBoard;

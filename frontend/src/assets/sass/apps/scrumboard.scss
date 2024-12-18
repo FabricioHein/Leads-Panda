@@ -30,7 +30,7 @@
                 align-self: center;
                 font-size: 19px;
                 margin-right: 14px;
-                color: #000000;
+                color: #4154f1000;
                 font-weight: 600;
             }
 
@@ -88,7 +88,7 @@
                 padding: 13px 21px;
                 font-weight: 600;
                 font-size: 16px;
-                color: #000000;
+                color: #4154f1000;
             }
         }
 
@@ -99,7 +99,7 @@
             align-self: center;
             font-size: 19px;
             margin-right: 14px;
-            color: #000000;
+            color: #4154f1000;
             font-weight: 600;
         }
 
@@ -223,7 +223,7 @@
 
             .dropdown-item {
                 &:hover {
-                    color: #000000;
+                    color: #4154f1000;
                 }
 
                 &.active,
@@ -259,7 +259,7 @@
             cursor: pointer;
 
             &:hover {
-                color: #000000;
+                color: #4154f1000;
             }
 
             svg {
@@ -297,7 +297,7 @@
                 margin-right: 5px;
 
                 &:hover {
-                    color: #000000;
+                    color: #4154f1000;
                     fill: rgba(27, 85, 226, 0.2392156863);
                 }
             }
@@ -330,7 +330,7 @@
             .task-body .task-bottom {
                 display: flex;
                 justify-content: space-between;
-                padding: 12px 15px;
+                padding: 2px 15px;
 
                 div {
                     &.tb-section-1 {
@@ -341,11 +341,11 @@
                             height: 17px;
 
                             &:hover {
-                                color: #000000;
+                                color: #4154f1000;
                                 cursor: pointer;
 
                                 svg {
-                                    color: #000000;
+                                    color: #4154f1000;
                                     fill: rgba(27, 85, 226, 0.2392156863);
                                 }
                             }
@@ -381,7 +381,7 @@
                             padding: 0;
 
                             &:hover {
-                                color: #000000;
+                                color: #4154f1000;
                                 fill: rgba(27, 85, 226, 0.2392156863);
                             }
                         }
@@ -470,7 +470,7 @@
         }
 
         &.ui-sortable-helper {
-            background-color: #000000;
+            background-color: #4154f1000;
 
             .task-header {
                 span {
@@ -546,11 +546,11 @@
 
 .ui-state-highlight {
     position: relative;
-    border-color: #000000 !important;
+    border-color: #4154f1000 !important;
     height: 141px;
     margin-bottom: 36px !important;
     border-radius: 15px !important;
-    border: 1px dashed #000000 !important;
+    border: 1px dashed #4154f1000 !important;
     background-image: linear-gradient(
         45deg,
         rgba(27, 85, 226, 0.09) 25%,
@@ -570,7 +570,7 @@
         position: absolute;
         left: 41%;
         font-size: 19px;
-        color: #000000;
+        color: #4154f1000;
         top: 50%;
         margin-top: -16px;
         font-weight: 600;

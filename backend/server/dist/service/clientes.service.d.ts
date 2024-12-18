@@ -19,7 +19,7 @@ export declare class ClientesService {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -47,7 +47,7 @@ export declare class ClientesService {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -59,18 +59,18 @@ export declare class ClientesService {
         created_at: Date;
         updated_at: Date;
     }>;
-    getAllClientes(clienteId: any): Promise<({
-        historico_cliente: {
-            operador: string;
-            created_at: Date;
-            valor: string;
-        }[];
+    getAllClientes(empresa_configId: any): Promise<({
         sexo: {
             id: number;
             descricao: string;
             created_at: Date;
             updated_at: Date;
         };
+        historico_cliente: {
+            created_at: Date;
+            valor: string;
+            operador: string;
+        }[];
     } & {
         id: number;
         nome: string;
@@ -86,7 +86,7 @@ export declare class ClientesService {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -105,7 +105,7 @@ export declare class ClientesService {
         operador: string;
         created_at: Date;
         updated_at: Date;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     createClientes(data: any): Promise<{
         id: number;
@@ -122,7 +122,7 @@ export declare class ClientesService {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -149,7 +149,7 @@ export declare class ClientesService {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;

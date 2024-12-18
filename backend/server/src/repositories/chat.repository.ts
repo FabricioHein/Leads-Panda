@@ -5,6 +5,41 @@ import { Injectable } from '@nestjs/common';
 export class ChatRepository {
   constructor(private prisma: PrismaService) { }
 
+  async countChatsByEmpresaNaoAtivo(empresa_configId) {
+    const count = await this.prisma.chat.count({
+      where: {
+        AND:[
+          {
+            empresa_configId: empresa_configId,
+          },
+          {
+            data_close: {
+              not: null
+            }
+          }
+        ]
+      
+      },
+    });
+    return count;
+  }
+  async countChatsByEmpresaAtivo(empresa_configId) {
+    const count = await this.prisma.chat.count({
+      where: {
+        AND:[
+          {
+            empresa_configId: empresa_configId,
+          },
+          {
+            data_close: null
+          }
+        ]
+      
+      },
+    });
+    return count;
+  }
+
   async getChatByTelefoneByUuidInfoChat(chat_telefone, uuid_chat_info) {
     return await this.prisma.chat.findMany({
       where: {
@@ -23,11 +58,10 @@ export class ChatRepository {
     });
   }
 
-
   async getChatAll(clienteId) {
     return await this.prisma.chat.findMany({
       where: {
-        cliente_id: clienteId,
+        empresa_configId: clienteId,
       },
       include: {
         chat_info: {
@@ -38,10 +72,17 @@ export class ChatRepository {
       },
     });
   }
-  async getChatTelefone(telefone) {
+  async getChatTelefoneEmail(email, telefone) {
     return await this.prisma.chat.findFirst({
       where: {
-        telefone: String(telefone)
+        AND:[
+          {
+            email: email
+          },
+          {
+            telefone: telefone
+          }
+        ]
 
       },
       include: {
@@ -61,7 +102,7 @@ export class ChatRepository {
   async getAllChatClose(clienteId) {
     return await this.prisma.chat.findMany({
       where: {
-        cliente_id: clienteId,
+        empresa_configId: clienteId,
         chat_open: true,
       },
       include: {
@@ -77,7 +118,7 @@ export class ChatRepository {
   async getAllChatOpen(clienteId) {
     return await this.prisma.chat.findMany({
       where: {
-        cliente_id: clienteId,
+        empresa_configId: clienteId,
         chat_open: false,
       },
       include: {

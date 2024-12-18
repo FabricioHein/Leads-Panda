@@ -4,7 +4,6 @@ import { ClientesController } from '../controllers/clientes.controller';
 import { ClientesRepository } from 'src/repositories/clientes.repository';
 import { PrismaService } from 'src/base/relacional/PrismaService';
 import { HistoricoClienteRepository } from 'src/repositories/historico-cliente.repository';
-import { WhatsappModule } from './whatsapp.module';
 
 @Module({
   controllers: [ClientesController],
@@ -14,6 +13,6 @@ import { WhatsappModule } from './whatsapp.module';
     ClientesService,
     PrismaService,
   ],
-  imports: [WhatsappModule],
+  imports: [],
 })
 export class ClientesModule {}

@@ -17,7 +17,7 @@ export declare class ClientesRepository {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -29,18 +29,24 @@ export declare class ClientesRepository {
         created_at: Date;
         updated_at: Date;
     }[]>;
-    getClientesAll(clienteId: any): Promise<({
-        historico_cliente: {
-            operador: string;
-            created_at: Date;
-            valor: string;
-        }[];
+    countClientesByEmpresa(empresa_configId: any): Promise<number>;
+    getByIdCPF(cpf: any, empresa_configId: any): Promise<{
+        id: number;
+        nome: string;
+        cpf: string;
+    }>;
+    getClientesAll(empresa_configId: any): Promise<({
         sexo: {
             id: number;
             descricao: string;
             created_at: Date;
             updated_at: Date;
         };
+        historico_cliente: {
+            created_at: Date;
+            valor: string;
+            operador: string;
+        }[];
     } & {
         id: number;
         nome: string;
@@ -56,7 +62,7 @@ export declare class ClientesRepository {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -83,7 +89,7 @@ export declare class ClientesRepository {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -110,7 +116,7 @@ export declare class ClientesRepository {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -137,7 +143,7 @@ export declare class ClientesRepository {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;
@@ -164,7 +170,7 @@ export declare class ClientesRepository {
         linkFoto: string;
         sexoId: number;
         planoId: number;
-        configuracaoClienteId: number;
+        empresa_configId: number;
         cep: string;
         logradouro: string;
         bairro: string;

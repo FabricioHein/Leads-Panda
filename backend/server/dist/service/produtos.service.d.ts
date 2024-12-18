@@ -18,10 +18,10 @@ export declare class ProdutoService {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }>;
-    getAllProduto(clienteId: any): Promise<{
+    getAllProduto(empresa_configId: any): Promise<{
         id: number;
         codigo: string;
         nome: string;
@@ -34,7 +34,7 @@ export declare class ProdutoService {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }[]>;
     createProduto(data: any): Promise<{
@@ -50,7 +50,7 @@ export declare class ProdutoService {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }>;
     deleteProduto(data: any): Promise<{
@@ -66,7 +66,7 @@ export declare class ProdutoService {
         updated_at: Date;
         operador: string;
         categoria_produtoId: number;
-        clienteId: number;
+        empresa_configId: number;
         descricao: string;
     }>;
 }

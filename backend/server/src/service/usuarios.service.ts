@@ -17,7 +17,6 @@ import { getEmailTemplatePath } from '../helper/getEmailTemplatePath';
 import { isBefore, subDays } from 'date-fns';
 
 import { SendgridService } from 'src/mail/sendgrid/sendgrid.service';
-import { Email } from 'whatsapp-api-js/messages';
 
 const jwt = new Jwt();
 @Injectable()
@@ -39,7 +38,6 @@ export class UsuariosService {
     const hasOldSolicitation = await this.usuarioRepositorio.resetPasswordFindUnique({
       where: { email },
     });
-
 
     if (hasOldSolicitation) {
       await this.usuarioRepositorio.deleteResetPassword({
@@ -133,7 +131,7 @@ export class UsuariosService {
   async sendWelcomeEmail(newUser) {
     const subject = 'Confirmação de e-mail';
     const code = randomUUID();
-    const linkVerification = `${process.env.FRONTEND_URL}/auth/validar-email/${code}`;
+    const linkVerification = `${process.env.FRONTEND_URL}/validar-email/${code}`;
 
     const templatePath = getEmailTemplatePath('confirm-email.hbs');
 
@@ -211,9 +209,7 @@ export class UsuariosService {
   async createUsuarioCliente(data: any) {
     try {    
 
-      if (data.type == 'google') {
-
-      
+      if (data.type == 'google') {      
 
         const usuario = await this.usuarioRepositorio.getByEmailUser(
           data.email
@@ -247,9 +243,9 @@ export class UsuariosService {
           novoUsuarioGoogle['isAdmin'] = true;
           novoUsuarioGoogle['primeiro_acesso'] = true;
           novoUsuarioGoogle['gerente_conta'] = true;
-          novoUsuarioGoogle['clienteId'] = Number(criarCliente.id);
+          novoUsuarioGoogle['empresa_configId'] = Number(criarCliente.id);
 
-          const user = await this.createUsuario(novoUsuarioGoogle);
+          await this.createUsuario(novoUsuarioGoogle);
 
           return true
         }
@@ -303,7 +299,7 @@ export class UsuariosService {
               dataUsuario['isAdmin'] = true;
               dataUsuario['primeiro_acesso'] = true;
               dataUsuario['gerente_conta'] = true;
-              dataUsuario['clienteId'] = Number(criarCliente.id);
+              dataUsuario['empresa_configId'] = Number(criarCliente.id);
 
               const usuarioNovo = await this.createUsuario(dataUsuario);
               if (usuarioNovo) {
@@ -370,7 +366,12 @@ export class UsuariosService {
             // dataUsuario['isAdmin'] = true;
             // dataUsuario['primeiro_acesso'] = true;
             // dataUsuario['gerente_conta'] = true;
-            dataUsuario['clienteId'] = Number(criarCliente.id);
+            dataUsuario['empresa_configId'] = Number(criarCliente.id);
+
+            empresa_config: {
+              connect: { id: 4 }  // Aqui você usa `connect` para vincular à empresa_config existente
+            }
+            
             dataUsuario['type'] = 'normal';
             await this.createUsuario(dataUsuario);
 
@@ -444,13 +445,14 @@ export class UsuariosService {
       delete usuarioInfo['sub'];
 
       if (!usuario) {
+        let empresa_configId = usuarioInfo.empresa_configId;
+       delete usuarioInfo['empresa_configId'];
+       delete usuarioInfo['type'];
         //criando usario na base
-        const novoUsuario = await this.usuarioRepositorio.createUser({
-          ...usuarioInfo,
-        });
+        const novoUsuario = await this.usuarioRepositorio.createUser(empresa_configId, usuarioInfo);
 
         if (novoUsuario) {
-          if (data.clienteId) {
+          if (data.empresa_configId) {
             if (data.modulos && data.sub) {
               data['id'] = Number(novoUsuario.id);
               await this.atualizarPermissoesModulos(data);

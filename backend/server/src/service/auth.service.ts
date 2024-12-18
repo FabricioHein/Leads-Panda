@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsuarioRepository } from 'src/repositories/usuario.repository';
 import { BcryptService as Jwt } from 'bcrypt-jwt-module';
 import axios from 'axios';
+import { verify } from 'crypto';
 const jwt = new Jwt();
 
 @Injectable()
@@ -65,16 +66,48 @@ export class AuthService {
     }
   }
 
+  async validaEmail(uuid: any){
+
+    try {
+      const code = await this.usuarioRepository.findVerificationCreateCode(uuid);
+   
+
+      if(code){
+
+        const usuario = await this.usuarioRepository.getByEmailUser(code.email);
+        console.log(usuario);
+
+        if(usuario){
+
+          await this.usuarioRepository.updateUser(usuario.id, {
+            verifiedAt: new Date()
+          });
+
+          return {
+            msg: 'Verificado com Sucesso!',
+            status: 200
+          };
+        };
+        
+      };
+
+    } catch (error) {
+      return {
+        msg: 'Erro ao validar usuario:',
+        status: 400
+      };
+    }    
+    
+  }
   async loginAcessoGoogle(data: any) {
 
     const { token} = data;
      const user = await this.usuarioRepository.findOne(data.email);
     if(user && this.validarTokenGoogle(token)){
 
-      const eventosUsuario = await this.getGoogleCalendarEvents(token);
-      console.log(eventosUsuario);
-
-      const payload = { username: user.nome };
+      // const eventosUsuario = await this.getGoogleCalendarEvents(token);
+      // console.log(eventosUsuario);
+      const payload = { username: user.nome, id: user.id };
       var novoToken = this.jwtService.sign(payload);
 
       const userLogin = await this.configService.getConfig(user.id, novoToken);

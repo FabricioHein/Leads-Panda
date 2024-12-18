@@ -8,7 +8,8 @@
                             <img :src="require('@/assets/images/odin-logo.png')" style="width: 50px;" />
 
                             <h1 class="">Registrar</h1>
-                            <p class="signup-link register">Já tem uma conta? <router-link to="/login">Acessar</router-link>
+                            <p class="signup-link register">Já tem uma conta? <router-link
+                                    to="/login">Acessar</router-link>
                             </p>
                             <div class="text-start">
                                 <div class="form">
@@ -24,21 +25,21 @@
                                     </div>
 
                                     <div id="cpf-field" class="input">
-                                        <label for="cpf">CPF</label>
-                                        <input v-model="cpf" v-maska="'###.###.###-##'" placeholder="CPF" type="text"
+                                        <label for="cpf">CPF/CNPJ</label>
+                                        <input v-model="cpf"  placeholder="CPF/CNPJ" type="text"
                                             class="form-control" />
 
                                     </div>
-                                    <div id="telefone-field" class="input">
+                                    <!-- <div id="telefone-field" class="input">
                                         <label>Telefone</label>
                                         <input class="form-control" v-model="telefone" v-maska="'+55(##)#####-####'"
                                             placeholder="Digite telefone" type="text" />
-                                    </div>
+                                    </div> -->
                                     <div id="senha" class="input">
                                         <label>Senha</label>
                                         <div class="input-group">
-                                            <input id="password" type="password" class="form-control" placeholder="Senha"
-                                                v-model="password" />
+                                            <input id="password" type="password" class="form-control"
+                                                placeholder="Senha" v-model="password" />
                                             <button v-if="ver" @click="verSenha" type="button" class="btn btn-primary">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -83,7 +84,8 @@
                                                     </path>
                                                 </svg>
                                             </button>
-                                            <button v-else @click="verSenhaRepetir" type="button" class="btn btn-primary">
+                                            <button v-else @click="verSenhaRepetir" type="button"
+                                                class="btn btn-primary">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                                     <path
@@ -130,13 +132,14 @@
                             <!-- Logo -->
                             <div style="text-align: center;">
                                 <router-link to="/">
-                                <img :src="require('@/assets/images/odin-logo.png')" style="width: 50px;" />
-                            </router-link>
-                            </div>                         
+                                    <img :src="require('@/assets/images/odin-logo.png')" style="width: 50px;" />
+                                </router-link>
+                            </div>
                             <!-- Mensagem -->
                             <div style="text-align: center; margin-top: 20px;">
                                 <h2>Verifique o Seu E-mail</h2>
-                                <p>Obrigado por se cadastrar! Por favor, verifique o seu e-mail para concluir o processo.
+                                <p>Obrigado por se cadastrar! Por favor, verifique o seu e-mail para concluir o
+                                    processo.
                                 </p>
                             </div>
 
@@ -270,7 +273,7 @@ export default {
             this.showMessage(criarNovo.msg, criarNovo.status == 200 || criarNovo.status == true ? 'success' : 'error');
 
             if (criarNovo.status == 200 || criarNovo.status == true) {
-                this.verificacaoEmail = true;              
+                this.verificacaoEmail = true;
             }
 
         },

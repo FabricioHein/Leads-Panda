@@ -14,8 +14,8 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class ProjetoController {
   constructor(private readonly projetoService: ProjetoService) {}
   @UseGuards(JwtAuthGuard)
-  @Get('todos/:clienteId')
-  async getAllProjeto(@Param('clienteId') id) {
+  @Get('todos/:empresa_configId')
+  async getAllProjeto(@Param('empresa_configId') id) {
     try {
       return await this.projetoService.getAllProjeto(id);
     } catch (error) {

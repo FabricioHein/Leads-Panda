@@ -15,7 +15,6 @@ const PrismaService_1 = require("../base/relacional/PrismaService");
 const tasksub_repository_1 = require("../repositories/tasksub.repository");
 const anotacoes_repository_1 = require("../repositories/anotacoes.repository");
 const arquivos_repository_1 = require("../repositories/arquivos.repository");
-const venda_repository_1 = require("../repositories/venda.repository");
 const motivos_repository_1 = require("../repositories/motivos.repository");
 const logTask_repositoy_1 = require("../repositories/logTask.repositoy");
 let TaskModule = class TaskModule {
@@ -30,7 +29,6 @@ TaskModule = __decorate([
             tasksub_repository_1.TaskSubRepository,
             anotacoes_repository_1.AnotacaoRepository,
             arquivos_repository_1.ArquivosRepository,
-            venda_repository_1.VendaRepository,
             motivos_repository_1.MotivosRepository,
             logTask_repositoy_1.LogTasksRepository,
         ],

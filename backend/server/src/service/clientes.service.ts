@@ -58,9 +58,9 @@ export class ClientesService {
       return ErroBadRequest(error);
     }
   }
-  async getAllClientes(clienteId) {
+  async getAllClientes(empresa_configId) {
     try {
-      return await this.clientesRepository.getClientesAll(Number(clienteId));
+      return await this.clientesRepository.getClientesAll(Number(empresa_configId));
     } catch (error) {
       return ErroBadRequest(error);
     }

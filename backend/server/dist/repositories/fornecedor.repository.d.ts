@@ -16,7 +16,7 @@ export declare class FornecedorRepository {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }[]>;
     getByIdFornecedor(id: any): Promise<{
         id: number;
@@ -32,7 +32,7 @@ export declare class FornecedorRepository {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     createFornecedor(data: any): Promise<{
         id: number;
@@ -48,7 +48,7 @@ export declare class FornecedorRepository {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     updateFornecedor(id: any, data: any): Promise<{
         id: number;
@@ -64,7 +64,7 @@ export declare class FornecedorRepository {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }>;
     deleteFornecedor(id: any): Promise<{
         id: number;
@@ -80,6 +80,6 @@ export declare class FornecedorRepository {
         created_at: Date;
         updated_at: Date;
         operador: string;
-        clienteId: number;
+        empresa_configId: number;
     }>;
 }

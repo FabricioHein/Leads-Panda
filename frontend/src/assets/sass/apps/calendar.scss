@@ -25,7 +25,7 @@
     content: '';
     position: absolute;
     padding: 0;
-    background: #000;
+    background: #4154f1;
     border-radius: 2px;
     left: 0px;
     top: 5px;
@@ -34,7 +34,7 @@
 }
 
 .labels .label.label-primary:before {
-    background: #000000;
+    background: #4154f1000;
 }
 
 .labels .label.label-warning:before {
@@ -57,13 +57,13 @@
     background: none !important;
     border: none !important;
     box-shadow: none !important;
-    color: #000 !important;
+    color: #4154f1 !important;
 }
 
 button.fc-today-button {
     border: 1px solid #e0e6ed !important;
     background: none !important;
-    color: #000 !important;
+    color: #4154f1 !important;
 }
 
 .fc .fc-toolbar-title {
@@ -99,7 +99,7 @@ button.fc-today-button {
 }
 
 td.fc-day-today .fc-daygrid-day-number {
-    background: #000000;
+    background: #4154f1000;
     border-radius: 50%;
     color: #fff;
     font-weight: 700;
@@ -168,7 +168,7 @@ a.fc-timegrid-event.bg-danger:hover {
 .fc-timegrid-event .fc-event-main-frame:before {
     content: '';
     height: 5px;
-    background: #000;
+    background: #4154f1;
     width: 5px;
     position: absolute;
     left: -8px;
@@ -183,7 +183,7 @@ a.fc-timegrid-event.bg-danger:hover {
 
 .fc-daygrid-event.bg-primary .fc-event-main-frame:before,
 .fc-timegrid-event.bg-primary .fc-event-main-frame:before {
-    background: #000000;
+    background: #4154f1000;
 }
 
 .fc-daygrid-event.bg-success .fc-event-main-frame:before,

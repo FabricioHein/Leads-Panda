@@ -1,44 +1,39 @@
 <div class="lead2-converts_chat_canvas "
   style="--chat-link-color: #8116d7; --chat-text-title-color: #ffffff; display: block; ">
+
   <div class="lead2-converts_chat_head lead2-converts_hide_image">
     <div class="head_flex">
       <div class="lead2-converts_head_back_button "><i class="macke macke-chevron-left"></i></div>
       <div class="lead2-converts_images visible"></div><span class="lead2-converts_head_texts">
-      
-
-        <div class="lead2-converts_head_text1" >    
-        {{chatProps.nome}}  {{chatProps.telefone}}
+        <div class="lead2-converts_head_text1">
+          {{chatProps.nome}} {{chatProps.telefone}}
         </div>
-
-       
       </span>
     </div>
-    
     <div class="lead2-converts_help_button_container"></div>
     <div class="lead2-converts_orion_belt_button_container transition"></div>
     <div class="lead2-converts_orion_belt_button_container schedule"></div>
     <div class="lead2-converts_orion_belt_button_container schedule"></div>
   </div>
-  <div class="lead2-converts_chat_component lead2-converts_chat_online lead2-converts_visible chat-conversation-box" 
-    style="--chat-msg-received-text-color: #34474C;" >
-    <div class="lead2-converts_chat_balloons_list" id="lead2-converts_chat_component" >
+  <div class="lead2-converts_chat_component lead2-converts_chat_online lead2-converts_visible chat-conversation-box"
+    style="--chat-msg-received-text-color: #34474C;">
+    <div class="lead2-converts_chat_balloons_list" id="lead2-converts_chat_component" @click="closeEmoji()">
 
       <div v-for="message in messages" :key="message.id" :class="messageClass(message)">
-        <img class="image_message"
-          :src="message.avatar"  v-if="message.avatar" />
-  
-  
-          <span class="lead2-converts_chat_balloon_inner innerRight" style="--chat-msg-text-color: #ffffff;">
-          {{ message.text }} 
+        <img class="image_message" :src="message.avatar" v-if="message.avatar" />
+
+
+        <span class="lead2-converts_chat_balloon_inner innerRight" style="--chat-msg-text-color: #ffffff;">
+          {{ message.text }}
         </span>
-  
+
         <div class="status">
           {{ message.username }} {{ ' - '}} {{
-            new Date(message.created_at).toLocaleString('pt-BR', { timezone: 'UTC' })
-          }} 
+          new Date(message.created_at).toLocaleString('pt-BR', { timezone: 'UTC' })
+          }}
           <i class="macke macke-done icon-delivery-msg"></i>
         </div>
-  
+
       </div>
       <div class="row p-3" v-if="emoji">
         <Picker :data="emojiIndex" set="twitter" @select="showEmoji" :i18n="{
@@ -59,7 +54,7 @@
           }
         }" />
       </div>
-  
+
       <div class="lead2-converts_chat_balloon lead2-converts_left_balloon typing_dots"><span
           class="lead2-converts_chat_balloon_inner"><span class="jumping-dots"><span class="dot-1">·</span><span
               class="dot-2">·</span><span class="dot-3">·</span></span></span></div>
@@ -73,7 +68,16 @@
         <div class="ChatForm-button ChatForm-btnIconHover ChatFormAudio-sendActive"
           style="position: initial; height: auto; padding: 3px;"><i class="macke macke-send"></i></div>
       </div>
-      <div class="MenuOptions" v-if="option && type != 'atendimento'"> </div>
+
+      <div class="MenuOptions" v-if="option">
+
+        <div class="MenuOptions-list-item"><label><i class="macke macke-attach macke_item"></i>Enviar arquivo</label>
+        </div>
+
+      </div>
+      <button id="openEmoji" class="btn btn-color rounded-circle" @click="getOption()">
+        <i class="bi bi-gear"></i>
+      </button>
 
 
       <div class="textareacontainer">

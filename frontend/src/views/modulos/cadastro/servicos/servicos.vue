@@ -118,7 +118,7 @@ export default {
             const produto = this.params;
 
             produto.operador = `Add/Atualizado por ${this.usuario.name} ${this.usuario.sobrenome}`;
-            produto.clienteId = this.cliente.id
+            produto.empresa_configId = this.cliente.id
 
             if (produto.id) {
                 const produtoServ = new produtoService(produto, this.token);

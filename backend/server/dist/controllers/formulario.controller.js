@@ -20,9 +20,9 @@ let FormularioController = class FormularioController {
     constructor(formularioService) {
         this.formularioService = formularioService;
     }
-    async getAllFormularioDinamico(clienteId) {
+    async getAllFormularioDinamico(empresa_configId) {
         try {
-            return await this.formularioService.getAllFormularioDinamico(clienteId);
+            return await this.formularioService.getAllFormularioDinamico(empresa_configId);
         }
         catch (error) {
             return error;
@@ -63,8 +63,8 @@ let FormularioController = class FormularioController {
 };
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Get)('todos/:clienteId'),
-    __param(0, (0, common_1.Param)('clienteId')),
+    (0, common_1.Get)('todos/:empresa_configId'),
+    __param(0, (0, common_1.Param)('empresa_configId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)

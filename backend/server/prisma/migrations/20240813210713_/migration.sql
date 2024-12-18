@@ -1,4 +1,37 @@
 -- CreateTable
+CREATE TABLE "Plan" (
+    "id" SERIAL NOT NULL,
+    "name" VARCHAR(100) NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
+
+    CONSTRAINT "Plan_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Payment" (
+    "id" SERIAL NOT NULL,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "empresa_configId" INTEGER,
+
+    CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CreditCard" (
+    "id" SERIAL NOT NULL,
+    "cardNumber" VARCHAR(19) NOT NULL,
+    "expiryDate" VARCHAR(5) NOT NULL,
+    "cvv" VARCHAR(4) NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "empresa_configId" INTEGER,
+
+    CONSTRAINT "CreditCard_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "email_verifications" (
     "id" TEXT NOT NULL,
     "email" VARCHAR(255) NOT NULL,
@@ -45,7 +78,7 @@ CREATE TABLE "chat_info" (
     "texto_input" VARCHAR(20),
     "tamanho_font_mgm" INTEGER,
     "tamanho_avatar_usuario" INTEGER,
-    "cliente_id" INTEGER,
+    "empresa_configId" INTEGER,
     "anexo_documento" BOOLEAN DEFAULT true,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
@@ -63,7 +96,7 @@ CREATE TABLE "chat_info" (
 -- CreateTable
 CREATE TABLE "integracao" (
     "integracao_id" SERIAL NOT NULL,
-    "cliente_id" INTEGER,
+    "empresa_configId" INTEGER,
 
     CONSTRAINT "integracao_pkey" PRIMARY KEY ("integracao_id")
 );
@@ -91,7 +124,7 @@ CREATE TABLE "chat" (
     "telefone" VARCHAR(50),
     "email" VARCHAR(50),
     "chat_info_id" INTEGER,
-    "cliente_id" INTEGER,
+    "empresa_configId" INTEGER,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
     "chat_open" BOOLEAN DEFAULT false,
@@ -107,9 +140,9 @@ CREATE TABLE "chat" (
 CREATE TABLE "motivos" (
     "id" SERIAL NOT NULL,
     "descricao" TEXT,
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
     "codigo" VARCHAR(20),
-    "nome" VARCHAR(20),
+    "nome" TEXT,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
 
@@ -120,9 +153,42 @@ CREATE TABLE "motivos" (
 CREATE TABLE "msg_padrao" (
     "id" SERIAL NOT NULL,
     "descricao" TEXT,
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
 
     CONSTRAINT "msg_padrao_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "agenda" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT,
+    "description" TEXT,
+    "className" VARCHAR(20),
+    "status" VARCHAR(10),
+    "date_start" TIMESTAMP(3),
+    "date_end" TIMESTAMP(3),
+    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3),
+
+    CONSTRAINT "agenda_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "agenda_cliente" (
+    "id" SERIAL NOT NULL,
+    "agendaId" INTEGER NOT NULL,
+    "empresa_configId" INTEGER NOT NULL,
+
+    CONSTRAINT "agenda_cliente_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "agenda_user" (
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "agendaId" INTEGER NOT NULL,
+
+    CONSTRAINT "agenda_user_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -147,7 +213,7 @@ CREATE TABLE "metas" (
     "data_final" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
 
     CONSTRAINT "metas_pkey" PRIMARY KEY ("id")
 );
@@ -167,7 +233,7 @@ CREATE TABLE "campanha_mkt" (
     "id" SERIAL NOT NULL,
     "titulo" VARCHAR(50),
     "html_body" TEXT,
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
     "tipo_msgId" INTEGER,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
@@ -195,7 +261,7 @@ CREATE TABLE "lista_contato_cliente" (
     "updated_at" TIMESTAMP(3),
     "lista_mktId" INTEGER,
     "contactsId" INTEGER,
-    "clienteId" INTEGER,
+    "empresa_configId" INTEGER,
 
     CONSTRAINT "lista_contato_cliente_pkey" PRIMARY KEY ("id")
 );
@@ -212,7 +278,38 @@ CREATE TABLE "campanha_lista" (
 );
 
 -- CreateTable
-CREATE TABLE "formulario_dinamico" (
+CREATE TABLE "page_link" (
+    "id" TEXT NOT NULL,
+    "profileText" TEXT,
+    "nome_link" TEXT,
+    "linkProfile" TEXT,
+    "public" BOOLEAN,
+    "backgroundColor1" VARCHAR(10),
+    "backgroundColor2" VARCHAR(10),
+    "colorText1" VARCHAR(10),
+    "colorText2" VARCHAR(10),
+    "backgroundImage" TEXT,
+    "buttonColor" VARCHAR(10),
+    "showProfilePicture" BOOLEAN,
+    "showShareLink" BOOLEAN,
+    "clientId" INTEGER,
+
+    CONSTRAINT "page_link_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "link_company" (
+    "id" SERIAL NOT NULL,
+    "label" VARCHAR(20) NOT NULL,
+    "href" TEXT NOT NULL,
+    "icon" VARCHAR(20) NOT NULL,
+    "page_linkId" TEXT,
+
+    CONSTRAINT "link_company_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "link" (
     "id" SERIAL NOT NULL,
     "publico" BOOLEAN,
     "url_formulario" VARCHAR(250),
@@ -222,7 +319,7 @@ CREATE TABLE "formulario_dinamico" (
     "updated_at" TIMESTAMP(3),
     "projetoId" INTEGER,
     "processoId" INTEGER,
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
     "nome_campanha" VARCHAR(255),
     "link_redirect" VARCHAR(800),
     "logo" VARCHAR(500),
@@ -230,7 +327,7 @@ CREATE TABLE "formulario_dinamico" (
     "logo_height" VARCHAR(10),
     "taskId" INTEGER,
 
-    CONSTRAINT "formulario_dinamico_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "link_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -252,7 +349,7 @@ CREATE TABLE "projeto" (
     "updated_at" TIMESTAMP(3),
     "tipo_projetoId" INTEGER,
     "operador" VARCHAR(150),
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
 
     CONSTRAINT "projeto_pkey" PRIMARY KEY ("id")
 );
@@ -384,8 +481,7 @@ CREATE TABLE "arquivos" (
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
     "taskId" INTEGER,
-    "clienteId" INTEGER,
-    "chatChat_id" INTEGER,
+    "empresa_configId" INTEGER,
     "messagesMessage_id" INTEGER,
 
     CONSTRAINT "arquivos_pkey" PRIMARY KEY ("id")
@@ -458,6 +554,7 @@ CREATE TABLE "config_clientes" (
     "complemento" VARCHAR(150),
     "cep" VARCHAR(25),
     "numero" VARCHAR(20),
+    "currentPlanId" INTEGER,
 
     CONSTRAINT "config_clientes_pkey" PRIMARY KEY ("id")
 );
@@ -478,7 +575,7 @@ CREATE TABLE "cliente" (
     "linkFoto" TEXT,
     "sexoId" INTEGER,
     "planoId" INTEGER,
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
     "cep" VARCHAR(25),
     "logradouro" VARCHAR(150),
     "bairro" VARCHAR(150),
@@ -501,7 +598,7 @@ CREATE TABLE "historico_cliente" (
     "operador" VARCHAR(50),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
-    "clienteId" INTEGER,
+    "empresa_configId" INTEGER,
 
     CONSTRAINT "historico_cliente_pkey" PRIMARY KEY ("id")
 );
@@ -512,10 +609,10 @@ CREATE TABLE "categoria_produto" (
     "codigo" VARCHAR(150) NOT NULL,
     "nome" VARCHAR(150) NOT NULL,
     "detalhamento" VARCHAR(500),
+    "operador" VARCHAR(150) NOT NULL,
+    "empresa_configId" INTEGER,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
-    "operador" VARCHAR(150) NOT NULL,
-    "configuracaoClienteId" INTEGER,
 
     CONSTRAINT "categoria_produto_pkey" PRIMARY KEY ("id")
 );
@@ -534,7 +631,7 @@ CREATE TABLE "produto" (
     "updated_at" TIMESTAMP(3),
     "operador" VARCHAR(150) NOT NULL,
     "categoria_produtoId" INTEGER,
-    "clienteId" INTEGER,
+    "empresa_configId" INTEGER,
     "descricao" TEXT,
 
     CONSTRAINT "produto_pkey" PRIMARY KEY ("id")
@@ -548,10 +645,10 @@ CREATE TABLE "servico" (
     "detalhamento" TEXT,
     "valor_hora" DECIMAL(10,2) NOT NULL,
     "ativo" BOOLEAN NOT NULL,
+    "operador" VARCHAR(150),
+    "empresa_configId" INTEGER,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
-    "operador" VARCHAR(150),
-    "clienteId" INTEGER,
 
     CONSTRAINT "servico_pkey" PRIMARY KEY ("id")
 );
@@ -561,7 +658,7 @@ CREATE TABLE "venda" (
     "id" SERIAL NOT NULL,
     "valor_total" DECIMAL(10,2),
     "status" VARCHAR(20) NOT NULL DEFAULT 'venda',
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
     "taskId" INTEGER,
     "usersId" INTEGER,
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
@@ -585,7 +682,7 @@ CREATE TABLE "fornecedor" (
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
     "operador" VARCHAR(150),
-    "clienteId" INTEGER,
+    "empresa_configId" INTEGER,
 
     CONSTRAINT "fornecedor_pkey" PRIMARY KEY ("id")
 );
@@ -698,7 +795,7 @@ CREATE TABLE "contatos" (
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
     "email" VARCHAR(255),
-    "configuracaoClienteId" INTEGER,
+    "empresa_configId" INTEGER,
     "logradouro" VARCHAR(150),
     "bairro" VARCHAR(150),
     "estado" VARCHAR(150),
@@ -724,7 +821,6 @@ CREATE TABLE "usuarios" (
     "themeDark" BOOLEAN,
     "operador" VARCHAR(150),
     "sexoId" INTEGER,
-    "clienteId" INTEGER,
     "email" VARCHAR(255),
     "profile" VARCHAR(255) DEFAULT 'admin',
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
@@ -744,14 +840,9 @@ CREATE TABLE "usuarios" (
     "gerente_conta" BOOLEAN,
     "termos" BOOLEAN,
     "password" TEXT,
+    "empresa_configId" INTEGER,
 
     CONSTRAINT "usuarios_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "_UsersTochat" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
@@ -773,7 +864,16 @@ CREATE UNIQUE INDEX "chat_telefone_key" ON "chat"("telefone");
 CREATE UNIQUE INDEX "chat_email_key" ON "chat"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "agenda_cliente_empresa_configId_agendaId_key" ON "agenda_cliente"("empresa_configId", "agendaId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "agenda_user_userId_agendaId_key" ON "agenda_user"("userId", "agendaId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "task_vendaId_key" ON "task"("vendaId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "config_clientes_currentPlanId_key" ON "config_clientes"("currentPlanId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "venda_taskId_key" ON "venda"("taskId");
@@ -787,17 +887,17 @@ CREATE UNIQUE INDEX "contatos_email_key" ON "contatos"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "usuarios_email_key" ON "usuarios"("email");
 
--- CreateIndex
-CREATE INDEX "_UsersTochat_B_index" ON "_UsersTochat"("B");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_UsersTochat_AB_unique" ON "_UsersTochat"("A", "B");
+-- AddForeignKey
+ALTER TABLE "Payment" ADD CONSTRAINT "Payment_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "chat_info" ADD CONSTRAINT "chat_info_cliente_id_fkey" FOREIGN KEY ("cliente_id") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "CreditCard" ADD CONSTRAINT "CreditCard_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "integracao" ADD CONSTRAINT "integracao_cliente_id_fkey" FOREIGN KEY ("cliente_id") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "chat_info" ADD CONSTRAINT "chat_info_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "integracao" ADD CONSTRAINT "integracao_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "messages" ADD CONSTRAINT "messages_chat_id_fkey" FOREIGN KEY ("chat_id") REFERENCES "chat"("chat_id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -806,31 +906,43 @@ ALTER TABLE "messages" ADD CONSTRAINT "messages_chat_id_fkey" FOREIGN KEY ("chat
 ALTER TABLE "chat" ADD CONSTRAINT "chat_chat_info_id_fkey" FOREIGN KEY ("chat_info_id") REFERENCES "chat_info"("chat_info_id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "chat" ADD CONSTRAINT "chat_cliente_id_fkey" FOREIGN KEY ("cliente_id") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "chat" ADD CONSTRAINT "chat_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "chat" ADD CONSTRAINT "chat_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "task"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "motivos" ADD CONSTRAINT "motivos_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "motivos" ADD CONSTRAINT "motivos_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "msg_padrao" ADD CONSTRAINT "msg_padrao_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "msg_padrao" ADD CONSTRAINT "msg_padrao_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "agenda_cliente" ADD CONSTRAINT "agenda_cliente_agendaId_fkey" FOREIGN KEY ("agendaId") REFERENCES "agenda"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "agenda_cliente" ADD CONSTRAINT "agenda_cliente_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "cliente"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "agenda_user" ADD CONSTRAINT "agenda_user_userId_fkey" FOREIGN KEY ("userId") REFERENCES "usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "agenda_user" ADD CONSTRAINT "agenda_user_agendaId_fkey" FOREIGN KEY ("agendaId") REFERENCES "agenda"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "times" ADD CONSTRAINT "times_metasId_fkey" FOREIGN KEY ("metasId") REFERENCES "metas"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "metas" ADD CONSTRAINT "metas_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "metas" ADD CONSTRAINT "metas_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "campanha_mkt" ADD CONSTRAINT "campanha_mkt_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "campanha_mkt" ADD CONSTRAINT "campanha_mkt_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "campanha_mkt" ADD CONSTRAINT "campanha_mkt_tipo_msgId_fkey" FOREIGN KEY ("tipo_msgId") REFERENCES "tipo_msg"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "lista_contato_cliente" ADD CONSTRAINT "lista_contato_cliente_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "cliente"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "lista_contato_cliente" ADD CONSTRAINT "lista_contato_cliente_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "cliente"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "lista_contato_cliente" ADD CONSTRAINT "lista_contato_cliente_contactsId_fkey" FOREIGN KEY ("contactsId") REFERENCES "contatos"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -839,22 +951,28 @@ ALTER TABLE "lista_contato_cliente" ADD CONSTRAINT "lista_contato_cliente_contac
 ALTER TABLE "lista_contato_cliente" ADD CONSTRAINT "lista_contato_cliente_lista_mktId_fkey" FOREIGN KEY ("lista_mktId") REFERENCES "lista_mkt"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "campanha_lista" ADD CONSTRAINT "campanha_lista_campanha_mktId_fkey" FOREIGN KEY ("campanha_mktId") REFERENCES "campanha_mkt"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "campanha_lista" ADD CONSTRAINT "campanha_lista_lista_mktId_fkey" FOREIGN KEY ("lista_mktId") REFERENCES "lista_mkt"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "formulario_dinamico" ADD CONSTRAINT "formulario_dinamico_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "campanha_lista" ADD CONSTRAINT "campanha_lista_campanha_mktId_fkey" FOREIGN KEY ("campanha_mktId") REFERENCES "campanha_mkt"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "formulario_dinamico" ADD CONSTRAINT "formulario_dinamico_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "task"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "page_link" ADD CONSTRAINT "page_link_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "form_ask" ADD CONSTRAINT "form_ask_formulario_dinamicoId_fkey" FOREIGN KEY ("formulario_dinamicoId") REFERENCES "formulario_dinamico"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "link_company" ADD CONSTRAINT "link_company_page_linkId_fkey" FOREIGN KEY ("page_linkId") REFERENCES "page_link"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "projeto" ADD CONSTRAINT "projeto_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "link" ADD CONSTRAINT "link_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "link" ADD CONSTRAINT "link_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "task"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "form_ask" ADD CONSTRAINT "form_ask_formulario_dinamicoId_fkey" FOREIGN KEY ("formulario_dinamicoId") REFERENCES "link"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "projeto" ADD CONSTRAINT "projeto_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "projeto" ADD CONSTRAINT "projeto_tipo_projetoId_fkey" FOREIGN KEY ("tipo_projetoId") REFERENCES "tipo_projeto"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -905,13 +1023,13 @@ ALTER TABLE "sms" ADD CONSTRAINT "sms_campanha_mktId_fkey" FOREIGN KEY ("campanh
 ALTER TABLE "attachments" ADD CONSTRAINT "attachments_emailId_fkey" FOREIGN KEY ("emailId") REFERENCES "email"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "arquivos" ADD CONSTRAINT "arquivos_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "cliente"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "arquivos" ADD CONSTRAINT "arquivos_messagesMessage_id_fkey" FOREIGN KEY ("messagesMessage_id") REFERENCES "messages"("message_id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "arquivos" ADD CONSTRAINT "arquivos_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "cliente"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "arquivos" ADD CONSTRAINT "arquivos_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "task"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "arquivos" ADD CONSTRAINT "arquivos_messagesMessage_id_fkey" FOREIGN KEY ("messagesMessage_id") REFERENCES "messages"("message_id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "anotacoes" ADD CONSTRAINT "anotacoes_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "task"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -923,28 +1041,31 @@ ALTER TABLE "log_taks" ADD CONSTRAINT "log_taks_taskId_fkey" FOREIGN KEY ("taskI
 ALTER TABLE "sub_task" ADD CONSTRAINT "sub_task_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "task"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "cliente" ADD CONSTRAINT "cliente_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "config_clientes" ADD CONSTRAINT "config_clientes_currentPlanId_fkey" FOREIGN KEY ("currentPlanId") REFERENCES "Plan"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "cliente" ADD CONSTRAINT "cliente_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "cliente" ADD CONSTRAINT "cliente_sexoId_fkey" FOREIGN KEY ("sexoId") REFERENCES "sexo_enum"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "historico_cliente" ADD CONSTRAINT "historico_cliente_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "cliente"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "historico_cliente" ADD CONSTRAINT "historico_cliente_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "cliente"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "categoria_produto" ADD CONSTRAINT "categoria_produto_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "categoria_produto" ADD CONSTRAINT "categoria_produto_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "produto" ADD CONSTRAINT "produto_categoria_produtoId_fkey" FOREIGN KEY ("categoria_produtoId") REFERENCES "categoria_produto"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "produto" ADD CONSTRAINT "produto_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "produto" ADD CONSTRAINT "produto_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "servico" ADD CONSTRAINT "servico_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "servico" ADD CONSTRAINT "servico_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "venda" ADD CONSTRAINT "venda_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "venda" ADD CONSTRAINT "venda_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "venda" ADD CONSTRAINT "venda_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "task"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -953,7 +1074,7 @@ ALTER TABLE "venda" ADD CONSTRAINT "venda_taskId_fkey" FOREIGN KEY ("taskId") RE
 ALTER TABLE "venda" ADD CONSTRAINT "venda_usersId_fkey" FOREIGN KEY ("usersId") REFERENCES "usuarios"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "fornecedor" ADD CONSTRAINT "fornecedor_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "fornecedor" ADD CONSTRAINT "fornecedor_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "permissao_modulos" ADD CONSTRAINT "permissao_modulos_moduloId_fkey" FOREIGN KEY ("moduloId") REFERENCES "modulo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -977,19 +1098,13 @@ ALTER TABLE "historico_permissao" ADD CONSTRAINT "historico_permissao_permissao_
 ALTER TABLE "sub_modulo" ADD CONSTRAINT "sub_modulo_moduloId_fkey" FOREIGN KEY ("moduloId") REFERENCES "modulo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "contatos" ADD CONSTRAINT "contatos_configuracaoClienteId_fkey" FOREIGN KEY ("configuracaoClienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "contatos" ADD CONSTRAINT "contatos_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "usuarios" ADD CONSTRAINT "usuarios_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "usuarios" ADD CONSTRAINT "usuarios_empresa_configId_fkey" FOREIGN KEY ("empresa_configId") REFERENCES "config_clientes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "usuarios" ADD CONSTRAINT "usuarios_sexoId_fkey" FOREIGN KEY ("sexoId") REFERENCES "sexo_enum"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "usuarios" ADD CONSTRAINT "usuarios_timesId_fkey" FOREIGN KEY ("timesId") REFERENCES "times"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_UsersTochat" ADD CONSTRAINT "_UsersTochat_A_fkey" FOREIGN KEY ("A") REFERENCES "usuarios"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_UsersTochat" ADD CONSTRAINT "_UsersTochat_B_fkey" FOREIGN KEY ("B") REFERENCES "chat"("chat_id") ON DELETE CASCADE ON UPDATE CASCADE;

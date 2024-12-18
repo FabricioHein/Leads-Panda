@@ -25,10 +25,10 @@ export class ClientesController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('todos/:clienteId')
-  async getAllClientes(@Param('clienteId') clienteId) {
+  @Get('todos/:empresa_configId')
+  async getAllClientes(@Param('empresa_configId') empresa_configId) {
     try {
-      return await this.clienteService.getAllClientes(clienteId);
+      return await this.clienteService.getAllClientes(empresa_configId);
     } catch (error) {
       return error;
     }

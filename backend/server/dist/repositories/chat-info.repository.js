@@ -24,7 +24,7 @@ let ChatInfoRepository = class ChatInfoRepository {
                         type: type
                     },
                     {
-                        cliente_id: clienteId
+                        empresa_configId: clienteId
                     }
                 ]
             },
@@ -33,7 +33,7 @@ let ChatInfoRepository = class ChatInfoRepository {
     async getChatInfoAll(clienteId) {
         return await this.prisma.chat_info.findMany({
             where: {
-                cliente_id: clienteId,
+                empresa_configId: clienteId,
             },
         });
     }

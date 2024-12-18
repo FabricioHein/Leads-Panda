@@ -34,23 +34,15 @@ export default {
             store.commit('toggleLayoutStyle', store.state.app.layout_style);
         },
         async change_file(event) {
-            let formData = new FormData();
-            formData.append('file', event.target.files[0]);
-            console.log('>> formData >> ', formData);
 
-            const importar = new ImportarService(
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                },
-                this.token,
-                `/api/importar/file/${this.usuario.id}`,
-                formData
-            )
-            const upload = await importar.importarFile();
-            this.usuario.linkFoto = upload.downloadURL;
-
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.usuario.linkFoto  = e.target.result
+                };
+                reader.readAsDataURL(file);
+            };     
 
         },
         async save() {
@@ -60,8 +52,13 @@ export default {
 
             if (atualizar) {
                 this.showMessage('Salvo com sucesso.');
-                localStorage.removeItem('usuario');
-                this.$store.dispatch('setUpdate');
+
+                 const usuario = JSON.parse(localStorage.getItem('usuario')) ;
+                 usuario.usuario = atualizar;
+                 localStorage.setItem('usuario', JSON.stringify(usuario));
+
+
+
             }
 
         },

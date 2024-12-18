@@ -16,10 +16,34 @@ export class ClientesRepository {
     });
   }
 
-  async getClientesAll(clienteId) {
+  async countClientesByEmpresa(empresa_configId) {
+    const count = await this.prisma.cliente.count({
+      where: {
+        empresa_configId: empresa_configId        
+
+      },
+    });
+    return count;
+  }
+  
+
+  async getByIdCPF(cpf, empresa_configId) {
+    return await this.prisma.cliente.findFirst({
+      where: {        
+        cpf: cpf,
+        empresa_configId: empresa_configId
+      }, select:{
+        id: true,
+        nome: true,
+        cpf: true
+      },
+    });
+  }
+
+  async getClientesAll(empresa_configId) {
     return await this.prisma.cliente.findMany({
       where: {
-        configuracaoClienteId: clienteId,
+        empresa_configId: empresa_configId,
       },
       include: {
         historico_cliente: {
@@ -58,6 +82,7 @@ export class ClientesRepository {
       data: data,
     });
   }
+
 
   async deleteClientes(id) {
     return await this.prisma.cliente.delete({

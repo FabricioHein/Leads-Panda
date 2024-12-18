@@ -85,7 +85,7 @@
         .dataTables_info {
             padding-top: 0.85em;
             white-space: normal;
-            color: #000000;
+            color: #4154f1000;
             font-weight: 600;
             border: 1px solid #e0e6ed;
             display: inline-block;
@@ -184,7 +184,7 @@
 
                         &:not(.disabled):hover .page-link,
                         &:hover .page-link {
-                            color: #000000;
+                            color: #4154f1000;
                         }
 
                         .page-link {
@@ -223,7 +223,7 @@
                 .VuePagination__count {
                     width: auto;
                     margin-bottom: 0;
-                    color: #000000;
+                    color: #4154f1000;
                     font-weight: 600;
                     border: 1px solid #e0e6ed;
                     display: inline-block;

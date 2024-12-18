@@ -1,4 +1,3 @@
-/* Author: Gabriel Novais | Github: ganovais | LinkedIn: ganovais */
 interface FormatDateProps {
   date: Date;
   showHour?: boolean;

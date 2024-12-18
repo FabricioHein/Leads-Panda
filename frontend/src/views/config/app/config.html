@@ -17,7 +17,7 @@
                                                 <div class="upload mt-4 pe-md-4">
                                                     <input ref="fl_profile" type="file" class="d-none"
                                                         accept="image/*" @change="change_file" />
-                                                    <img :src="cliente.logo_link  ? cliente.logo_link : require('@/assets/images/user-no-foto.png')"
+                                                    <img :src="params.logo_link  ? params.logo_link : require('@/assets/images/user-no-foto.png')"
                                                         alt="profile" class="profile-preview"
                                                         @click="$refs.fl_profile.click()" />
                                                     <p class="mt-2">Carregar Logo</p>
@@ -29,9 +29,9 @@
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <label for="fullName">Empresa</label>
-                                                                <input v-model="cliente.nome_empresa" 
+                                                                <input v-model="params.nome_empresa" 
                                                                     type="text" class="form-control"
-                                                                    :class="[cliente.nome_empresa  ? 'is-valid' : 'is-invalid']" />
+                                                                    :class="[params.nome_empresa  ? 'is-valid' : 'is-invalid']" />
                                                                 <div class="valid-feedback">ok!
                                                                 </div>
                                                                 <div class="invalid-feedback">Campo obrigatório!
@@ -40,10 +40,10 @@
 
                                                             <div class="form-group">
                                                                 <label for="fullName">CNPJ </label>
-                                                                <input v-model="cliente.cnpj_cpf" type="text"
+                                                                <input v-model="params.cnpj_cpf" type="text"
                                                                     class="form-control"
                                                                     v-maska="'##.###.###/####-##'"
-                                                                    :class="[cliente.cnpj_cpf ? 'is-valid' : 'is-invalid']" />
+                                                                    :class="[params.cnpj_cpf ? 'is-valid' : 'is-invalid']" />
                                                                 <div class="valid-feedback">ok!
                                                                 </div>
                                                                 <div class="invalid-feedback">Campo obrigatório!
@@ -52,9 +52,9 @@
                                                             <div class="form-group">
                                                                 <label for="fullName">Responsável</label>
 
-                                                                <input v-model="cliente.responsavel" type="text"
+                                                                <input v-model="params.responsavel" type="text"
                                                                     class="form-control"
-                                                                    :class="[cliente.responsavel ? 'is-valid' : 'is-invalid']"
+                                                                    :class="[params.responsavel ? 'is-valid' : 'is-invalid']"
                                                                      />
                                                                 <div class="valid-feedback">ok!
                                                                 </div>
@@ -68,9 +68,9 @@
                                                             <div class="form-group">
                                                                 <label for="fullName">Nome Fantasia</label>
 
-                                                                <input v-model="cliente.nome_fantasia" type="text"
+                                                                <input v-model="params.nome_fantasia" type="text"
                                                                     class="form-control"
-                                                                    :class="[cliente.nome_fantasia ? 'is-valid' : 'is-invalid']" />
+                                                                    :class="[params.nome_fantasia ? 'is-valid' : 'is-invalid']" />
                                                                 <div class="valid-feedback">ok!
                                                                 </div>
                                                                 <div class="invalid-feedback">Campo obrigatório!
@@ -112,14 +112,14 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                    <!-- <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                         <form id="general-info" class="section general-info">
                             <div class="info">
                                 <h6 class="">Endereço</h6>
                               
                             </div>
                         </form>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

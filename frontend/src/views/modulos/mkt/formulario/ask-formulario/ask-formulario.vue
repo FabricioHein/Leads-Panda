@@ -107,7 +107,7 @@ export default {
                 publico: false,
                 url_formulario: '',
                 projetoId: null,
-                configuracaoClienteId: null,
+                empresa_configId: null,
                 processoId: null,
                 json: [],
                 link_redirect: null,

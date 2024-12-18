@@ -1,320 +1,321 @@
 <template>
     <page :params="getAcesso()">
 
-<div class="layout-px-spacing">
+        <div class="layout-px-spacing">
 
-    <div class="action-btn layout-top-spacing mb-5">
+            <div class="action-btn layout-top-spacing mb-5 p-3">
 
-        <button type="button" id="add-list" class="btn btn-primary" @click="edit_project()">
-            <i class="bi bi-diagram-3">
-                Add Processo
-            </i>
-        </button>
-    </div>
-
-    <div class="row scrumboard" id="cancel-row">
-        <div class="col-lg-12 layout-spacing">
-            <div class="task-list-section">
-                <div v-for="project in project_list" :key="project.etapa" class="task-list-container">
-                    <div class="connect-sorting" :style="colorProjBackground(project.color)">
-                        <div ></div>
-
-                        <div class="task-container-header">
-                            <i class="bi bi-diagram-3"></i>
-                            <h6 class="s-heading" data-listTitle="In Progress">{{ project.title }}</h6>
-                            <div class="dropdown btn-group">
-                                <div class="add-s-task p-2">
-                                    <a href="javascript:;" class="addTask" @click="goToTask(task, project)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-plus-circle">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <line x1="12" y1="8" x2="12" y2="16"></line>
-                                            <line x1="8" y1="12" x2="16" y2="12"></line>
-                                        </svg>
-                                    </a>
+                <button type="button" id="add-list" class="btn btn-primary" @click="edit_project()">
+                    <i class="bi bi-diagram-3">
+                        Criar Board
+                    </i>
+                </button>
+            </div>
+            <div class="row scrumboard" id="cancel-row">
+                <div class="col-lg-12 layout-spacing">
+                    <div class="task-list-section">
+                        <div v-for="project in project_list" :key="project.etapa" class="task-list-container">
+                            <div class="connect-sorting" :style="colorProjBackground(project.color)">
+                                <div></div>
+                                <div class="card-body">
+                                    <b>Total em Negócios: R$</b> {{ setValorTotal(project) }}
                                 </div>
-                                <a href="javascript:;" id="ddlMore" class="btn dropdown-toggle btn-icon-only"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-more-horizontal">
-                                        <circle cx="12" cy="12" r="1"></circle>
-                                        <circle cx="19" cy="12" r="1"></circle>
-                                        <circle cx="5" cy="12" r="1"></circle>
-                                    </svg>
-                                </a>
+                                <div class="task-container-header">
+                                    <i class="bi bi-diagram-3"></i>
+                                    <h6 class="s-heading" data-listTitle="In Progress">{{ project.title }}</h6>
+                                    <div class="dropdown btn-group">
+                                        <div class="add-s-task p-2">
+                                            <a href="javascript:;" class="addTask" @click="goToTask(task, project)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-plus-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <a href="javascript:;" id="ddlMore" class="btn dropdown-toggle btn-icon-only"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-more-horizontal">
+                                                <circle cx="12" cy="12" r="1"></circle>
+                                                <circle cx="19" cy="12" r="1"></circle>
+                                                <circle cx="5" cy="12" r="1"></circle>
+                                            </svg>
+                                        </a>
 
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="ddlMore">
-                                    <li><a href="javascript:;" class="dropdown-item"
-                                            @click="edit_project(project)">Editar</a></li>
-                                    <li><a href="javascript:;" class="dropdown-item"
-                                            @click="delete_project(project)">Apagar</a></li>
-                                    <!-- <li><a href="javascript:;" class="dropdown-item"
+                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="ddlMore">
+                                            <li><a href="javascript:;" class="dropdown-item"
+                                                    @click="edit_project(project)">Editar</a></li>
+                                            <li><a href="javascript:;" class="dropdown-item"
+                                                    @click="delete_project(project)">Apagar</a></li>
+                                            <!-- <li><a href="javascript:;" class="dropdown-item"
                                             @click="clear_project(project)">Limpar Todos</a></li> -->
-                                </ul>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <draggable @dragend="move(project, taskMove)" class="connect-sorting-content"
+                                    group="default" ghost-class="ui-state-highlight" drag-class="ui-sortable-helper"
+                                    :animation="200">
+                                    <div v-for="task in project.task" :key="project.id + '' + task.id"
+                                        @dragover="moveTask(task)" class="card task-text-progress cursor-move ui-sortable-handle cursor-p
+                                                                ">
+                                        <div class="card-body" @dblclick="goToTask(task, project)">
+                                            <div v-if="task.image" class="px-2 pt-2">
+                                                <img src="@/assets/images/taskboard.jpg" class="img-fluid rounded"
+                                                    alt="scrumboard" />
+                                            </div>
+
+                                            <div class="task-header">
+                                                <h4>{{ task.title }}</h4>
+                                            </div>
+                                            <div class="task-body">
+                                                <div class="task-bottom">
+                                                    <i class="bi bi-people">
+
+                                                        Contato: {{ task.contato_nome || ' Sem Infomação' }}
+                                                    </i>
+                                                    <!-- Status: {{ task.status || ' Sem Infomação' }} -->
+
+                                                </div>
+                                                <div class="task-bottom">
+                                                    <i class="bi bi-cash-coin">
+                                                        Valor de Negócio R$: {{
+                                                            Number(task.valor_Inicial).toLocaleString('pt-br',
+                                                                { minimumFractionDigits: 2 })
+                                                            || 0 }}
+                                                    </i>
+
+                                                </div>
+                                                <div class="task-bottom">
+                                                    <i class="bi bi-thermometer-snow">
+                                                        Temperatura: {{ temperatura(task.status) }}
+                                                    </i>
+                                                </div>
+
+                                                <div class="task-bottom">
+                                                    <div class="tb-section-2">
+                                                        <a href="javascript:;" @click="goToTask(task, project)">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-edit-2 s-task-edit">
+                                                                <path
+                                                                    d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+                                                                </path>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="javascript:;"
+                                                            @click="delete_confirm(project.id, task)">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-trash-2 s-task-delete">
+                                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                                                <path
+                                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                                </path>
+                                                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </draggable>
+
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                        <draggable @dragend="move(project, taskMove)" class="connect-sorting-content" group="default"
-                            ghost-class="ui-state-highlight" drag-class="ui-sortable-helper" :animation="200">
-                            <div v-for="task in project.task" :key="project.id + '' + task.id"
-                                @dragover="moveTask(task)" class="card task-text-progress cursor-move ui-sortable-handle cursor-p
-                                                                ">
-                                <div class="card-body" @click="goToTask(task, project)">
-                                    <div v-if="task.image" class="px-2 pt-2">
-                                        <img src="@/assets/images/taskboard.jpg" class="img-fluid rounded"
-                                            alt="scrumboard" />
-                                    </div>
-
-                                    <div class="task-header">
-                                        <h4>{{ task.title }}</h4>
-                                    </div>
-                                    <div class="task-body">
-                                        <div class="task-bottom">
-                                            <i class="bi bi-cash-coin">
-
-                                                Contato: {{ task.contato_nome || ' Sem Infomação' }}
-                                            </i>
-                                            <!-- Status: {{ task.status || ' Sem Infomação' }} -->
-
+            <!-- Modal -->
+            <div id="addListModal" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md modal-dialog-right">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ params.id ? 'Editar Processo' : 'Cria Board' }}</h5>
+                            <button type="button" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close"
+                                class="btn-close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="compose-box">
+                                <div class="compose-content" id="addListModalTitle">
+                                    <form action="javascript:void(0);">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group mb-0">
+                                                    <label>Nome do Processo</label>
+                                                    <input type="text" v-model="params.title" class="form-control"
+                                                        placeholder="Nome" />
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <label>Etapa</label>
+                                                    <input type="number" v-model="params.etapa" class="form-control" />
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <label>Cor do Processo</label>
+                                                    <input type="color" v-model="params.color" class="form-control form-control-color" />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="task-bottom">
-                                            <i class="bi bi-cash-coin">
-                                                Valor de Negócio R$: {{
-                                                    Number(task.valor_Inicial).toLocaleString('pt-br',
-                                                        { minimumFractionDigits: 2 })
-                                                    || 0 }}
-                                            </i>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" @click="save_project()">{{ params.id ?
+                                'Atualizar' : 'Criar Board' }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                        </div>
-                                        <div class="task-bottom">
-                                            <i class="bi bi-thermometer-snow">
-                                                Temperatura: {{ temperatura(task.status) }}
-                                            </i>
-                                        </div>
+            <div id="addTaskModal" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="badge badge-warning badge-chip mt-3 mb-3 ms-2 position-relative">
+                                <img src="@/assets/images/lead.png" alt="Person" width="96" height="96" />
+                                <span class="text">
+                                    {{ params_task.id ? params_task.title : 'Add Lead' }} </span>
+                            </span>
+                            <button type="button" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close"
+                                class="btn-close"></button>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="compose-box">
+                                <div class="compose-content" id="addTaskModalTitle">
+                                    <div class="addTaskAccordion" id="add_task_accordion">
+                                        <div class="card task-text-progress">
+                                            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                                                data-parent="#add_task_accordion">
+                                                <div class="card-body p-0">
+                                                    <form action="javascript:void(0);">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group mb-4">
+                                                                    <label>Título</label>
+                                                                    <input type="text" v-model="params_task.title"
+                                                                        class="form-control" placeholder="Título" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group mb-4">
+                                                                    <label>Valor Inicial</label>
+                                                                    <input type="number"
+                                                                        v-model="params_task.valor_Inicial"
+                                                                        class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group mb-4">
+                                                                    <label>Valor Inicial</label>
+                                                                    <input type="number"
+                                                                        v-model="params_task.valor_Final"
+                                                                        class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group mb-4">
+                                                                    <label>Contato</label>
+                                                                    <input type="text" v-model="params_task.contactsId"
+                                                                        class="form-control" placeholder="Contato" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group mb-4">
+                                                                    <label>Status</label>
+                                                                    <input type="text" v-model="params_task.produtoId"
+                                                                        class="form-control" placeholder="Status" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
 
-                                        <div class="task-bottom">
-                                            <div class="tb-section-2">
-                                                <a href="javascript:;" @click="goToTask(task, project)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="feather feather-edit-2 s-task-edit">
-                                                        <path
-                                                            d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
-                                                        </path>
-                                                    </svg>
-                                                </a>
-                                                <a href="javascript:;" @click="delete_confirm(project.id, task)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="feather feather-trash-2 s-task-delete">
-                                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                                        <path
-                                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                                        </path>
-                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                    </svg>
-                                                </a>
+                                                                <div class="form-group mb-0">
+                                                                    <label>Descrição</label>
+                                                                    <vue-easymde v-model="params_task.description" />
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>
-
-                            </div>
-                        </draggable>
-                        <div class="card-body">
-                            <b>Total em Negócios: R$</b> {{ setValorTotal(project) }}
-                        </div>
-
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="addListModal" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        {{ params.id ? 'Editar Processo' : 'Add Processo' }}</h5>
-                    <button type="button" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close"
-                        class="btn-close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="compose-box">
-                        <div class="compose-content" id="addListModalTitle">
-                            <form action="javascript:void(0);">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group mb-0">
-                                            <label>Nome do Processo</label>
-                                            <input type="text" v-model="params.title" class="form-control"
-                                                placeholder="Nome" />
-                                        </div>
-                                        <div class="form-group mb-0">
-                                            <label>Etapa</label>
-                                            <input type="number" v-model="params.etapa" class="form-control" />
-                                        </div>
-                                        <div class="form-group mb-0">
-                                            <label>Cor do Processo</label>
-                                            <input type="color" v-model="params.color" class="form-control" />
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                        data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @click="save_project()">{{ params.id ? 'Atualizar' :
-                        'Add Processo' }}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="addTaskModal" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="badge badge-warning badge-chip mt-3 mb-3 ms-2 position-relative">
-                        <img src="@/assets/images/lead.png" alt="Person" width="96" height="96" />
-                        <span class="text">
-                            {{ params_task.id ? params_task.title : 'Add Lead' }} </span>
-                    </span>
-                    <button type="button" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close"
-                        class="btn-close"></button>
-                </div>
-                <div class="modal-body ">
-                    <div class="compose-box">
-                        <div class="compose-content" id="addTaskModalTitle">
-                            <div class="addTaskAccordion" id="add_task_accordion">
-                                <div class="card task-text-progress">
-                                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                                        data-parent="#add_task_accordion">
-                                        <div class="card-body p-0">
-                                            <form action="javascript:void(0);">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group mb-4">
-                                                            <label>Título</label>
-                                                            <input type="text" v-model="params_task.title"
-                                                                class="form-control" placeholder="Título" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="form-group mb-4">
-                                                            <label>Valor Inicial</label>
-                                                            <input type="number" v-model="params_task.valor_Inicial"
-                                                                class="form-control" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group mb-4">
-                                                            <label>Valor Inicial</label>
-                                                            <input type="number" v-model="params_task.valor_Final"
-                                                                class="form-control" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group mb-4">
-                                                            <label>Contato</label>
-                                                            <input type="text" v-model="params_task.contactsId"
-                                                                class="form-control" placeholder="Contato" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group mb-4">
-                                                            <label>Status</label>
-                                                            <input type="text" v-model="params_task.produtoId"
-                                                                class="form-control" placeholder="Status" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-
-                                                        <div class="form-group mb-0">
-                                                            <label>Descrição</label>
-                                                            <vue-easymde v-model="params_task.description" />
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" data-bs-toggle="modal"
+                                data-bs-target="#addTaskModal">Cancelar</button>
+                            <button type="button" data-btnfn="addTask" class="btn btn-primary" @click="save_task()">{{
+                                params_task.id ? 'Atualizar' : 'Add Lead' }}</button>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bs-toggle="modal"
-                        data-bs-target="#addTaskModal">Cancelar</button>
-                    <button type="button" data-btnfn="addTask" class="btn btn-primary" @click="save_task()">{{
-                        params_task.id ? 'Atualizar' : 'Add Lead' }}</button>
-                </div>
             </div>
-        </div>
-    </div>
 
-    <div id="deleteConformation" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content mailbox-popup">
-                <div class="modal-header">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-trash-2">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                            </path>
-                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
+            <div id="deleteConformation" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md modal-dialog-centered">
+                    <div class="modal-content mailbox-popup">
+                        <div class="modal-header">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-trash-2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path
+                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                    </path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </div>
+                            <h5 class="modal-title" id="exampleModalLabel">Deseja Apagadar a Lead?</h5>
+                            <button type="button" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close"
+                                class="btn-close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="">Se você excluir a Lead, ela desaparecerá para sempre. Tem certeza de que deseja
+                                continuar?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" data-remove="task" class="btn btn-danger"
+                                @click="delete_task()">Apagar</button>
+                        </div>
                     </div>
-                    <h5 class="modal-title" id="exampleModalLabel">Deseja Apagadar a Lead?</h5>
-                    <button type="button" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close"
-                        class="btn-close"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="">Se você excluir a Lead, ela desaparecerá para sempre. Tem certeza de que deseja
-                        continuar?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                        data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" data-remove="task" class="btn btn-danger"
-                        @click="delete_task()">Apagar</button>
                 </div>
             </div>
+
+
         </div>
-    </div>
-</div>
-</page>
+    </page>
 </template>
 
 <style>
@@ -330,12 +331,12 @@
 }
 
 .vue-easymde .editor-toolbar button {
-    color: #000000 !important;
+    color: #4154f1 !important;
 }
 
 .vue-easymde .editor-toolbar button.active,
 .vue-easymde .editor-toolbar button:hover {
-    border-color: #000000 !important;
+    border-color: #4154f1 !important;
     opacity: 0.6;
 }
 
@@ -343,6 +344,26 @@
 .vue-easymde .editor-preview-side {
     z-index: 9999 !important;
     margin-top: 0 !important;
+}
+
+.modal-dialog-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 100%;
+    max-width: 400px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog-right {
+    transform: translateX(0);
+}
+
+.modal-dialog-right .modal-content {
+    height: 100%;
+    border-radius: 0;
 }
 </style>
 
@@ -385,10 +406,10 @@ onMounted(() => {
 
 const getAcesso = () => {
 
-const acesso = Acesso.getAcesso('CRM', '/oportunidades', permissao);
-console.log(acesso);
+    const acesso = Acesso.getAcesso('CRM', '/oportunidades', permissao);
+    console.log(acesso);
 
-return acesso
+    return acesso
 }
 
 
@@ -402,7 +423,7 @@ const temperatura = (temp) => {
             break;
         case 'quente':
             return 'Quente - ✩✩✩'
-            break;      
+            break;
         default:
             break;
     }
@@ -410,7 +431,7 @@ const temperatura = (temp) => {
 
 const goToTask = (task, project) => {
 
-    console.log(project)
+    // console.log(project)
     if (task && task.id) {
         router.push(`/crm/leads/${task.id}`)
     }
@@ -542,15 +563,15 @@ const clear_project = (project) => {
 const setValorTotal = (project) => {
     let proj = project.task || [];
     let valorTotal = 0;
-    if((proj || []).length > 0){
+    if ((proj || []).length > 0) {
         proj.forEach((v) => {
-        if (v.valor_Inicial) {
-            valorTotal += Number(v.valor_Inicial)
-        }
+            if (v.valor_Inicial) {
+                valorTotal += Number(v.valor_Inicial)
+            }
 
-    });
+        });
     }
-    
+
 
     return Number(valorTotal).toLocaleString('pt-br', { minimumFractionDigits: 2 })
 };

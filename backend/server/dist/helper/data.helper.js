@@ -16,6 +16,13 @@ class DateTime {
         }
         throw new Error(`Data ${val} no formato inválido para conversão.`);
     }
+    static formatToHoraMin(date) {
+        let data = new Date(date);
+        let dataHora = data.toISOString().split('T')[0];
+        let horaMinuto = data.toTimeString().split(' ')[0];
+        let horaMinutoSemSegundos = horaMinuto.split(':').slice(0, 2).join(':');
+        return `${dataHora}T${horaMinutoSemSegundos}`;
+    }
     static ToFormat(val, format) {
         return moment(val).utc().format(format);
     }

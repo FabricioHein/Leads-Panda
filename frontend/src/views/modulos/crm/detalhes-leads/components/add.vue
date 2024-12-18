@@ -11,12 +11,12 @@
 
         <label>Nome Contato</label>
         <input type="text" class="form-control" placeholder="Pesquise o Contato" v-model="params.contato_nome"
-          @input="findContato()" />      
-       
+          @input="findContato()" />
+
         <div v-if="contatoNome">
           <ul>
             <li v-for="contato in contatosLista" @click="setContato(contato)">
-             {{ contato.nome }}   {{ contato.sobrenome }} {{' - ' }}   {{ contato.cpf }}
+              {{ contato.nome }} {{ contato.sobrenome }} {{ ' - ' }} {{ contato.cpf }}
             </li>
           </ul>
         </div>
@@ -49,8 +49,6 @@
         <select v-model="params.produtoId" class="form-select">
           <option v-for="m in produtos" :value="m.id">{{ m.nome }}</option>
         </select>
-
-
       </div>
 
     </div>
@@ -62,8 +60,8 @@
   </div>
   <div class="account-settings-footer">
     <div class="as-footer-container">
+      <button type="button"  class="btn btn-danger" @click="back(params)">Voltar</button>
       <button type="button" class="btn btn-success" @click="saveTask">Salvar</button>
-      <button type="button" class="btn btn-danger" @click="back">Cancelar</button>
     </div>
   </div>
 </template>
@@ -79,12 +77,12 @@
 
 .ql-toolbar.ql-snow .ql-picker-label {
   border: 1px solid transparent;
-  color: #000000;
+  color: #4154f1000;
 }
 
 .ql-snow .ql-stroke {
   fill: none;
-  stroke: #000000;
+  stroke: #4154f1000;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 2;
@@ -92,7 +90,7 @@
 
 .ql-snow .ql-fill,
 .ql-snow .ql-stroke.ql-fill {
-  fill: #000000;
+  fill: #4154f1000;
 }
 
 #addTaskModal .ql-toolbar.ql-snow {
@@ -234,16 +232,17 @@ export default {
 
       this.contatoNome = !this.contatoNome;
 
-      if((this.params.contato_nome).length > 3){
+      if ((this.params.contato_nome).length > 3) {
         const contatos = new ContatosService({}, this.token, `/api/clientes/filter/name/${this.params.contato_nome}`);
-      this.contatosLista = await contatos.getByIdNomeOrNumber();
+        this.contatosLista = await contatos.getByIdNomeOrNumber();
       }
-    
 
-     
+
+
     },
-    back() {
-      this.$router.push('/crm/oportunidades')
+    back(data) {
+      this.$router.go( -1);
+
     },
     async saveTask() {
       if (!this.params.title) {
@@ -255,6 +254,8 @@ export default {
         let taskUpdate = new TaskModel(this.params);
         taskUpdate['id'] = Number(this.params.id);
         taskUpdate['processoId'] = this.params.processoId;
+        delete this.params['usersId']
+
         const taskCrm = new TaskCrmService(taskUpdate, this.token);
         await taskCrm.atualizarTask();
         this.showMessage('Atualizado com Sucesso');
@@ -263,13 +264,16 @@ export default {
 
       } else {
         let projetoId = (window.location.pathname).replace('/crm/leads/novo-', '');
-        this.params['projetoId'] = Number(projetoId)
+        this.params['projetoId'] = Number(projetoId);
+
+        this.params['usersId'] = this.params.usersId ? this.params.usersId : this.usuario.id;
         let task = new TaskModel(this.params);
         const taskCrm = new TaskCrmService(task, this.token);
-        await taskCrm.criarTask();
+       const taskNova = await taskCrm.criarTask();
         this.showMessage('Criado com Sucesso');
-        this.$router.push(`/crm/fluxo/${projetoId}`);
-      }
+        console.log(taskNova, 'teste')
+         this.$router.push(`/crm/fluxo/${taskNova.processo.projeto.id}`);      
+        }
     },
     showMessage(msg = '', type = 'success') {
       const toast = window.Swal.mixin({

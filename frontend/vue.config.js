@@ -56,7 +56,7 @@ module.exports = {
         proxy: {
             '/api': {
                 target: process.env.BACKEND,
-                // target: 'https://us-central1-lead2converts-prod.cloudfunctions.net/backend',
+                // target: 'https://us-central1-linkkoub-prod.cloudfunctions.net/backend',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, ''),
                 secure: true,
@@ -64,7 +64,7 @@ module.exports = {
             }, 
             '/auth': {
                 target: process.env.BACKEND,
-                // target: 'https://us-central1-lead2converts-prod.cloudfunctions.net/backend',
+                // target: 'https://us-central1-linkkoub-prod.cloudfunctions.net/backend',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/auth/, ''),
                 secure: true,
@@ -76,14 +76,7 @@ module.exports = {
                 rewrite: (path) => path.replace(/^\/apicep/, ''),
                 secure: true,
 
-            },
-            '/socket.io': {
-                target: process.env.SOCKET_SERVER,
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/socket.io/, ''),
-                secure: true,
-
-            }
+            }           
         },
     },
 };
